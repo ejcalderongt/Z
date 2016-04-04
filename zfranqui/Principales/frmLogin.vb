@@ -151,6 +151,7 @@ Public Class frmLogin
         Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.GroupBox1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.KeyPreview = True
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmLogin"
@@ -260,6 +261,23 @@ Public Class frmLogin
 
     End Sub
 
+    Private Sub frmLogin_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+
+        Try
+
+            If e.Control = True AndAlso e.KeyCode = Keys.I Then
+                If MsgBox("¿Abrir archivo de configuración?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                    IO.File.Open(CurDir() & "\conn.ini", IO.FileMode.Open)
+                End If
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+        
+
+    End Sub
+
     Private Sub frmLogin_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ModoConfiguracion = pModoConfiguracion.Desarrollo
@@ -327,8 +345,23 @@ Public Class frmLogin
         ProduccionLocal = 3
     End Enum
 
+    Dim Contador As Integer = 0
+
     Private Sub Label5_Click(sender As Object, e As EventArgs) Handles Label5.Click
-        MsgBox(CurDir)
+
+        Contador += 1
+
+        If Contador = 10 Then
+            If MsgBox(CurDir() & vbNewLine & "¿Reiniciar contador?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                Contador = 0
+            End If
+        End If
+
+        If Contador = 15 Then
+            Process.Start(CurDir)
+            Contador = 0
+        End If
+
     End Sub
 
     Private Sub GetIPAddress()
