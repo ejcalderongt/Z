@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsetRep" targetNamespace="http://tempuri.org/DsetRep.xsd" xmlns:mstns="http://tempuri.org/DsetRep.xsd" xmlns="http://tempuri.org/DsetRep.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="zetafranquiciadosConnectionStringLocal" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="zetafranquiciadosConnectionStringLocal (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.zfranqui.Settings.GlobalReference.Default.zetafranquiciadosConnectionStringLocal" Provider="MySql.Data.MySqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="DTDescuentoTableAdapter" GeneratorDataComponentClassName="DTDescuentoTableAdapter" Name="DTDescuento" UserDataComponentName="DTDescuentoTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="zetafranquiciadosConnectionStringLocal (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT     tipobeneficio.Nombre AS TipoBeneficio, beneficio.Nombre,CONCAT(beneficio.Modelo, '/',beneficio.NoChasis, '/', 
+beneficio.NoPlaca, '/', beneficio.Motor) AS REF, beneficio.NumeroTelefono, beneficio.EmpresaTelco, 
+beneficio.fecha_asignacion, descuento_ref.FechaCobro, descuento_ref.NoCuota, descuento_ref.Monto, descuento_ref.Abonado, 
+tipodescuento.Nombre AS TipoDescuento, cef.Codigo AS CodCEF, cef.Descripcion AS DescCEF, franquiciado.Codigo AS CodFranquiciado, 
+franquiciado.Nombres AS NomFranquiciado, franquiciado.Apellidos AS ApeFranquiciado
+FROM         descuento_det INNER JOIN
+descuento_ref ON descuento_det.IdDescuentoEnc = descuento_ref.IdDescuentoEnc INNER JOIN
+beneficio ON descuento_det.IdBeneficio = beneficio.IdBeneficio INNER JOIN
+tipobeneficio ON beneficio.IdTipoBeneficio = tipobeneficio.IdTipoBeneficio INNER JOIN
+descuento_enc ON descuento_det.IdDescuentoEnc = descuento_enc.IdDescuentoEnc INNER JOIN
+cef ON descuento_enc.IdCEF = cef.IdCef INNER JOIN
+tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento INNER JOIN
+franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Nombre" DataSetColumn="Nombre" />
+              <Mapping SourceColumn="NumeroTelefono" DataSetColumn="NumeroTelefono" />
+              <Mapping SourceColumn="EmpresaTelco" DataSetColumn="EmpresaTelco" />
+              <Mapping SourceColumn="FechaCobro" DataSetColumn="FechaCobro" />
+              <Mapping SourceColumn="NoCuota" DataSetColumn="NoCuota" />
+              <Mapping SourceColumn="Monto" DataSetColumn="Monto" />
+              <Mapping SourceColumn="Abonado" DataSetColumn="Abonado" />
+              <Mapping SourceColumn="TipoBeneficio" DataSetColumn="TipoBeneficio" />
+              <Mapping SourceColumn="fecha_asignacion" DataSetColumn="fecha_asignacion" />
+              <Mapping SourceColumn="TipoDescuento" DataSetColumn="TipoDescuento" />
+              <Mapping SourceColumn="CodCEF" DataSetColumn="CodCEF" />
+              <Mapping SourceColumn="DescCEF" DataSetColumn="DescCEF" />
+              <Mapping SourceColumn="CodFranquiciado" DataSetColumn="CodFranquiciado" />
+              <Mapping SourceColumn="NomFranquiciado" DataSetColumn="NomFranquiciado" />
+              <Mapping SourceColumn="ApeFranquiciado" DataSetColumn="ApeFranquiciado" />
+              <Mapping SourceColumn="REF" DataSetColumn="REF" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsetRep" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsetRep" msprop:Generator_UserDSName="DsetRep">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="DTDescuento" msprop:Generator_TableClassName="DTDescuentoDataTable" msprop:Generator_TableVarName="tableDTDescuento" msprop:Generator_RowChangedName="DTDescuentoRowChanged" msprop:Generator_TablePropName="DTDescuento" msprop:Generator_RowDeletingName="DTDescuentoRowDeleting" msprop:Generator_RowChangingName="DTDescuentoRowChanging" msprop:Generator_RowEvHandlerName="DTDescuentoRowChangeEventHandler" msprop:Generator_RowDeletedName="DTDescuentoRowDeleted" msprop:Generator_RowClassName="DTDescuentoRow" msprop:Generator_UserTableName="DTDescuento" msprop:Generator_RowEvArgName="DTDescuentoRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NumeroTelefono" msprop:Generator_ColumnVarNameInTable="columnNumeroTelefono" msprop:Generator_ColumnPropNameInRow="NumeroTelefono" msprop:Generator_ColumnPropNameInTable="NumeroTelefonoColumn" msprop:Generator_UserColumnName="NumeroTelefono" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpresaTelco" msprop:Generator_ColumnVarNameInTable="columnEmpresaTelco" msprop:Generator_ColumnPropNameInRow="EmpresaTelco" msprop:Generator_ColumnPropNameInTable="EmpresaTelcoColumn" msprop:Generator_UserColumnName="EmpresaTelco" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="FechaCobro" msprop:Generator_ColumnVarNameInTable="columnFechaCobro" msprop:Generator_ColumnPropNameInRow="FechaCobro" msprop:Generator_ColumnPropNameInTable="FechaCobroColumn" msprop:Generator_UserColumnName="FechaCobro" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="NoCuota" msprop:Generator_ColumnVarNameInTable="columnNoCuota" msprop:Generator_ColumnPropNameInRow="NoCuota" msprop:Generator_ColumnPropNameInTable="NoCuotaColumn" msprop:Generator_UserColumnName="NoCuota" type="xs:int" minOccurs="0" />
+              <xs:element name="Monto" msprop:Generator_ColumnVarNameInTable="columnMonto" msprop:Generator_ColumnPropNameInRow="Monto" msprop:Generator_ColumnPropNameInTable="MontoColumn" msprop:Generator_UserColumnName="Monto" type="xs:float" minOccurs="0" />
+              <xs:element name="Abonado" msprop:Generator_ColumnVarNameInTable="columnAbonado" msprop:Generator_ColumnPropNameInRow="Abonado" msprop:Generator_ColumnPropNameInTable="AbonadoColumn" msprop:Generator_UserColumnName="Abonado" type="xs:float" minOccurs="0" />
+              <xs:element name="TipoBeneficio" msprop:Generator_ColumnVarNameInTable="columnTipoBeneficio" msprop:Generator_ColumnPropNameInRow="TipoBeneficio" msprop:Generator_ColumnPropNameInTable="TipoBeneficioColumn" msprop:Generator_UserColumnName="TipoBeneficio" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="fecha_asignacion" msprop:Generator_ColumnVarNameInTable="columnfecha_asignacion" msprop:Generator_ColumnPropNameInRow="fecha_asignacion" msprop:Generator_ColumnPropNameInTable="fecha_asignacionColumn" msprop:Generator_UserColumnName="fecha_asignacion" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="TipoDescuento" msprop:Generator_ColumnVarNameInTable="columnTipoDescuento" msprop:Generator_ColumnPropNameInRow="TipoDescuento" msprop:Generator_ColumnPropNameInTable="TipoDescuentoColumn" msprop:Generator_UserColumnName="TipoDescuento" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodCEF" msprop:Generator_ColumnVarNameInTable="columnCodCEF" msprop:Generator_ColumnPropNameInRow="CodCEF" msprop:Generator_ColumnPropNameInTable="CodCEFColumn" msprop:Generator_UserColumnName="CodCEF" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DescCEF" msprop:Generator_ColumnVarNameInTable="columnDescCEF" msprop:Generator_ColumnPropNameInRow="DescCEF" msprop:Generator_ColumnPropNameInTable="DescCEFColumn" msprop:Generator_UserColumnName="DescCEF" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CodFranquiciado" msprop:Generator_ColumnVarNameInTable="columnCodFranquiciado" msprop:Generator_ColumnPropNameInRow="CodFranquiciado" msprop:Generator_ColumnPropNameInTable="CodFranquiciadoColumn" msprop:Generator_UserColumnName="CodFranquiciado" type="xs:int" minOccurs="0" />
+              <xs:element name="NomFranquiciado" msprop:Generator_ColumnVarNameInTable="columnNomFranquiciado" msprop:Generator_ColumnPropNameInRow="NomFranquiciado" msprop:Generator_ColumnPropNameInTable="NomFranquiciadoColumn" msprop:Generator_UserColumnName="NomFranquiciado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="ApeFranquiciado" msprop:Generator_ColumnVarNameInTable="columnApeFranquiciado" msprop:Generator_ColumnPropNameInRow="ApeFranquiciado" msprop:Generator_ColumnPropNameInTable="ApeFranquiciadoColumn" msprop:Generator_UserColumnName="ApeFranquiciado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="REF" msprop:Generator_ColumnVarNameInTable="columnREF" msprop:Generator_ColumnPropNameInRow="REF" msprop:Generator_ColumnPropNameInTable="REFColumn" msprop:Generator_UserColumnName="REF" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="103" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
