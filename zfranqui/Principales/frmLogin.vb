@@ -1,3 +1,5 @@
+Imports DevExpress.XtraEditors
+
 Public Class frmLogin
     Inherits System.Windows.Forms.Form
 
@@ -248,8 +250,12 @@ Public Class frmLogin
 
             End If
 
+
+
         Catch ex As Exception
-            MsgBox(ex.Message)
+            Dim ConS As String = BD.CadenaConexion
+            ConS = ConS.Remove(38, 20)
+            XtraMessageBox.Show("Error en inicio de sesión: " & vbNewLine & ex.Message & vbNewLine & " Parámetros de conexión (pwd less): " & ConS, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
     End Sub

@@ -560,4 +560,22 @@ Public Class frmMenu
 
     End Sub
 
+    Dim ContadorClicks As Integer = 0
+    Private Sub lblNomPCCliente_ItemClick(sender As Object, e As ItemClickEventArgs) Handles lblNomPCCliente.ItemClick
+
+        Try
+
+            ContadorClicks += 1
+
+            If ContadorClicks = 10 Then
+                MsgBox("Cadena de conexión actual: " & BD.CadenaConexion)
+                ContadorClicks = 0
+            End If
+
+        Catch ex As Exception
+
+        End Try
+
+    End Sub
+
 End Class
