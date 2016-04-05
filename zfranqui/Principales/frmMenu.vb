@@ -537,9 +537,9 @@ Public Class frmMenu
 
     Private Sub BarButtonItem1_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1.ItemClick
 
-        Dim Rep As New frmReporteGrid
-        Rep.ShowDialog()
-        Rep.Close()
+        'Dim Rep As New frmReporteGrid
+        'Rep.ShowDialog()
+        'Rep.Close()
 
     End Sub
     Private Sub Inserta_Bitacora_Acceso_Menu(ByVal Opcion As String)

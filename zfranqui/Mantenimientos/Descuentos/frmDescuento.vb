@@ -526,7 +526,7 @@ Public Class frmDescuento
         Try
 
             Dim DT1 As New DataTable
-            Dim frmReportView1 As New frmRepView
+            Dim rpv As New frmRepView
             Dim rtpDetCuotas As New rptDtoDetREF
 
             Try
@@ -552,17 +552,57 @@ Public Class frmDescuento
 
                     rtpDetCuotas.SetDataSource(DT1)
                     'rptRecepcion1.SetParameterValue("PolizaNO", DT.Rows(0).Item("poliza_no"))
-                    frmReportView1.crview.ReportSource = rtpDetCuotas
-                    frmReportView1.ShowDialog()
+                    rpv.crview = New CrystalDecisions.Windows.Forms.CrystalReportViewer
+                    rpv.crview.ReportSource = rtpDetCuotas
+                    rpv.ShowDialog()
 
                 End If
 
             Catch ex As Exception
-                XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                XtraMessageBox.Show("1 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
             End Try
 
         Catch ex As Exception
-            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            XtraMessageBox.Show("2 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Sub
+
+    Private Sub ImprimirReporteGrid()
+
+        Try
+
+            Dim DT1 As New DataTable
+            'Dim rpv As New frmRepView
+            'Dim rtpDetCuotas As New rptDtoDetREF
+
+            Try
+
+                vSQL = " SELECT tipobeneficio.Nombre AS TipoBeneficio, beneficio.Nombre, CONCAT(beneficio.Modelo, '/',beneficio.NoChasis, '/', " & _
+                        " beneficio.NoPlaca, '/', beneficio.Motor) AS REF, beneficio.NumeroTelefono, beneficio.EmpresaTelco,  " & _
+                        " beneficio.fecha_asignacion, descuento_ref.FechaCobro, descuento_ref.NoCuota, descuento_ref.Monto, descuento_ref.Abonado,  " & _
+                        " tipodescuento.Nombre AS TipoDescuento, cef.Codigo AS CodCEF, cef.Descripcion AS DescCEF, franquiciado.Codigo AS CodFranquiciado, " & _
+                        " franquiciado.Nombres AS NomFranquiciado, franquiciado.Apellidos AS ApeFranquiciado " & _
+                        " FROM  descuento_det INNER JOIN " & _
+                        " descuento_ref ON descuento_det.IdDescuentoEnc = descuento_ref.IdDescuentoEnc INNER JOIN " & _
+                        " beneficio ON descuento_det.IdBeneficio = beneficio.IdBeneficio INNER JOIN " & _
+                        " tipobeneficio ON beneficio.IdTipoBeneficio = tipobeneficio.IdTipoBeneficio INNER JOIN " & _
+                        " descuento_enc ON descuento_det.IdDescuentoEnc = descuento_enc.IdDescuentoEnc INNER JOIN " & _
+                        " cef ON descuento_enc.IdCEF = cef.IdCef INNER JOIN " & _
+                        " tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento INNER JOIN " & _
+                        " franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
+                        " WHERE descuento_enc.IdDescuentoEnc = " & pObjEnc.IdDescuentoEnc
+
+                Dim repG As New frmReporteGrid(vSQL)
+                repG.ShowDialog()
+                repG.Dispose()
+
+            Catch ex As Exception
+                XtraMessageBox.Show("1 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End Try
+
+        Catch ex As Exception
+            XtraMessageBox.Show("2 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
 
     End Sub
@@ -626,7 +666,7 @@ Public Class frmDescuento
         Try
 
             If GridViewDescuento.RowCount > 0 Then
-                ImprimirReporte()
+                ImprimirReporteGrid()
             End If
 
         Catch ex As Exception

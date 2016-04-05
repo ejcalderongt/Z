@@ -267,7 +267,7 @@ Public Class frmLogin
 
             If e.Control = True AndAlso e.KeyCode = Keys.I Then
                 If MsgBox("¿Abrir archivo de configuración?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
-                    IO.File.Open(CurDir() & "\conn.ini", IO.FileMode.Open)
+                    Process.Start(CurDir() & "\conn.ini", IO.FileMode.Open)
                 End If
             End If
 
