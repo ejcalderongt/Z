@@ -19,5 +19,13 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">server=localhost;user id=root;password=sysadm;persistsecurityinfo=True;database=zetafranquiciados</Value>
     </Setting>
+    <Setting Name="ZETAFRANQUICIADOSConnectionString" Type="(Connection string)" Scope="Application">
+      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;ConnectionString&gt;server=200.35.177.122;user id=zfran;password=Zeta.2016;persistsecurityinfo=True;database=ZETAFRANQUICIADOS;port=3401&lt;/ConnectionString&gt;
+  &lt;ProviderName&gt;MySql.Data.MySqlClient&lt;/ProviderName&gt;
+&lt;/SerializableConnectionString&gt;</DesignTimeValue>
+      <Value Profile="(Default)">server=200.35.177.122;user id=zfran;password=Zeta.2016;persistsecurityinfo=True;database=ZETAFRANQUICIADOS;port=3401</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

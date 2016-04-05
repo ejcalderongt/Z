@@ -578,22 +578,20 @@ Public Class frmDescuento
 
             Try
 
-                vSQL = " SELECT tipobeneficio.Nombre AS TipoBeneficio, beneficio.Nombre, CONCAT(beneficio.Modelo, '/',beneficio.NoChasis, '/', " & _
-                        " beneficio.NoPlaca, '/', beneficio.Motor) AS REF, beneficio.NumeroTelefono, beneficio.EmpresaTelco,  " & _
-                        " beneficio.fecha_asignacion, descuento_ref.FechaCobro, descuento_ref.NoCuota, descuento_ref.Monto, descuento_ref.Abonado,  " & _
-                        " tipodescuento.Nombre AS TipoDescuento, cef.Codigo AS CodCEF, cef.Descripcion AS DescCEF, franquiciado.Codigo AS CodFranquiciado, " & _
-                        " franquiciado.Nombres AS NomFranquiciado, franquiciado.Apellidos AS ApeFranquiciado " & _
-                        " FROM  descuento_det INNER JOIN " & _
-                        " descuento_ref ON descuento_det.IdDescuentoEnc = descuento_ref.IdDescuentoEnc INNER JOIN " & _
-                        " beneficio ON descuento_det.IdBeneficio = beneficio.IdBeneficio INNER JOIN " & _
-                        " tipobeneficio ON beneficio.IdTipoBeneficio = tipobeneficio.IdTipoBeneficio INNER JOIN " & _
-                        " descuento_enc ON descuento_det.IdDescuentoEnc = descuento_enc.IdDescuentoEnc INNER JOIN " & _
-                        " cef ON descuento_enc.IdCEF = cef.IdCef INNER JOIN " & _
-                        " tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento INNER JOIN " & _
-                        " franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
-                        " WHERE descuento_enc.IdDescuentoEnc = " & pObjEnc.IdDescuentoEnc
+                Dim lSQL As String = String.Format("SELECT b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
+                                                   & " b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, r.FechaCobro, r.NoCuota, r.Monto, " _
+                                                   & "r.Abonado, r.pagada, tipodescuento.Nombre AS TipoDescuento " _
+                                                   & "FROM descuento_ref AS r " _
+                                                   & "INNER JOIN descuento_det AS det ON r.IdDescuentoEnc= det.IdDescuentoEnc " _
+                                                   & "AND r.IdDescuentoDet = det.IdDescuentoDet " _
+                                                   & "INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " _
+                                                   & "INNER JOIN TipoBeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " _
+                                                   & "INNER JOIN descuento_enc AS enc ON det.IdDescuentoEnc = enc.IdDescuentoEnc " _
+                                                   & "INNER JOIN tipodescuento ON enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " _
+                                                   & "WHERE r.IdDescuentoEnc={0}", pObjEnc.IdDescuentoEnc)
 
-                Dim repG As New frmReporteGrid(vSQL)
+                Dim repG As New frmReporteGrid(lSQL, frmReporteGrid.TipoReporte.CuotasDetalleDescuento)
+                repG.DescuentoEnc = pObjEnc
                 repG.ShowDialog()
                 repG.Dispose()
 
