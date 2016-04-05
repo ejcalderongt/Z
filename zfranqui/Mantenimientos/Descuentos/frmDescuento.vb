@@ -526,7 +526,7 @@ Public Class frmDescuento
         Try
 
             Dim DT1 As New DataTable
-            Dim frmReportView1 As New frmRepView
+            Dim rpv As New frmRepView
             Dim rtpDetCuotas As New rptDtoDetREF
 
             Try
@@ -552,17 +552,55 @@ Public Class frmDescuento
 
                     rtpDetCuotas.SetDataSource(DT1)
                     'rptRecepcion1.SetParameterValue("PolizaNO", DT.Rows(0).Item("poliza_no"))
-                    frmReportView1.crview.ReportSource = rtpDetCuotas
-                    frmReportView1.ShowDialog()
+                    rpv.crview = New CrystalDecisions.Windows.Forms.CrystalReportViewer
+                    rpv.crview.ReportSource = rtpDetCuotas
+                    rpv.ShowDialog()
 
                 End If
 
             Catch ex As Exception
-                XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                XtraMessageBox.Show("1 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
             End Try
 
         Catch ex As Exception
-            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            XtraMessageBox.Show("2 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Sub
+
+    Private Sub ImprimirReporteGrid()
+
+        Try
+
+            Dim DT1 As New DataTable
+            'Dim rpv As New frmRepView
+            'Dim rtpDetCuotas As New rptDtoDetREF
+
+            Try
+
+                Dim lSQL As String = String.Format("SELECT b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
+                                                   & " b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, r.FechaCobro, r.NoCuota, r.Monto, " _
+                                                   & "r.Abonado, r.pagada, tipodescuento.Nombre AS TipoDescuento " _
+                                                   & "FROM descuento_ref AS r " _
+                                                   & "INNER JOIN descuento_det AS det ON r.IdDescuentoEnc= det.IdDescuentoEnc " _
+                                                   & "AND r.IdDescuentoDet = det.IdDescuentoDet " _
+                                                   & "INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " _
+                                                   & "INNER JOIN TipoBeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " _
+                                                   & "INNER JOIN descuento_enc AS enc ON det.IdDescuentoEnc = enc.IdDescuentoEnc " _
+                                                   & "INNER JOIN tipodescuento ON enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " _
+                                                   & "WHERE r.IdDescuentoEnc={0}", pObjEnc.IdDescuentoEnc)
+
+                Dim repG As New frmReporteGrid(lSQL, frmReporteGrid.TipoReporte.CuotasDetalleDescuento)
+                repG.DescuentoEnc = pObjEnc
+                repG.ShowDialog()
+                repG.Dispose()
+
+            Catch ex As Exception
+                XtraMessageBox.Show("1 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            End Try
+
+        Catch ex As Exception
+            XtraMessageBox.Show("2 " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
 
     End Sub
@@ -626,7 +664,7 @@ Public Class frmDescuento
         Try
 
             If GridViewDescuento.RowCount > 0 Then
-                ImprimirReporte()
+                ImprimirReporteGrid()
             End If
 
         Catch ex As Exception

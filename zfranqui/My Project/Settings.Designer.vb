@@ -102,6 +102,17 @@ Partial Friend NotInheritable Class Settings
             Return CType(Me("zetafranquiciadosConnectionStringLocal"),String)
         End Get
     End Property
+    
+    <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+     Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+     Global.System.Configuration.SpecialSettingAttribute(Global.System.Configuration.SpecialSetting.ConnectionString),  _
+     Global.System.Configuration.DefaultSettingValueAttribute("server=200.35.177.122;user id=zfran;password=Zeta.2016;persistsecurityinfo=True;d"& _ 
+        "atabase=ZETAFRANQUICIADOS;port=3401")>  _
+    Public ReadOnly Property ZETAFRANQUICIADOSConnectionString() As String
+        Get
+            Return CType(Me("ZETAFRANQUICIADOSConnectionString"),String)
+        End Get
+    End Property
 End Class
 
 Namespace My

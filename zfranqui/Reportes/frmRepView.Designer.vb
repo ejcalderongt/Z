@@ -30,7 +30,7 @@ Partial Class frmRepView
         '
         Me.crview.ActiveViewIndex = 0
         Me.crview.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.crview.CachedPageNumberPerDoc = 10
+        'Me.crview.CachedPageNumberPerDoc = 10
         Me.crview.Cursor = System.Windows.Forms.Cursors.Default
         Me.crview.Dock = System.Windows.Forms.DockStyle.Fill
         Me.crview.Location = New System.Drawing.Point(0, 0)
