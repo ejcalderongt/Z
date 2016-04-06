@@ -183,6 +183,11 @@ Public Class frmDescuento
 
             For Each D As clsBeDescuento_det In pObjEnc.Detalle
 
+                If clsLnDescuento_ref.TienePago(D) Then
+                    DescuentoTieneAlgunPago = True
+                    Exit Function
+                End If
+
             Next
 
         Catch ex As Exception
@@ -194,9 +199,13 @@ Public Class frmDescuento
     Private Sub mnuEliminar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuEliminar.ItemClick
 
         If CBool(MsgBox("¿Anular el Descuento?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes) Then
-            If ObjLNenc.Eliminar(pObjEnc) > 0 Then
-                MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
-                Me.Close()
+            If Not DescuentoTieneAlgunPago() Then
+                If ObjLNenc.Eliminar(pObjEnc) > 0 Then
+                    MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
+                    Me.Close()
+                End If
+            Else
+                MsgBox("Ya se han realizado pagos sobre los beneficios de éste descuento, no se puede anular el registro", MsgBoxStyle.Exclamation, Me.Text)
             End If
         End If
 
