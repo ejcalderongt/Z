@@ -66,8 +66,7 @@ Public Class clsLnPago_det
 
 
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGODET", oBePago_det.IdPagoDet))
-			cmd.Parameters("@IDPAGODET").Direction = ParameterDirection.Output
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGOENC", oBePago_det.IdPagoEnc))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGOENC", oBePago_det.IdPagoEnc))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOENC", oBePago_det.IdDescuentoEnc))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTODET", oBePago_det.IdDescuentoDet))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOREF", oBePago_det.IdDescuentoRef))
@@ -117,8 +116,8 @@ Public Class clsLnPago_det
 			Upd.Add("fec_mod","@fec_mod","F")
 			Upd.Add("user_agr","@user_agr","F")
 			Upd.Add("user_mod","@user_mod","F")
-			Upd.Where("IdPagoDet = @IdPagoDet" & _
-				"AND IdPagoEnc = @IdPagoEnc")
+            Upd.Where("IdPagoDet = @IdPagoDet " & _
+                "AND IdPagoEnc = @IdPagoEnc")
 
 			Dim sp As String = Upd.SQL()
 
@@ -175,9 +174,9 @@ Public Class clsLnPago_det
 			cmd.CommandType=CommandType.Text
 
 
-			Dim sp As String = " Delete from Pago_det" & _ 
-			 "  Where(IdPagoDet = @IdPagoDet)" & _ 
-			 "  AND (IdPagoEnc = @IdPagoEnc)"
+            Dim sp As String = " Delete from Pago_det" & _
+             "  Where(IdPagoDet = @IdPagoDet) " & _
+             "  AND (IdPagoEnc = @IdPagoEnc)"
 			
 
 			Dim EsTransaccional As Boolean = (Not pConection is Nothing Andalso Not pTransaction Is Nothing)
@@ -233,9 +232,9 @@ Public Class clsLnPago_det
 
 	Public Function Obtener(ByRef oBePago_det As clsBePago_det) As Boolean
 		Try
-			Dim sp As String = "SELECT * FROM Pago_det" & _ 
-			" Where(IdPagoDet = @IdPagoDet)" & _ 
-			"AND (IdPagoEnc = @IdPagoEnc)"
+            Dim sp As String = "SELECT * FROM Pago_det" & _
+            " Where(IdPagoDet = @IdPagoDet) " & _
+            "AND (IdPagoEnc = @IdPagoEnc)"
 			
 			Dim cnn As New MySqlConnection(BD.CadenaConexion)
 			Dim cmd As New MySqlCommand(sp, cnn)
@@ -244,7 +243,7 @@ Public Class clsLnPago_det
 			
 			Dim dad As New MySqlDataAdapter(cmd)
 			dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGODET", oBePago_det.IdPagoDet))
-			dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGOENC", oBePago_det.IdPagoDet))
+            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGOENC", oBePago_det.IdPagoEnc))
 			
 			Dim dt As New DataTable
 			dad.Fill(dt)

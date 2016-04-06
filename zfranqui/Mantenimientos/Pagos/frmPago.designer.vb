@@ -176,6 +176,7 @@ Partial Class frmPago
         Label3.Size = New System.Drawing.Size(62, 13)
         Label3.TabIndex = 5
         Label3.Text = "Descuento:"
+        Label3.Visible = False
         '
         'RibbonControl
         '
@@ -312,6 +313,7 @@ Partial Class frmPago
         Me.lblCodigo.Name = "lblCodigo"
         Me.lblCodigo.Size = New System.Drawing.Size(0, 13)
         Me.lblCodigo.TabIndex = 73
+        Me.lblCodigo.Visible = False
         '
         'GroupControl1
         '
@@ -480,7 +482,7 @@ Partial Class frmPago
         Me.TaDetalle.Padding = New System.Windows.Forms.Padding(3)
         Me.TaDetalle.Size = New System.Drawing.Size(989, 275)
         Me.TaDetalle.TabIndex = 0
-        Me.TaDetalle.Text = "Detalles de Descuento"
+        Me.TaDetalle.Text = "Detalle de pagos pendientes"
         '
         'GrpCliente
         '

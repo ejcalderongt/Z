@@ -254,4 +254,36 @@ Partial Public Class clsLnDescuento_enc
 
     End Function
 
+    Public Shared Function GetAllByCefFranquiciado(ByVal pIdCef As Integer, ByVal pIdFranquiciado As Integer) As DataTable
+
+        Dim lTable As New DataTable("Result")
+
+        Try
+            Dim lSQl As String = String.Format("SELECT det.IdDescuentoEnc,det.IdDescuentoDet,ref.IdDescuentoRef, " _
+                                             & "det.IdBeneficio,b.Nombre,b.Modelo,b.NoChasis AS Chasis,b.NoPlaca AS Placa," _
+                                             & "b.NumeroTelefono AS 'No. Telefono',b.EmpresaTelco AS Empresa,ref.NoCuota AS 'No. Cuota',ref.Monto," _
+                                             & "ref.Abonado,det.MontoTotal AS 'Monto Total',tp.Nombre AS 'Tipo Periodo' " _
+                                             & "FROM descuento_enc AS enc " _
+                                             & "INNER JOIN descuento_det AS det ON enc.IdDescuentoEnc = det.IdDescuentoEnc " _
+                                             & "INNER JOIN descuento_ref AS ref ON det.IdDescuentoEnc = ref.IdDescuentoEnc " _
+                                             & "INNER JOIN beneficio AS b ON det.IdBeneficio = b.IdBeneficio " _
+                                             & "INNER JOIN tipodescuento AS tp ON enc.IdTipoDescuento = tp.IdTipoDescuento " _
+                                             & "AND det.IdDescuentoDet = ref.IdDescuentoDet " _
+                                             & "WHERE Idcef={0} AND IdFranquiciado={1} " _
+                                             & "ORDER BY enc.IdTipoDescuento", pIdCef, pIdFranquiciado)
+
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+                Using lDataAdapter As New MySqlDataAdapter(lSQl, lConnection)
+                    lDataAdapter.SelectCommand.CommandType = CommandType.Text
+                    lDataAdapter.Fill(lTable)
+                End Using
+            End Using
+            Return lTable
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
 End Class
