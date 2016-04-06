@@ -55,7 +55,7 @@ Partial Public Class clsLnPago_enc
                                 " PAGO_ENC " & _
                                 " INNER JOIN CEF ON PAGO_ENC.IDCEF = CEF.IDCEF " & _
                                 " INNER JOIN FRANQUICIADO ON PAGO_ENC.IDFRANQUICIADO = FRANQUICIADO.IDFRANQUICIADO " & _
-                                " INNER JOIN PAGO_DET ON PAGO_ENC.IDPAGO = PAGO_DET.IDPAGOENC " & _
+                                " INNER JOIN PAGO_DET ON PAGO_ENC.IDPAGOENC = PAGO_DET.IDPAGOENC " & _
                                 " INNER JOIN DESCUENTO_REF ON PAGO_DET.IDDESCUENTOENC = DESCUENTO_REF.IDDESCUENTOENC " & _
                                 " AND PAGO_DET.IDDESCUENTODET = DESCUENTO_REF.IDDESCUENTODET " & _
                                 " AND PAGO_DET.IDDESCUENTOREF = DESCUENTO_REF.IDDESCUENTOREF " & _
