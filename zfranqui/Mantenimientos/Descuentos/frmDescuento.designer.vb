@@ -575,7 +575,7 @@ Partial Class frmDescuento
         Me.Name = "frmDescuento"
         Me.Ribbon = Me.RibbonControl
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Mantenimiento de Descuentos a Franquiciados"
+        Me.Text = "Mantenimiento de descuentos a Franquiciados"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.RibbonControl, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.User_agrTextEdit.Properties, System.ComponentModel.ISupportInitialize).EndInit()
