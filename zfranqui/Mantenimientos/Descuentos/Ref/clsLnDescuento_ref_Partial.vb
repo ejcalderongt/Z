@@ -1,4 +1,7 @@
-﻿Partial Public Class clsLnDescuento_ref
+﻿Imports MySql.Data.MySqlClient
+Imports MySql.Data
+
+Partial Public Class clsLnDescuento_ref
 
     Public Shared Function GetAllByDetalle(ByVal pIdDescuentoEnc As Integer, ByVal pIdDescuentoDet As Integer) As List(Of clsBeDescuento_ref)
 
@@ -340,8 +343,9 @@
             Upd.Init("descuento_ref")
             Upd.Add("anulada", "1", "N")
             Upd.Where("IdDescuentoEnc=" & DetRef.IdDescuentoEnc & _
-                      " and idDescuentoDet =" & DetRef.IdDescuentoDet & _
-                      " and iddescuento =" & DetRef.IdDescuentoRef)
+                      " and IdDescuentoDet =" & DetRef.IdDescuentoDet & _
+                      " and IdDescuentoRef =" & DetRef.IdDescuentoRef & _
+                      " and IdBeneficio =" & DetRef.IdBeneficio)
             BD.Xcute(Upd.SQL())
 
             AnularCuota = True
@@ -357,18 +361,49 @@
         AnularDetalleDescuento = False
 
         Dim DT As New DataTable
+        Dim lConnection As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
+        Dim lTransaction As MySql.Data.MySqlClient.MySqlTransaction = Nothing
 
         Try
 
-            vSQL = "delete from descuento_det where IdDescuentoEnc =" & Det.IdDescuentoEnc & _
-                " and IdDescuentoDet =" & Det.IdDescuentoDet & _
-                " and IdBeneficio =" & Det.Beneficio.IdBeneficio
-            BD.Xcute(Upd.SQL())
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand()
+
+            lConnection.Open()
+            lTransaction = lConnection.BeginTransaction()
+
+            vSQL = "DELETE FROM DESCUENTO_DET " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, lConnection)
+            cmd.Transaction = lTransaction
+            cmd.ExecuteNonQuery()
+
+            vSQL = "DELETE FROM DESCUENTO_REF " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, lConnection)
+            cmd.Transaction = lTransaction
+            cmd.ExecuteNonQuery()
 
             AnularDetalleDescuento = True
 
+            lTransaction.Commit()
+            lConnection.Close()
+
         Catch ex As Exception
+            lTransaction.Rollback()
+            lConnection.Dispose()
             MsgBox(ex.Message)
+        Finally
+            lConnection.Dispose()
+            lTransaction.Dispose()
         End Try
 
     End Function
