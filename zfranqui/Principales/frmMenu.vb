@@ -592,4 +592,19 @@ Public Class frmMenu
 
     End Sub
 
+    Private Sub mnuEstadoCuentaDetalle_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuEstadoCuentaDetalle.ItemClick
+
+
+        Try
+
+            Dim DescuentosDet As New frmRepEstadoCuentaDef()
+            DescuentosDet.ShowDialog()
+            DescuentosDet.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
 End Class

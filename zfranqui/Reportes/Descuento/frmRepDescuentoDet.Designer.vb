@@ -22,9 +22,8 @@ Partial Class frmRepDescuentoDet
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRepDescuentoDet))
         Me.dgrid = New DevExpress.XtraGrid.GridControl()
-        Me.DsetRep1 = New zfranqui.DsetRep()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colNombre = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colModelo = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -42,7 +41,7 @@ Partial Class frmRepDescuentoDet
         Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colpagada = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdActualizar = New DevExpress.XtraBars.BarButtonItem()
@@ -50,37 +49,32 @@ Partial Class frmRepDescuentoDet
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
-        Me.DtDescuentoDetRepGridTableAdapter1 = New zfranqui.DsetRepTableAdapters.dtDescuentoDetRepGridTableAdapter()
+        Me.RepositoryItemCheckEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit()
         CType(Me.dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DsetRep1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgrid
         '
         Me.dgrid.Cursor = System.Windows.Forms.Cursors.Default
         Me.dgrid.DataMember = "dtDescuentoDetRepGrid"
-        Me.dgrid.DataSource = Me.DsetRep1
         Me.dgrid.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgrid.Location = New System.Drawing.Point(0, 22)
         Me.dgrid.MainView = Me.GridView1
         Me.dgrid.Name = "dgrid"
+        Me.dgrid.RepositoryItems.AddRange(New DevExpress.XtraEditors.Repository.RepositoryItem() {Me.RepositoryItemCheckEdit1})
         Me.dgrid.Size = New System.Drawing.Size(757, 350)
         Me.dgrid.TabIndex = 0
         Me.dgrid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
-        '
-        'DsetRep1
-        '
-        Me.DsetRep1.DataSetName = "DsetRep"
-        Me.DsetRep1.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'GridView1
         '
         Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colEsVehiculo, Me.colEsTelefono, Me.colEsServicio, Me.colFechaCobro, Me.colNoCuota, Me.colMonto, Me.colAbonado, Me.colpagada, Me.colTipoDescuento})
         Me.GridView1.GridControl = Me.dgrid
         Me.GridView1.GroupCount = 1
-        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "NoCuota", Me.colNoCuota, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "")})
+        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Count, "NoCuota", Me.colNoCuota, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}")})
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsView.ShowFooter = True
         Me.GridView1.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colNombre, DevExpress.Data.ColumnSortOrder.Ascending)})
@@ -157,6 +151,8 @@ Partial Class frmRepDescuentoDet
         '
         'colFechaCobro
         '
+        Me.colFechaCobro.DisplayFormat.FormatString = "d"
+        Me.colFechaCobro.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
         Me.colFechaCobro.FieldName = "FechaCobro"
         Me.colFechaCobro.Name = "colFechaCobro"
         Me.colFechaCobro.Visible = True
@@ -174,6 +170,7 @@ Partial Class frmRepDescuentoDet
         '
         'colMonto
         '
+        Me.colMonto.DisplayFormat.FormatString = "{0:n2}"
         Me.colMonto.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.colMonto.FieldName = "Monto"
         Me.colMonto.Name = "colMonto"
@@ -183,6 +180,8 @@ Partial Class frmRepDescuentoDet
         '
         'colAbonado
         '
+        Me.colAbonado.DisplayFormat.FormatString = "{0:n2}"
+        Me.colAbonado.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.colAbonado.FieldName = "Abonado"
         Me.colAbonado.Name = "colAbonado"
         Me.colAbonado.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", "{0:n2}")})
@@ -191,6 +190,8 @@ Partial Class frmRepDescuentoDet
         '
         'colpagada
         '
+        Me.colpagada.ColumnEdit = Me.RepositoryItemCheckEdit1
+        Me.colpagada.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom
         Me.colpagada.FieldName = "pagada"
         Me.colpagada.Name = "colpagada"
         Me.colpagada.Visible = True
@@ -266,11 +267,12 @@ Partial Class frmRepDescuentoDet
         Me.barDockControlRight.Location = New System.Drawing.Point(757, 22)
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 350)
         '
-        'DtDescuentoDetRepGridTableAdapter1
+        'RepositoryItemCheckEdit1
         '
-        Me.DtDescuentoDetRepGridTableAdapter1.ClearBeforeFill = True
+        Me.RepositoryItemCheckEdit1.AutoHeight = False
+        Me.RepositoryItemCheckEdit1.Name = "RepositoryItemCheckEdit1"
         '
-        'frmReporteGrid
+        'frmRepDescuentoDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -280,14 +282,14 @@ Partial Class frmRepDescuentoDet
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
-        Me.Name = "frmReporteGrid"
+        Me.Name = "frmRepDescuentoDet"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Reporte"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.dgrid, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DsetRep1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -301,7 +303,6 @@ Partial Class frmRepDescuentoDet
     Friend WithEvents barDockControlBottom As DevExpress.XtraBars.BarDockControl
     Friend WithEvents barDockControlLeft As DevExpress.XtraBars.BarDockControl
     Friend WithEvents barDockControlRight As DevExpress.XtraBars.BarDockControl
-    Friend WithEvents DsetRep1 As zfranqui.DsetRep
     Friend WithEvents colNombre As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colModelo As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colNoChasis As DevExpress.XtraGrid.Columns.GridColumn
@@ -318,5 +319,5 @@ Partial Class frmRepDescuentoDet
     Friend WithEvents colAbonado As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colpagada As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colTipoDescuento As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents DtDescuentoDetRepGridTableAdapter1 As zfranqui.DsetRepTableAdapters.dtDescuentoDetRepGridTableAdapter
+    Friend WithEvents RepositoryItemCheckEdit1 As DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit
 End Class
