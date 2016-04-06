@@ -590,7 +590,7 @@ Public Class frmDescuento
                                                    & "INNER JOIN tipodescuento ON enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " _
                                                    & "WHERE r.IdDescuentoEnc={0}", pObjEnc.IdDescuentoEnc)
 
-                Dim repG As New frmReporteGrid(lSQL, frmReporteGrid.TipoReporte.CuotasDetalleDescuento)
+                Dim repG As New frmRepDescuentoDet(lSQL, frmRepDescuentoDet.TipoReporte.CuotasDetalleDescuento)
                 repG.DescuentoEnc = pObjEnc
                 repG.ShowDialog()
                 repG.Dispose()

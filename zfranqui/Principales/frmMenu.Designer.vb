@@ -65,15 +65,6 @@ Partial Class frmMenu
         Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         Me.mnuReportes = New DevExpress.XtraBars.BarSubItem()
         Me.mnuRepDtosPorFranqui = New DevExpress.XtraBars.BarButtonItem()
-        Me.rpConfiguracion = New DevExpress.XtraBars.Ribbon.RibbonPage()
-        Me.rpg1 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.rpg2 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.rpg3 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.rpg4 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.rpg5 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.rpg6 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.rpg7 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.XtraTabbedMdiManager1 = New DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(Me.components)
         Me.BarButtonItem2 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem3 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem4 = New DevExpress.XtraBars.BarButtonItem()
@@ -84,6 +75,15 @@ Partial Class frmMenu
         Me.BarButtonItem9 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem10 = New DevExpress.XtraBars.BarButtonItem()
         Me.BarButtonItem11 = New DevExpress.XtraBars.BarButtonItem()
+        Me.rpConfiguracion = New DevExpress.XtraBars.Ribbon.RibbonPage()
+        Me.rpg1 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.rpg2 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.rpg3 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.rpg4 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.rpg5 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.rpg6 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.rpg7 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.XtraTabbedMdiManager1 = New DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(Me.components)
         CType(Me.rbMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.XtraTabbedMdiManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -356,6 +356,66 @@ Partial Class frmMenu
         Me.mnuRepDtosPorFranqui.Id = 54
         Me.mnuRepDtosPorFranqui.Name = "mnuRepDtosPorFranqui"
         '
+        'BarButtonItem2
+        '
+        Me.BarButtonItem2.Caption = "Estados de cuenta descuentos"
+        Me.BarButtonItem2.Id = 55
+        Me.BarButtonItem2.Name = "BarButtonItem2"
+        '
+        'BarButtonItem3
+        '
+        Me.BarButtonItem3.Caption = "Descuentos por quincena por franquicia"
+        Me.BarButtonItem3.Id = 56
+        Me.BarButtonItem3.Name = "BarButtonItem3"
+        '
+        'BarButtonItem4
+        '
+        Me.BarButtonItem4.Caption = "Saldos de vehículos (Changanes, motos, otros)"
+        Me.BarButtonItem4.Id = 57
+        Me.BarButtonItem4.Name = "BarButtonItem4"
+        '
+        'BarButtonItem5
+        '
+        Me.BarButtonItem5.Caption = "Saldo inicial vrs. Pagado."
+        Me.BarButtonItem5.Id = 58
+        Me.BarButtonItem5.Name = "BarButtonItem5"
+        '
+        'BarButtonItem6
+        '
+        Me.BarButtonItem6.Caption = "Franquiciados asignados a CEF"
+        Me.BarButtonItem6.Id = 59
+        Me.BarButtonItem6.Name = "BarButtonItem6"
+        '
+        'BarButtonItem7
+        '
+        Me.BarButtonItem7.Caption = "Recibos pendientes de pago"
+        Me.BarButtonItem7.Id = 60
+        Me.BarButtonItem7.Name = "BarButtonItem7"
+        '
+        'BarButtonItem8
+        '
+        Me.BarButtonItem8.Caption = "Pagos operados"
+        Me.BarButtonItem8.Id = 61
+        Me.BarButtonItem8.Name = "BarButtonItem8"
+        '
+        'BarButtonItem9
+        '
+        Me.BarButtonItem9.Caption = "Impresión recibo de cobros"
+        Me.BarButtonItem9.Id = 62
+        Me.BarButtonItem9.Name = "BarButtonItem9"
+        '
+        'BarButtonItem10
+        '
+        Me.BarButtonItem10.Caption = "Resumen estado de cuenta por franquiciado"
+        Me.BarButtonItem10.Id = 63
+        Me.BarButtonItem10.Name = "BarButtonItem10"
+        '
+        'BarButtonItem11
+        '
+        Me.BarButtonItem11.Caption = "Detalle estado de cuenta por franquiciado"
+        Me.BarButtonItem11.Id = 64
+        Me.BarButtonItem11.Name = "BarButtonItem11"
+        '
         'rpConfiguracion
         '
         Me.rpConfiguracion.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.rpg1, Me.rpg2, Me.rpg3, Me.rpg4, Me.rpg5, Me.rpg6, Me.rpg7})
@@ -421,66 +481,6 @@ Partial Class frmMenu
         'XtraTabbedMdiManager1
         '
         Me.XtraTabbedMdiManager1.MdiParent = Me
-        '
-        'BarButtonItem2
-        '
-        Me.BarButtonItem2.Caption = "Estados de cuenta descuentos"
-        Me.BarButtonItem2.Id = 55
-        Me.BarButtonItem2.Name = "BarButtonItem2"
-        '
-        'BarButtonItem3
-        '
-        Me.BarButtonItem3.Caption = "Descuentos por quincena por franquicia"
-        Me.BarButtonItem3.Id = 56
-        Me.BarButtonItem3.Name = "BarButtonItem3"
-        '
-        'BarButtonItem4
-        '
-        Me.BarButtonItem4.Caption = "Saldos de vehículos (Changanes, motos, otros)"
-        Me.BarButtonItem4.Id = 57
-        Me.BarButtonItem4.Name = "BarButtonItem4"
-        '
-        'BarButtonItem5
-        '
-        Me.BarButtonItem5.Caption = "Saldo inicial vrs. Pagado."
-        Me.BarButtonItem5.Id = 58
-        Me.BarButtonItem5.Name = "BarButtonItem5"
-        '
-        'BarButtonItem6
-        '
-        Me.BarButtonItem6.Caption = "Franquiciados asignados a CEF"
-        Me.BarButtonItem6.Id = 59
-        Me.BarButtonItem6.Name = "BarButtonItem6"
-        '
-        'BarButtonItem7
-        '
-        Me.BarButtonItem7.Caption = "Recibos pendientes de pago"
-        Me.BarButtonItem7.Id = 60
-        Me.BarButtonItem7.Name = "BarButtonItem7"
-        '
-        'BarButtonItem8
-        '
-        Me.BarButtonItem8.Caption = "Pagos operados"
-        Me.BarButtonItem8.Id = 61
-        Me.BarButtonItem8.Name = "BarButtonItem8"
-        '
-        'BarButtonItem9
-        '
-        Me.BarButtonItem9.Caption = "Impresión recibo de cobros"
-        Me.BarButtonItem9.Id = 62
-        Me.BarButtonItem9.Name = "BarButtonItem9"
-        '
-        'BarButtonItem10
-        '
-        Me.BarButtonItem10.Caption = "Resumen estado de cuenta por franquiciado"
-        Me.BarButtonItem10.Id = 63
-        Me.BarButtonItem10.Name = "BarButtonItem10"
-        '
-        'BarButtonItem11
-        '
-        Me.BarButtonItem11.Caption = "Detalle estado de cuenta por franquiciado"
-        Me.BarButtonItem11.Id = 64
-        Me.BarButtonItem11.Name = "BarButtonItem11"
         '
         'frmMenu
         '

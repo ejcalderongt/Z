@@ -170,6 +170,7 @@ Public Class frmLogin
 
     Private lUsuario As New clsLnUsuario
     Private Usuario As New clsBeUsuario
+    Private AbrioIni As Boolean = False
 
     Private Sub frmLogin_Activated(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Activated
         txtUsuario.Focus()
@@ -223,6 +224,13 @@ Public Class frmLogin
 
         Try
 
+            Try
+                If AbrioIni Then
+                    Leer_Cadena_Conexion()
+                End If
+            Catch ex1 As Exception
+            End Try
+            
             If InfOK() Then
 
                 Usuario.Codigo = txtUsuario.Text
@@ -268,6 +276,7 @@ Public Class frmLogin
             If e.Control = True AndAlso e.KeyCode = Keys.I Then
                 If MsgBox("¿Abrir archivo de configuración?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
                     Process.Start(CurDir() & "\conn.ini", IO.FileMode.Open)
+                    AbrioIni = True
                 End If
             End If
 
@@ -304,7 +313,6 @@ Public Class frmLogin
             End If
 
             GetIPAddress()
-
 
         Catch ex As Exception
             MsgBox(ex.Message)

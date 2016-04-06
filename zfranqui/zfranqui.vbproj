@@ -32,7 +32,7 @@
     <ProductName>ZFRANQUI</ProductName>
     <PublisherName>DSSISA</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>31</ApplicationRevision>
+    <ApplicationRevision>34</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -411,16 +411,22 @@
     <Compile Include="Reportes\Descuento\DsetRep.vb">
       <DependentUpon>DsetRep.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Descuento\frmRepDescuentoFran.Designer.vb">
+      <DependentUpon>frmRepDescuentoFran.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepDescuentoFran.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Reportes\Descuento\rptDtoDetREF.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rptDtoDetREF.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Reportes\EJC\frmReporteGrid.Designer.vb">
-      <DependentUpon>frmReporteGrid.vb</DependentUpon>
+    <Compile Include="Reportes\Descuento\frmRepDescuentoDet.Designer.vb">
+      <DependentUpon>frmRepDescuentoDet.vb</DependentUpon>
     </Compile>
-    <Compile Include="Reportes\EJC\frmReporteGrid.vb">
+    <Compile Include="Reportes\Descuento\frmRepDescuentoDet.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Reportes\frmRepView.Designer.vb">
@@ -537,12 +543,16 @@
     <EmbeddedResource Include="Principales\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepDescuentoFran.resx">
+      <DependentUpon>frmRepDescuentoFran.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Descuento\rptDtoDetREF.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rptDtoDetREF.vb</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\EJC\frmReporteGrid.resx">
-      <DependentUpon>frmReporteGrid.vb</DependentUpon>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepDescuentoDet.resx">
+      <DependentUpon>frmRepDescuentoDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\frmRepView.resx">
       <DependentUpon>frmRepView.vb</DependentUpon>
@@ -1528,9 +1538,7 @@
   <ItemGroup>
     <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Reportes\Descuento\Periodo_Definido\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

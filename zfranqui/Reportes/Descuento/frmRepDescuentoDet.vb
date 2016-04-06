@@ -1,4 +1,4 @@
-﻿Public Class frmReporteGrid
+﻿Public Class frmRepDescuentoDet
 
     Enum TipoReporte As Integer
 
@@ -105,7 +105,7 @@
 
         End Select
 
-        
+
 
     End Sub
 
