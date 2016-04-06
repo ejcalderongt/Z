@@ -28,7 +28,7 @@ Partial Class frmDescuento
         Dim lblCEF As System.Windows.Forms.Label
         Dim Label3 As System.Windows.Forms.Label
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmDescuento))
-        Dim GridLevelNode1 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
+        Dim GridLevelNode2 As DevExpress.XtraGrid.GridLevelNode = New DevExpress.XtraGrid.GridLevelNode()
         Me.RibbonControl = New DevExpress.XtraBars.Ribbon.RibbonControl()
         Me.mnuGuardar = New DevExpress.XtraBars.BarButtonItem()
         Me.mnuActualizar = New DevExpress.XtraBars.BarButtonItem()
@@ -501,15 +501,15 @@ Partial Class frmDescuento
         '
         Me.mnuEliminarCuota.Image = Global.zfranqui.My.Resources.Resources._error
         Me.mnuEliminarCuota.Name = "mnuEliminarCuota"
-        Me.mnuEliminarCuota.Size = New System.Drawing.Size(78, 20)
-        Me.mnuEliminarCuota.Text = "Eliminar"
+        Me.mnuEliminarCuota.Size = New System.Drawing.Size(70, 20)
+        Me.mnuEliminarCuota.Text = "Anular"
         '
         'GridCuota
         '
         Me.GridCuota.Cursor = System.Windows.Forms.Cursors.Default
         Me.GridCuota.Dock = System.Windows.Forms.DockStyle.Bottom
-        GridLevelNode1.RelationName = "Level1"
-        Me.GridCuota.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode1})
+        GridLevelNode2.RelationName = "Level1"
+        Me.GridCuota.LevelTree.Nodes.AddRange(New DevExpress.XtraGrid.GridLevelNode() {GridLevelNode2})
         Me.GridCuota.Location = New System.Drawing.Point(2, 49)
         Me.GridCuota.MainView = Me.GridViewCuota
         Me.GridCuota.Name = "GridCuota"

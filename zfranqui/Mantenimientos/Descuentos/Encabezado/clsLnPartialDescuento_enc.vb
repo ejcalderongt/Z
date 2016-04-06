@@ -158,34 +158,13 @@ Partial Public Class clsLnDescuento_enc
                     " usuario AS usuario_1 ON descuento_enc.user_mod = usuario_1.IdUsuario " & _
                     " WHERE descuento_enc.IdDescuentoEnc=@IdDescuentoEnc"
 
-            'vSQL = " SELECT descuento_enc.IdDescuentoEnc, descuento_enc.IdCEF, descuento_enc.IdFranquiciado, descuento_enc.fec_agr, descuento_enc.fec_mod, " & _
-            '        " descuento_enc.user_agr, descuento_enc.user_mod, descuento_enc.IdTipoDescuento, tipodescuento.Nombre AS NomTipoDescuento, " & _
-            '        " franquiciado.Codigo AS CodigoFrnquiciado, franquiciado.Nombres AS NomFranquiciado, franquiciado.Apellidos AS ApeFranquiciado,  " & _
-            '        " cef.Codigo AS CodigoCEF, cef.Descripcion AS NomCEF, usuario_1.Nombre AS NomUsuarioModifico, usuario.Nombre AS NomUsuarioAgrego " & _
-            '        " FROM   descuento_enc INNER JOIN " & _
-            '        " cef ON descuento_enc.IdCEF = cef.IdCef INNER JOIN " & _
-            '        " franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado INNER JOIN " & _
-            '        " tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento INNER JOIN " & _
-            '        " usuario ON descuento_enc.user_agr = usuario.IdUsuario INNER JOIN " & _
-            '        " usuario AS usuario_1 ON descuento_enc.user_mod = usuario_1.IdUsuario " & _
-            '        " WHERE descuento_enc.IdCef=@IdCef AND descuento_enc.IdTipoDescuento=@IdTipoDescuento AND descuento_enc.IdFranquiciado=@IdFranquiciado"
-
-            'If pSeleccionado Then
-            '    vSQL += " AND descuento_enc.IdDescuentoEnc=@IdDescuentoEnc"
-            'End If
 
             Dim cnn As New MySqlConnection(BD.CadenaConexion)
             Dim cmd As New MySqlCommand(vSQL, cnn)
             cmd.CommandType = CommandType.Text
 
             Dim dad As New MySqlDataAdapter(cmd)
-            'If pSeleccionado Then
             dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOENC", oBeDescuento_enc.IdDescuentoEnc))
-            'End If
-
-            'dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IdCef", oBeDescuento_enc.CEF.IdCef))
-            'dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IdTipoDescuento", oBeDescuento_enc.IdTipoDescuento))
-            'dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IdFranquiciado", oBeDescuento_enc.Franquiciado.IdFranquiciado))
 
             Dim dt As New DataTable
             dad.Fill(dt)
