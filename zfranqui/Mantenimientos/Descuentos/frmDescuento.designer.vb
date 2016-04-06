@@ -212,7 +212,7 @@ Partial Class frmDescuento
         '
         'mnuEliminar
         '
-        Me.mnuEliminar.Caption = "Eliminar"
+        Me.mnuEliminar.Caption = "Anular"
         Me.mnuEliminar.Glyph = CType(resources.GetObject("mnuEliminar.Glyph"), System.Drawing.Image)
         Me.mnuEliminar.Id = 3
         Me.mnuEliminar.LargeGlyph = CType(resources.GetObject("mnuEliminar.LargeGlyph"), System.Drawing.Image)

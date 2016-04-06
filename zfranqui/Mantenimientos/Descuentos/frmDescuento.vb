@@ -175,9 +175,25 @@ Public Class frmDescuento
 
     End Function
 
+    Private Function DescuentoTieneAlgunPago() As Boolean
+
+        DescuentoTieneAlgunPago = False
+
+        Try
+
+            For Each D As clsBeDescuento_det In pObjEnc.Detalle
+
+            Next
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
     Private Sub mnuEliminar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuEliminar.ItemClick
 
-        If CBool(MsgBox("¿Eliminar el Descuento?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes) Then
+        If CBool(MsgBox("¿Anular el Descuento?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes) Then
             If ObjLNenc.Eliminar(pObjEnc) > 0 Then
                 MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
                 Me.Close()
@@ -660,9 +676,9 @@ Public Class frmDescuento
             If GridViewDescuento.RowCount > 0 Then
 
                 Dim Dr As DataRowView = GridViewDescuento.GetFocusedRow
-                Dim lIndex As Integer = pObjEnc.Detalle.FindIndex(Function(b) b.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio")))
+                Dim lIndex As Integer = pObjEnc.Detalle.FindIndex(Function(b) b.IdDescuentoDet = CInt(Dr.Item("IdDescuentoDet")))
                 Dim Det As New clsBeDescuento_det
-                Det = pObjEnc.Detalle.Find(Function(b) b.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio")))
+                Det = pObjEnc.Detalle.Find(Function(b) b.IdDescuentoDet = CInt(Dr.Item("IdDescuentoDet")))
 
                 If MsgBox("Eliminar el beneficio: " & Dr(2).ToString & "/" & Dr(3).ToString & "/" & Dr(4).ToString & "/" & Dr(5).ToString & "/" & Dr(6).ToString & "/" & Dr(7).ToString, MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
 
@@ -678,10 +694,14 @@ Public Class frmDescuento
                         If Not clsLnDescuento_ref.TienePago(Det) Then
 
                             If clsLnDescuento_ref.AnularDetalleDescuento(Det) Then
-                                MsgBox("Se ha eliminado el beneficio", MsgBoxStyle.Information, Me.Text)
+
+                                MsgBox("Se ha eliminado el beneficio y sus cuotas", MsgBoxStyle.Information, Me.Text)
                                 pObjEnc.Detalle.RemoveAt(lIndex) 'Remover de lista de clase
                                 GridViewDescuento.DeleteSelectedRows() 'Remover de gridview
                                 CargarDetalle()
+
+                                'Si solo tiene un beneficio anular el descuento ?
+
                             End If
 
                             'anular el beneficio
