@@ -101,7 +101,7 @@ Partial Class frmPeriodo
         Me.GroupControl1.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupControl1.Location = New System.Drawing.Point(0, 0)
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(718, 171)
+        Me.GroupControl1.Size = New System.Drawing.Size(708, 171)
         Me.GroupControl1.TabIndex = 1
         Me.GroupControl1.Text = "Datos"
         '
@@ -259,7 +259,7 @@ Partial Class frmPeriodo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(718, 538)
+        Me.ClientSize = New System.Drawing.Size(708, 526)
         Me.Controls.Add(Me.GroupControl3)
         Me.Controls.Add(Me.GroupControl2)
         Me.Controls.Add(Me.GroupControl1)
