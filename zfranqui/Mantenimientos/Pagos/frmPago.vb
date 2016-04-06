@@ -202,10 +202,29 @@ Public Class frmPago
                 txtCodCEF.Text = FraList.Franqui.CEF.Codigo
                 txtNomCEF.Text = FraList.Franqui.CEF.Descripcion
 
+                CargaDescuentos()
+
             End If
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
+        End Try
+
+    End Sub
+
+    Private Sub CargaDescuentos()
+
+        Try
+
+            Dgrid.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciado(CInt(txtCodCEF.Tag), CInt(txtCodigoFranquiciado.Tag))
+
+            GridViewPago.Columns("IdDescuentoEnc").Visible = False
+            GridViewPago.Columns("IdDescuentoDet").Visible = False
+            GridViewPago.Columns("IdDescuentoRef").Visible = False
+            GridViewPago.Columns("IdBeneficio").Visible = False
+
+        Catch ex As Exception
+            Throw ex
         End Try
 
     End Sub

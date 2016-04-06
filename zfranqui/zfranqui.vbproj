@@ -307,6 +307,12 @@
     <Compile Include="Mantenimientos\Pagos\frmPagoList.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Mantenimientos\Pagos\frmGeneraPago.Designer.vb">
+      <DependentUpon>frmGeneraPago.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenimientos\Pagos\frmGeneraPago.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Mantenimientos\Periodo_Descuento\clsBePeriodo_descuento.vb" />
     <Compile Include="Mantenimientos\Periodo_Descuento\clsLnPeriodo_descuento.vb" />
     <Compile Include="Mantenimientos\Periodo_Descuento\clsLnPeriodo_descuento_Partial.vb" />
@@ -491,6 +497,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Pagos\frmPagoList.resx">
       <DependentUpon>frmPagoList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mantenimientos\Pagos\frmGeneraPago.resx">
+      <DependentUpon>frmGeneraPago.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Periodo_Descuento\frmPeriodoDescuento.resx">
       <DependentUpon>frmPeriodoDescuento.vb</DependentUpon>

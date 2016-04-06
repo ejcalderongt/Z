@@ -537,7 +537,7 @@ Partial Class frmDescuento
         Me.TaDetalle.Padding = New System.Windows.Forms.Padding(3)
         Me.TaDetalle.Size = New System.Drawing.Size(989, 275)
         Me.TaDetalle.TabIndex = 0
-        Me.TaDetalle.Text = "Detalles de Descuento"
+        Me.TaDetalle.Text = "Detalle de Descuentos"
         '
         'GrpCliente
         '
