@@ -24,18 +24,18 @@ Partial Class frmGeneraPago
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim Label2 As System.Windows.Forms.Label
-        Dim IdEmpresaLabel As System.Windows.Forms.Label
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.dtmFecha = New System.Windows.Forms.DateTimePicker()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.lblPeriodo = New System.Windows.Forms.Label()
         Me.txtMontoTotal = New System.Windows.Forms.NumericUpDown()
         Me.txtCuota = New System.Windows.Forms.NumericUpDown()
-        Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
         Me.GroupControl2 = New DevExpress.XtraEditors.GroupControl()
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.GroupControl3 = New DevExpress.XtraEditors.GroupControl()
-        Me.cmbTipoBeneficio = New System.Windows.Forms.ComboBox()
         Me.BarManager = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdGuardarPago = New DevExpress.XtraBars.BarButtonItem()
@@ -46,23 +46,15 @@ Partial Class frmGeneraPago
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.dtmFecha = New System.Windows.Forms.DateTimePicker()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
         Label2 = New System.Windows.Forms.Label()
-        IdEmpresaLabel = New System.Windows.Forms.Label()
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl1.SuspendLayout()
         CType(Me.txtMontoTotal, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtCuota, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtFiltro.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl2.SuspendLayout()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GroupControl3, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupControl3.SuspendLayout()
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -74,15 +66,6 @@ Partial Class frmGeneraPago
         Label2.Size = New System.Drawing.Size(40, 13)
         Label2.TabIndex = 3
         Label2.Text = "Monto:"
-        '
-        'IdEmpresaLabel
-        '
-        IdEmpresaLabel.AutoSize = True
-        IdEmpresaLabel.Location = New System.Drawing.Point(12, 30)
-        IdEmpresaLabel.Name = "IdEmpresaLabel"
-        IdEmpresaLabel.Size = New System.Drawing.Size(78, 13)
-        IdEmpresaLabel.TabIndex = 0
-        IdEmpresaLabel.Text = "Tipo Beneficio:"
         '
         'GroupControl1
         '
@@ -100,6 +83,53 @@ Partial Class frmGeneraPago
         Me.GroupControl1.Size = New System.Drawing.Size(704, 139)
         Me.GroupControl1.TabIndex = 1
         Me.GroupControl1.Text = "Datos"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(12, 60)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(68, 13)
+        Me.Label1.TabIndex = 13
+        Me.Label1.Text = "Fecha Pago:"
+        '
+        'DateTimePicker1
+        '
+        Me.DateTimePicker1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.DateTimePicker1.Checked = False
+        Me.DateTimePicker1.CustomFormat = "dd-MMM-yyyy"
+        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.DateTimePicker1.Location = New System.Drawing.Point(139, 56)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(159, 20)
+        Me.DateTimePicker1.TabIndex = 0
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(12, 34)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(71, 13)
+        Me.Label3.TabIndex = 11
+        Me.Label3.Text = "Fecha Cobro:"
+        '
+        'dtmFecha
+        '
+        Me.dtmFecha.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.dtmFecha.Checked = False
+        Me.dtmFecha.CustomFormat = "dd-MMM-yyyy"
+        Me.dtmFecha.Enabled = False
+        Me.dtmFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
+        Me.dtmFecha.Location = New System.Drawing.Point(139, 30)
+        Me.dtmFecha.Name = "dtmFecha"
+        Me.dtmFecha.Size = New System.Drawing.Size(159, 20)
+        Me.dtmFecha.TabIndex = 10
         '
         'Label4
         '
@@ -140,16 +170,6 @@ Partial Class frmGeneraPago
         Me.txtCuota.Size = New System.Drawing.Size(159, 20)
         Me.txtCuota.TabIndex = 1
         '
-        'txtFiltro
-        '
-        Me.txtFiltro.EditValue = ""
-        Me.txtFiltro.Location = New System.Drawing.Point(15, 54)
-        Me.txtFiltro.Name = "txtFiltro"
-        Me.txtFiltro.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat
-        Me.txtFiltro.Size = New System.Drawing.Size(681, 22)
-        Me.txtFiltro.TabIndex = 2
-        Me.txtFiltro.Tag = "Buscar..."
-        '
         'GroupControl2
         '
         Me.GroupControl2.Controls.Add(Me.Dgrid)
@@ -176,27 +196,6 @@ Partial Class frmGeneraPago
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsBehavior.Editable = False
         Me.GridView1.OptionsView.ShowFooter = True
-        '
-        'GroupControl3
-        '
-        Me.GroupControl3.Controls.Add(Me.cmbTipoBeneficio)
-        Me.GroupControl3.Controls.Add(Me.txtFiltro)
-        Me.GroupControl3.Controls.Add(IdEmpresaLabel)
-        Me.GroupControl3.Location = New System.Drawing.Point(2, 173)
-        Me.GroupControl3.Name = "GroupControl3"
-        Me.GroupControl3.Size = New System.Drawing.Size(704, 90)
-        Me.GroupControl3.TabIndex = 2
-        Me.GroupControl3.Text = "Filtro"
-        '
-        'cmbTipoBeneficio
-        '
-        Me.cmbTipoBeneficio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbTipoBeneficio.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbTipoBeneficio.ForeColor = System.Drawing.Color.Navy
-        Me.cmbTipoBeneficio.Location = New System.Drawing.Point(139, 27)
-        Me.cmbTipoBeneficio.Name = "cmbTipoBeneficio"
-        Me.cmbTipoBeneficio.Size = New System.Drawing.Size(159, 21)
-        Me.cmbTipoBeneficio.TabIndex = 0
         '
         'BarManager
         '
@@ -281,59 +280,11 @@ Partial Class frmGeneraPago
         Me.barDockControlRight.Location = New System.Drawing.Point(708, 22)
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 408)
         '
-        'Label3
-        '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(12, 34)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(71, 13)
-        Me.Label3.TabIndex = 11
-        Me.Label3.Text = "Fecha Cobro:"
-        '
-        'dtmFecha
-        '
-        Me.dtmFecha.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtmFecha.Checked = False
-        Me.dtmFecha.CustomFormat = "dd-MMM-yyyy"
-        Me.dtmFecha.Enabled = False
-        Me.dtmFecha.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.dtmFecha.Location = New System.Drawing.Point(139, 30)
-        Me.dtmFecha.Name = "dtmFecha"
-        Me.dtmFecha.Size = New System.Drawing.Size(159, 20)
-        Me.dtmFecha.TabIndex = 10
-        '
-        'Label1
-        '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 60)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(68, 13)
-        Me.Label1.TabIndex = 13
-        Me.Label1.Text = "Fecha Pago:"
-        '
-        'DateTimePicker1
-        '
-        Me.DateTimePicker1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DateTimePicker1.Checked = False
-        Me.DateTimePicker1.CustomFormat = "dd-MMM-yyyy"
-        Me.DateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
-        Me.DateTimePicker1.Location = New System.Drawing.Point(139, 56)
-        Me.DateTimePicker1.Name = "DateTimePicker1"
-        Me.DateTimePicker1.Size = New System.Drawing.Size(159, 20)
-        Me.DateTimePicker1.TabIndex = 0
-        '
         'frmGeneraPago
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(708, 453)
-        Me.Controls.Add(Me.GroupControl3)
         Me.Controls.Add(Me.GroupControl2)
         Me.Controls.Add(Me.GroupControl1)
         Me.Controls.Add(Me.barDockControlLeft)
@@ -344,32 +295,25 @@ Partial Class frmGeneraPago
         Me.Name = "frmGeneraPago"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Generar Pago"
-        CType(Me.GroupControl1,System.ComponentModel.ISupportInitialize).EndInit
-        Me.GroupControl1.ResumeLayout(false)
-        Me.GroupControl1.PerformLayout
-        CType(Me.txtMontoTotal,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.txtCuota,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.txtFiltro.Properties,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.GroupControl2,System.ComponentModel.ISupportInitialize).EndInit
-        Me.GroupControl2.ResumeLayout(false)
-        CType(Me.Dgrid,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.GridView1,System.ComponentModel.ISupportInitialize).EndInit
-        CType(Me.GroupControl3,System.ComponentModel.ISupportInitialize).EndInit
-        Me.GroupControl3.ResumeLayout(false)
-        Me.GroupControl3.PerformLayout
-        CType(Me.BarManager,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupControl1.ResumeLayout(False)
+        Me.GroupControl1.PerformLayout()
+        CType(Me.txtMontoTotal, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtCuota, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GroupControl2, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.GroupControl2.ResumeLayout(False)
+        CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BarManager, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(false)
 
 End Sub
     Friend WithEvents GroupControl1 As DevExpress.XtraEditors.GroupControl
-    Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
     Friend WithEvents GroupControl2 As DevExpress.XtraEditors.GroupControl
-    Friend WithEvents GroupControl3 As DevExpress.XtraEditors.GroupControl
     Friend WithEvents Dgrid As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents txtMontoTotal As System.Windows.Forms.NumericUpDown
     Friend WithEvents txtCuota As System.Windows.Forms.NumericUpDown
-    Friend WithEvents cmbTipoBeneficio As System.Windows.Forms.ComboBox
     Friend WithEvents lblPeriodo As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents BarManager As DevExpress.XtraBars.BarManager
