@@ -239,27 +239,6 @@ Public Class frmDescuento
                     txtCodCEF.Text = pObjEnc.Franquiciado.CEF.Codigo
                     txtNomCEF.Text = pObjEnc.Franquiciado.CEF.Descripcion
 
-                    'pObjEnc.CEF.IdCef = pObjEnc.Franquiciado.CEF.IdCef
-
-                    'If TipoDescuento = pTipoDescuento.Definido Then
-                    '    pObjEnc.IdTipoDescuento = pTipoDescuento.Definido
-                    'ElseIf TipoDescuento = pTipoDescuento.Indefinido Then
-                    '    pObjEnc.IdTipoDescuento = pTipoDescuento.Indefinido
-                    'ElseIf TipoDescuento = pTipoDescuento.Unico Then
-                    '    pObjEnc.IdTipoDescuento = pTipoDescuento.Unico
-                    'End If
-
-                    'If clsLnDescuento_enc.Exists(pObjEnc) Then
-                    '    If XtraMessageBox.Show("La persona tiene descuentos. ¿Desea cargarlos?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                    '        CargarDatos()
-                    '    Else
-                    '        pObjEnc = New clsBeDescuento_enc
-                    '        pObjEnc.IsNew = True
-                    '    End If
-                    'Else
-                    '    pObjEnc = New clsBeDescuento_enc
-                    '    pObjEnc.IsNew = True
-                    'End If
 
                 Else
                     MsgBox("El código ingresado de franquiciado no es válido", MsgBoxStyle.Exclamation, Me.Text)
@@ -424,12 +403,12 @@ Public Class frmDescuento
             If pObjEnc.Referencia IsNot Nothing AndAlso pObjEnc.Referencia.Count > 0 Then
 
                 Dim DT As New DataTable("Result")
+                DT.Columns.Add("IdDescuentoRef", GetType(Integer))
                 DT.Columns.Add("Beneficio", GetType(String))
                 DT.Columns.Add("Fecha_Cobro", GetType(DateTime))
                 DT.Columns.Add("No_Cuota", GetType(Integer))
                 DT.Columns.Add("Monto", GetType(Decimal))
                 DT.Columns.Add("Abonado", GetType(Decimal))
-                'DT.Columns.Add("Monto Total", GetType(Decimal))
                 DT.Columns.Add("Pagada", GetType(Boolean))
 
                 For Each Obj As clsBeDescuento_ref In pObjEnc.Referencia
@@ -438,27 +417,28 @@ Public Class frmDescuento
 
                     Dim Row As DataRow = DT.NewRow
 
+                    Row.Item(0) = Obj.IdDescuentoRef
+
                     If Obj.EsVehiculo Then
-                        Row.Item(0) = String.Format("{0} {1} {2} {3} {4}", Obj.Beneficio.Nombre, Obj.Beneficio.Modelo, Obj.Beneficio.NoPlaca, Obj.Beneficio.Motor, Obj.Beneficio.NoChasis).Trim()
+                        Row.Item(1) = String.Format("{0} {1} {2} {3} {4}", Obj.Beneficio.Nombre, Obj.Beneficio.Modelo, Obj.Beneficio.NoPlaca, Obj.Beneficio.Motor, Obj.Beneficio.NoChasis).Trim()
                     ElseIf Obj.EsTelefono Then
-                        Row.Item(0) = String.Format("{0} {1} {2}", Obj.Beneficio.Nombre, Obj.Beneficio.NumeroTelefono, Obj.Beneficio.EmpresaTelco).Trim()
+                        Row.Item(1) = String.Format("{0} {1} {2}", Obj.Beneficio.Nombre, Obj.Beneficio.NumeroTelefono, Obj.Beneficio.EmpresaTelco).Trim()
                     ElseIf Obj.EsServicio Then
-                        Row.Item(0) = String.Format("{0}", Obj.Beneficio.Nombre).Trim()
+                        Row.Item(1) = String.Format("{0}", Obj.Beneficio.Nombre).Trim()
                     End If
 
-                    Row.Item(1) = Obj.FechaCobro
-                    Row.Item(2) = Obj.NoCuota
-                    Row.Item(3) = Obj.Monto
-                    Row.Item(4) = Obj.Abonado
-                    'Row.Item(5) = Obj.MontoTotal
-                    'Row.Item(6) = Obj.Pagada
-                    Row.Item(5) = Obj.Pagada
+                    Row.Item(2) = Obj.FechaCobro
+                    Row.Item(3) = Obj.NoCuota
+                    Row.Item(4) = Obj.Monto
+                    Row.Item(5) = Obj.Abonado
+                    Row.Item(6) = Obj.Pagada
                     DT.Rows.Add(Row)
 
                 Next
 
                 GridCuota.DataSource = DT
-                GridViewCuota.Columns(0).GroupIndex = 1
+                GridViewCuota.Columns(0).Visible = False 'Ocultar IdRef
+                GridViewCuota.Columns(1).GroupIndex = 1
                 GridViewCuota.OptionsView.ShowFooter = True
 
                 GridViewCuota.Columns("No_Cuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
@@ -677,30 +657,44 @@ Public Class frmDescuento
 
         Try
 
-            If Modo = TipoTrans.Nuevo Then
+            If GridViewDescuento.RowCount > 0 Then
 
-                If GridViewDescuento.RowCount > 0 Then
+                Dim Dr As DataRowView = GridViewDescuento.GetFocusedRow
+                Dim lIndex As Integer = pObjEnc.Detalle.FindIndex(Function(b) b.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio")))
+                Dim Det As New clsBeDescuento_det
+                Det = pObjEnc.Detalle.Find(Function(b) b.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio")))
 
-                    Dim Dr As DataRowView = GridViewDescuento.GetFocusedRow
-                    Dim lIndex As Integer = pObjEnc.Detalle.FindIndex(Function(b) b.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio")))
+                If MsgBox("Eliminar el beneficio: " & Dr(2).ToString & "/" & Dr(3).ToString & "/" & Dr(4).ToString & "/" & Dr(5).ToString & "/" & Dr(6).ToString & "/" & Dr(7).ToString, MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
 
-                    If MsgBox("Eliminar el beneficio: " & Dr(2).ToString & "/" & Dr(3).ToString & "/" & Dr(4).ToString & "/" & Dr(5).ToString & "/" & Dr(6).ToString & "/" & Dr(7).ToString, MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                    If Modo = TipoTrans.Nuevo Then
 
                         pObjEnc.Detalle.RemoveAt(lIndex)
                         GridViewDescuento.DeleteSelectedRows()
 
-                    End If
+                    Else
 
-                    'ListObjDR = clsLnDescuento_ref.GetAllByDetalle(pObjBeEnc.IdDescuentoEnc, CInt(Dr.Item("IdDescuentoDet")))
+                        'VALIDAR SI NO TIENE PAGO PARA ELIMINARLO
+
+                        If Not clsLnDescuento_ref.TienePago(Det) Then
+
+                            If clsLnDescuento_ref.AnularDetalleDescuento(Det) Then
+                                MsgBox("Se ha eliminado el beneficio", MsgBoxStyle.Information, Me.Text)
+                                pObjEnc.Detalle.RemoveAt(lIndex) 'Remover de lista de clase
+                                GridViewDescuento.DeleteSelectedRows() 'Remover de gridview
+                                CargarDetalle()
+                            End If
+
+                            'anular el beneficio
+
+                        Else
+                            MsgBox("La cuota tiene pago(s) realizado(s), no se puede anular", MsgBoxStyle.Exclamation)
+                        End If
+
+                    End If
 
                 End If
 
-            Else
-
-                'VALIDAR SI NO TIENE PAGO PARA ELIMINARLO
-
             End If
-
 
         Catch ex As Exception
             XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -712,31 +706,43 @@ Public Class frmDescuento
 
         Try
 
-            If Modo = TipoTrans.Nuevo Then
+            If GridViewDescuento.RowCount > 0 Then
 
-                If GridViewDescuento.RowCount > 0 Then
+                Dim Dr As DataRowView = GridViewCuota.GetFocusedRow
+                Dim lIndex As Integer = pObjEnc.Referencia.FindIndex(Function(b) b.IdDescuentoRef = CInt(Dr.Item("IdDescuentoRef")))
+                Dim Ref As New clsBeDescuento_ref
+                Ref = pObjEnc.Referencia.Find(Function(b) b.IdDescuentoRef = CInt(Dr.Item("IdDescuentoRef")))
 
-                    Dim Dr As DataRowView = GridViewDescuento.GetFocusedRow
+                If MsgBox("Eliminar cuota #:" & Dr(3).ToString & " Fecha: " & CDate(Dr(2)) & " Monto: " & Dr(4).ToString, MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
 
-                    Dim lIndex As Integer = pObjEnc.Referencia.FindIndex(Function(b) b.IdDescuentoRef = CInt(Dr.Item("IdDescuentoRef")))
-
-                    If MsgBox("Eliminar cuota: " & Dr(2).ToString & "/" & Dr(3).ToString & "/" & Dr(4).ToString & "/" & Dr(5).ToString & "/" & Dr(6).ToString & "/" & Dr(7).ToString, MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                    If Modo = TipoTrans.Nuevo Then
 
                         pObjEnc.Referencia.RemoveAt(lIndex)
                         GridViewCuota.DeleteSelectedRows()
 
-                    End If
+                    Else
 
-                    'ListObjDR = clsLnDescuento_ref.GetAllByDetalle(pObjBeEnc.IdDescuentoEnc, CInt(Dr.Item("IdDescuentoDet")))
+                        'VALIDAR SI NO TIENE PAGO PARA ELIMINARLO
+
+                        If Not clsLnDescuento_ref.TienePago(Ref) Then
+
+                            If clsLnDescuento_ref.AnularCuota(Ref) Then
+                                MsgBox("Se ha anulado la cuota", MsgBoxStyle.Information, Me.Text)
+                                pObjEnc.Referencia.RemoveAt(lIndex) 'Remover de lista de clase
+                                GridViewCuota.DeleteSelectedRows() 'Remover de gridview
+                                CargarDetalle()
+                            End If
+                            'anular la cuota
+
+                        Else
+                            MsgBox("La cuota tiene pago(s) realizado(s), no se puede anular", MsgBoxStyle.Exclamation)
+                        End If
+
+                    End If
 
                 End If
 
-            Else
-
-                'VALIDAR SI NO TIENE PAGO PARA ELIMINARLO
-
             End If
-
 
         Catch ex As Exception
             XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)

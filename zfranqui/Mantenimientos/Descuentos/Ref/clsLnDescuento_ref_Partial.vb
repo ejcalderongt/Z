@@ -87,7 +87,8 @@
             'Validacion y estandarización de los datos
             Using lCnn As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
 
-                Dim lSQL As String = String.Format("SELECT b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
+                Dim lSQL As String = String.Format("SELECT r.IdDescuentoEnc, r.IdDescuentoDet, r.IdDescuentoRef, r.IdBeneficio, " _
+                                                 & " b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
                                                  & " b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, r.FechaCobro, r.NoCuota, r.Monto, " _
                                                  & "r.Abonado, det.MontoTotal, r.pagada " _
                                                  & "FROM descuento_ref AS r " _
@@ -95,7 +96,8 @@
                                                  & "AND r.IdDescuentoDet = det.IdDescuentoDet " _
                                                  & "INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " _
                                                  & "INNER JOIN TipoBeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " _
-                                                 & "WHERE r.IdDescuentoEnc={0}", pIdDescuentoEnc)
+                                                 & "WHERE r.IdDescuentoEnc={0} AND r.Anulada = 0 ", pIdDescuentoEnc)
+
 
                 'Acceso a los datos.
                 Using lDTA As New MySql.Data.MySqlClient.MySqlDataAdapter(lSQL, lCnn)
@@ -116,6 +118,11 @@
                             If lRow("Nombre") IsNot DBNull.Value AndAlso lRow("Nombre") IsNot Nothing Then
 
                                 Obj.Beneficio = New clsBeBeneficio
+                                Obj.IdDescuentoEnc = CType(lRow("IdDescuentoEnc"), System.Int32)
+                                Obj.IdDescuentoDet = CType(lRow("IdDescuentoDet"), System.Int32)
+                                Obj.IdDescuentoRef = CType(lRow("IdDescuentoRef"), System.Int32)
+                                Obj.IdBeneficio = CType(lRow("IdBeneficio"), System.Int32)
+
                                 Obj.Beneficio.Nombre = CType(lRow("Nombre"), System.String)
 
                                 If lRow("Modelo") IsNot DBNull.Value AndAlso lRow("Modelo") IsNot Nothing Then
@@ -195,7 +202,7 @@
             Return lReturnList
 
         Catch ex As Exception
-            Throw ex
+            MsgBox("GetAllByEncabezado " & ex.Message, MsgBoxStyle.Exclamation, "Error")
         End Try
 
     End Function
@@ -271,6 +278,94 @@
             End Using
 
             Return lMax
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function TienePago(ByVal DetRef As clsBeDescuento_ref) As Boolean
+
+        TienePago = False
+
+        Dim DT As New DataTable
+
+        Try
+
+            vSQL = "select * from pago_det where IdDescuentoEnc = " & DetRef.IdDescuentoEnc & _
+                " and IdDescuentoDet =" & DetRef.IdDescuentoDet & _
+                " and IdDescuentoRef =" & DetRef.IdDescuentoRef & _
+                " and IdBeneficio = " & DetRef.IdBeneficio
+            BD.OpenDT(DT, vSQL)
+
+            TienePago = DT.Rows.Count > 0
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function TienePago(ByVal DescuentoDet As clsBeDescuento_det) As Boolean
+
+        TienePago = False
+
+        Dim DT As New DataTable
+
+        Try
+
+            vSQL = "select * from pago_det where IdDescuentoEnc = " & DescuentoDet.IdDescuentoEnc & _
+                " and IdDescuentoDet =" & DescuentoDet.IdDescuentoDet & _
+                " and IdBeneficio = " & DescuentoDet.Beneficio.IdBeneficio
+            BD.OpenDT(DT, vSQL)
+
+            TienePago = DT.Rows.Count > 0
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function AnularCuota(ByVal DetRef As clsBeDescuento_ref) As Boolean
+
+        AnularCuota = False
+
+        Dim DT As New DataTable
+
+        Try
+
+
+            Upd.Init("descuento_ref")
+            Upd.Add("anulada", "1", "N")
+            Upd.Where("IdDescuentoEnc=" & DetRef.IdDescuentoEnc & _
+                      " and idDescuentoDet =" & DetRef.IdDescuentoDet & _
+                      " and iddescuento =" & DetRef.IdDescuentoRef)
+            BD.Xcute(Upd.SQL())
+
+            AnularCuota = True
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function AnularDetalleDescuento(ByVal Det As clsBeDescuento_det) As Boolean
+
+        AnularDetalleDescuento = False
+
+        Dim DT As New DataTable
+
+        Try
+
+            vSQL = "delete from descuento_det where IdDescuentoEnc =" & Det.IdDescuentoEnc & _
+                " and IdDescuentoDet =" & Det.IdDescuentoDet & _
+                " and IdBeneficio =" & Det.Beneficio.IdBeneficio
+            BD.Xcute(Upd.SQL())
+
+            AnularDetalleDescuento = True
 
         Catch ex As Exception
             MsgBox(ex.Message)
