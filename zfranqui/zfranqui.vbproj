@@ -568,6 +568,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Para realizar un pago.docx" />
     <None Include="Reportes\Descuento\DsetRep.xsc">
       <DependentUpon>DsetRep.xsd</DependentUpon>
     </None>
