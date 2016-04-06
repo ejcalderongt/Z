@@ -408,4 +408,42 @@ Partial Public Class clsLnDescuento_ref
 
     End Function
 
+    Public Shared Function AnularDetalleDescuento(ByVal Det As clsBeDescuento_det, Optional ByVal pConection As MySqlConnection = Nothing, Optional ByVal pTransaction As MySqlTransaction = Nothing) As Boolean
+
+        AnularDetalleDescuento = False
+
+        Dim DT As New DataTable
+        
+        Try
+
+            Dim cmd As New MySqlCommand()
+
+            vSQL = "DELETE FROM DESCUENTO_DET " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, pConection)
+            cmd.Transaction = pTransaction
+            cmd.ExecuteNonQuery()
+
+            vSQL = "DELETE FROM DESCUENTO_REF " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, pConection)
+            cmd.Transaction = pTransaction
+            cmd.ExecuteNonQuery()
+
+            AnularDetalleDescuento = True
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
 End Class
