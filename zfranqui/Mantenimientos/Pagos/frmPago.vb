@@ -53,9 +53,11 @@ Public Class frmPago
                     mnuActualizar.Enabled = False
                     mnuEliminar.Enabled = False
                     cmdImprimir1.Enabled = False
+                    pObjBeEnc.IsNew = True
 
                 Case TipoTrans.Editar
 
+                    pObjBeEnc.IsNew = False
                     CargarDatos()
 
                     mnuGuardar.Enabled = False
@@ -222,21 +224,23 @@ Public Class frmPago
 
         Try
 
-            GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(CInt(txtCodCEF.Tag), CInt(txtCodigoFranquiciado.Tag))
+            GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
 
-            GridViewDescuento.Columns("IdDescuentoEnc").Visible = False
-            GridViewDescuento.Columns("IdDescuentoDet").Visible = False
-            GridViewDescuento.Columns("IdBeneficio").Visible = False
+            If GridViewDescuento.RowCount > 0 Then
+                GridViewDescuento.Columns("IdDescuentoEnc").Visible = False
+                GridViewDescuento.Columns("IdDescuentoDet").Visible = False
+                GridViewDescuento.Columns("IdBeneficio").Visible = False
 
-            GridViewDescuento.Columns("Periodo").GroupIndex = 3
+                GridViewDescuento.Columns("Periodo").GroupIndex = 3
 
-            GridViewDescuento.OptionsView.ShowFooter = True
+                GridViewDescuento.OptionsView.ShowFooter = True
 
-            GridViewDescuento.Columns("Cuotas").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
-            GridViewDescuento.Columns("Cuotas").SummaryItem.DisplayFormat = "{0:n2}"
+                GridViewDescuento.Columns("Cuotas").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
+                GridViewDescuento.Columns("Cuotas").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridViewDescuento.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewDescuento.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+            End If
 
         Catch ex As Exception
             Throw ex
@@ -248,14 +252,28 @@ Public Class frmPago
 
         Try
 
-            GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(CInt(txtCodCEF.Tag), CInt(txtCodigoFranquiciado.Tag))
+            GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
 
-            GridViewCuota.Columns("IdDescuentoEnc").Visible = False
-            GridViewCuota.Columns("IdDescuentoDet").Visible = False
-            GridViewCuota.Columns("IdDescuentoRef").Visible = False
-            GridViewCuota.Columns("IdBeneficio").Visible = False
+            If GridViewCuota.RowCount > 0 Then
+                GridViewCuota.Columns("IdDescuentoEnc").Visible = False
+                GridViewCuota.Columns("IdDescuentoDet").Visible = False
+                GridViewCuota.Columns("IdDescuentoRef").Visible = False
+                GridViewCuota.Columns("IdBeneficio").Visible = False
+                GridViewCuota.OptionsView.ShowFooter = True
 
-            GridViewCuota.OptionsView.ShowFooter = True
+                GridViewCuota.Columns("No. Cuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
+                GridViewCuota.Columns("No. Cuota").SummaryItem.DisplayFormat = "{0:n2}"
+
+                GridViewCuota.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+
+                GridViewCuota.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridViewCuota.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+
+                GridViewCuota.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridViewCuota.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+
+            End If
 
         Catch ex As Exception
             Throw ex
@@ -273,17 +291,37 @@ Public Class frmPago
         Try
 
             If Val(txtCodigoFranquiciado.Text) > 0 Then
-                ObjLnF.Obtener(pObjBeEnc.Franquiciado)
+
+                pObjBeEnc.Franquiciado.Codigo = txtCodigoFranquiciado.Text
+
+                If ObjLnF.Obtener(pObjBeEnc.Franquiciado, False) Then
+
+                    pObjBeEnc.Franquiciado = pObjBeEnc.Franquiciado
+                    txtCodigoFranquiciado.Tag = pObjBeEnc.Franquiciado.IdFranquiciado
+                    txtCodigoFranquiciado.Text = pObjBeEnc.Franquiciado.Codigo
+                    txtNombres.Text = pObjBeEnc.Franquiciado.Nombres
+                    txtApellidos.Text = pObjBeEnc.Franquiciado.Apellidos
+                    txtCodCEF.Tag = pObjBeEnc.Franquiciado.CEF.IdCef
+                    txtCodCEF.Text = pObjBeEnc.Franquiciado.CEF.Codigo
+                    txtNomCEF.Text = pObjBeEnc.Franquiciado.CEF.Descripcion
+
+                Else
+                    'MsgBox("El código ingresado de franquiciado no es válido", MsgBoxStyle.Exclamation, Me.Text)
+                    XtraMessageBox.Show("El código ingresado de franquiciado no es válido", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+                End If
+
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
 
     End Sub
 
 
     Private Sub cmdAgregar_Click(sender As Object, e As EventArgs) Handles cmdAgregar.Click
+
+        If pObjBeEnc.IsNew = False Then Exit Sub
 
         Try
 
@@ -319,7 +357,7 @@ Public Class frmPago
         Try
 
             If pObjBeEnc.IdPagoEnc = Nothing Then pObjBeEnc.IdPagoEnc = 0
-            pObjBeEnc = clsLnPago_enc.GetSingle(pObjBeEnc.IdCEF, pObjBeEnc.IdFranquiciado, pObjBeEnc.IdPagoEnc)
+            pObjBeEnc = clsLnPago_enc.GetSingle(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado, pObjBeEnc.IdPagoEnc)
 
             'ObjLNenc.Obtener(pObjBeEnc)
 
@@ -363,6 +401,7 @@ Public Class frmPago
 
             CargaResumenDescuento()
             CargaCuotas()
+            CargarPagosRealizados()
 
         Catch ex As Exception
             Throw ex
@@ -385,6 +424,17 @@ Public Class frmPago
             Next
 
             GridPago.DataSource = DT
+
+            If GridViewPago.RowCount > 0 Then
+                GridViewPago.Columns("No. Cuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
+                GridViewPago.Columns("No. Cuota").SummaryItem.DisplayFormat = "{0:n2}"
+
+                GridViewPago.Columns("Monto Cuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridViewPago.Columns("Monto Cuota").SummaryItem.DisplayFormat = "{0:n2}"
+
+                GridViewPago.Columns("Monto Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridViewPago.Columns("Monto Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+            End If
 
         Catch ex As Exception
             Throw ex

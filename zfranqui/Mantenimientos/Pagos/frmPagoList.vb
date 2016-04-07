@@ -125,8 +125,8 @@ Public Class frmPagoList
 
                     Dim Pago As New frmPago(frmPago.TipoTrans.Editar)
                     Pago.pObjBeEnc.IdPagoEnc = CInt(Dr.Item("Correlativo"))
-                    Pago.pObjBeEnc.IdCEF = CInt(Dr.Item("IdCef"))
-                    Pago.pObjBeEnc.IdFranquiciado = CInt(Dr.Item("IdFranquiciado"))
+                    Pago.pObjBeEnc.CEF.IdCef = CInt(Dr.Item("IdCef"))
+                    Pago.pObjBeEnc.Franquiciado.IdFranquiciado = CInt(Dr.Item("IdFranquiciado"))
                     Pago.ShowDialog()
                     Pago.Dispose()
                     Listar_Pagos()

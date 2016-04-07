@@ -120,10 +120,10 @@ Partial Public Class clsLnPago_enc
                         Obj.IdPagoEnc = CType(lRow("IdPagoEnc"), System.Int32)
 
                         If lRow("IdCEF") IsNot DBNull.Value AndAlso lRow("IdCEF") IsNot Nothing Then
-                            Obj.IdCEF = CType(lRow("IdCEF"), System.Int32)
+                            Obj.CEF.IdCef = CType(lRow("IdCEF"), System.Int32)
                         End If
                         If lRow("IdFranquiciado") IsNot DBNull.Value AndAlso lRow("IdFranquiciado") IsNot Nothing Then
-                            Obj.IdFranquiciado = CType(lRow("IdFranquiciado"), System.String)
+                            Obj.Franquiciado.IdFranquiciado = CType(lRow("IdFranquiciado"), System.String)
                         End If
                         If lRow("NoDeposito") IsNot DBNull.Value AndAlso lRow("NoDeposito") IsNot Nothing Then
                             Obj.NoDeposito = CType(lRow("NoDeposito"), System.String)
