@@ -259,8 +259,6 @@ Public Class frmLogin
 
             End If
 
-
-
         Catch ex As Exception
             Dim ConS As String = BD.CadenaConexion
             ConS = ConS.Remove(38, 20)

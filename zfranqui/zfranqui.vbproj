@@ -292,9 +292,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Mantenimientos\Pagos\Det\clsBePago_det.vb" />
+    <Compile Include="Mantenimientos\Pagos\Det\clsBePago_det_Partial.vb" />
     <Compile Include="Mantenimientos\Pagos\Det\clsLnPartialPago_Det.vb" />
     <Compile Include="Mantenimientos\Pagos\Enc\clsBePago_enc.vb" />
     <Compile Include="Mantenimientos\Pagos\Det\clsLnPago_det.vb" />
+    <Compile Include="Mantenimientos\Pagos\Enc\clsBePago_enc_Partial.vb" />
     <Compile Include="Mantenimientos\Pagos\Enc\clsLnPago_enc.vb" />
     <Compile Include="Mantenimientos\Pagos\Enc\clsLnPartialPago_Enc.vb" />
     <Compile Include="Mantenimientos\Pagos\frmPago.designer.vb">
