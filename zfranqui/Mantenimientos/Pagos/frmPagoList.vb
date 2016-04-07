@@ -61,6 +61,8 @@ Public Class frmPagoList
 
             Dim D As New DataTable("Pago")
             D.Columns.Add("Correlativo", GetType(Integer))
+            D.Columns.Add("IdCef", GetType(Integer))
+            D.Columns.Add("IdFranquiciado", GetType(Integer))
             D.Columns.Add("CEF", GetType(String))
             D.Columns.Add("Franquiciado", GetType(String))
             D.Columns.Add("Fecha Pago", GetType(DateTime))
@@ -76,6 +78,8 @@ Public Class frmPagoList
             If GridView1.RowCount > 0 Then
                 GridView1.Columns(1).GroupIndex = 0
                 GridView1.Columns(2).GroupIndex = 1
+                GridView1.Columns("IdCef").Visible = False
+                GridView1.Columns("IdFranquiciado").Visible = False
             End If
 
         Catch ex As Exception
@@ -121,6 +125,8 @@ Public Class frmPagoList
 
                     Dim Pago As New frmPago(frmPago.TipoTrans.Editar)
                     Pago.pObjBeEnc.IdPagoEnc = CInt(Dr.Item("Correlativo"))
+                    Pago.pObjBeEnc.IdCEF = CInt(Dr.Item("IdCef"))
+                    Pago.pObjBeEnc.IdFranquiciado = CInt(Dr.Item("IdFranquiciado"))
                     Pago.ShowDialog()
                     Pago.Dispose()
                     Listar_Pagos()
