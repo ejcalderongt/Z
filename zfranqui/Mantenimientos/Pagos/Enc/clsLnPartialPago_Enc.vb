@@ -92,4 +92,95 @@ Partial Public Class clsLnPago_enc
 
     End Function
 
+    Public Shared Function GetSingle(ByVal pIdCef As Integer, _
+                                     ByVal pIdFranquiciado As Integer, _
+                                     ByVal pIdPagoEnc As Integer) As clsBePago_enc
+
+        Try
+
+            Using lCnn As New MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lDTA As New MySqlDataAdapter("SELECT * FROM pago_enc WHERE IdCef=@IdCef AND IdFranquiciado=@IdFranquiciado AND IdPagoEnc=@IdPagoEnc", lCnn)
+
+                    lDTA.SelectCommand.CommandType = CommandType.Text
+                    lDTA.SelectCommand.Parameters.AddWithValue("@IdCef", pIdCef)
+                    lDTA.SelectCommand.Parameters.AddWithValue("@IdFranquiciado", pIdFranquiciado)
+                    lDTA.SelectCommand.Parameters.AddWithValue("@IdPagoEnc", pIdPagoEnc)
+
+                    Dim lDT As New DataTable()
+                    lDTA.Fill(lDT)
+
+                    If lDT IsNot Nothing AndAlso lDT.Rows.Count > 0 Then
+                        Dim lRow As DataRow = lDT.Rows(0)
+                        Dim Obj As New clsBePago_enc()
+
+                        Obj.IdPagoEnc = CType(lRow("IdPagoEnc"), System.Int32)
+
+                        If lRow("IdCEF") IsNot DBNull.Value AndAlso lRow("IdCEF") IsNot Nothing Then
+                            Obj.IdCEF = CType(lRow("IdCEF"), System.Int32)
+                        End If
+                        If lRow("IdFranquiciado") IsNot DBNull.Value AndAlso lRow("IdFranquiciado") IsNot Nothing Then
+                            Obj.IdFranquiciado = CType(lRow("IdFranquiciado"), System.String)
+                        End If
+                        If lRow("NoDeposito") IsNot DBNull.Value AndAlso lRow("NoDeposito") IsNot Nothing Then
+                            Obj.NoDeposito = CType(lRow("NoDeposito"), System.String)
+                        End If
+                        If lRow("FechaPago") IsNot DBNull.Value AndAlso lRow("FechaPago") IsNot Nothing Then
+                            Obj.FechaPago = CType(lRow("FechaPago"), System.DateTime)
+                        End If
+                        If lRow("user_agr") IsNot DBNull.Value AndAlso lRow("user_agr") IsNot Nothing Then
+                            Obj.User_agr = CType(lRow("user_agr"), System.String)
+                        End If
+                        If lRow("fec_agr") IsNot DBNull.Value AndAlso lRow("fec_agr") IsNot Nothing Then
+                            Obj.Fec_agr = CType(lRow("fec_agr"), System.DateTime)
+                        End If
+                        If lRow("user_mod") IsNot DBNull.Value AndAlso lRow("user_mod") IsNot Nothing Then
+                            Obj.User_mod = CType(lRow("user_mod"), System.String)
+                        End If
+                        If lRow("fec_mod") IsNot DBNull.Value AndAlso lRow("fec_mod") IsNot Nothing Then
+                            Obj.Fec_mod = CType(lRow("fec_mod"), System.DateTime)
+                        End If
+                        If lRow("Anulado") IsNot DBNull.Value AndAlso lRow("Anulado") IsNot Nothing Then
+                            Obj.Anulado = CType(lRow("Anulado"), System.Boolean)
+                        End If
+                        Obj.IsNew = False
+                        Return Obj
+                    End If
+                End Using
+            End Using
+
+            Return Nothing
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function GetAll() As DataTable
+
+        Dim lTable As New DataTable("Result")
+
+        Try
+            Dim lSQl As String = "SELECT enc.IdPagoEnc,c.Codigo , c.Descripcion, " _
+                                             & "f.Codigo AS cf , f.Nombres, enc.FechaPago " _
+                                             & "FROM pago_enc AS enc  " _
+                                             & "INNER JOIN cef AS c ON enc.IdCef = c.IdCEF  " _
+                                             & "INNER JOIN franquiciado AS f ON enc.IdFranquiciado = f.IdFranquiciado "
+
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+                Using lDataAdapter As New MySqlDataAdapter(lSQl, lConnection)
+                    lDataAdapter.SelectCommand.CommandType = CommandType.Text
+                    lDataAdapter.Fill(lTable)
+                End Using
+            End Using
+            Return lTable
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
 End Class

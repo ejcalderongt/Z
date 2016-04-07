@@ -66,6 +66,90 @@ Partial Public Class clsLnDescuento_ref
                             If lRow("fec_mod") IsNot DBNull.Value AndAlso lRow("fec_mod") IsNot Nothing Then
                                 Obj.Fec_mod = CType(lRow("fec_mod"), System.DateTime)
                             End If
+                            If lRow("Anulada") IsNot DBNull.Value AndAlso lRow("Anulada") IsNot Nothing Then
+                                Obj.Anulada = CType(lRow("Anulada"), System.Boolean)
+                            End If
+
+                            lReturnList.Add(Obj)
+                        Next
+                    End If
+                End Using
+            End Using
+
+            Return lReturnList
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function GetAllByEncabezadoPago(ByVal pIdDescuentoEnc As Integer) As List(Of clsBeDescuento_ref)
+
+        Dim lReturnList As New List(Of clsBeDescuento_ref)
+
+        Try
+
+            'Validacion y estandarización de los datos
+            Using lCnn As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
+
+                Dim lSQL As String = String.Format("SELECT * FROM descuento_ref WHERE IdDescuentoEnc={0}", pIdDescuentoEnc)
+
+                'Acceso a los datos.
+                Using lDTA As New MySql.Data.MySqlClient.MySqlDataAdapter(lSQL, lCnn)
+
+                    lDTA.SelectCommand.CommandType = CommandType.Text
+
+                    Dim lDataTable As New DataTable
+                    lDTA.Fill(lDataTable)
+
+                    Dim Obj As clsBeDescuento_ref
+
+                    If lDataTable IsNot Nothing AndAlso lDataTable.Rows.Count > 0 Then
+                        For Each lRow As DataRow In lDataTable.Rows
+                            Obj = New clsBeDescuento_ref
+
+                            Obj.IdDescuentoEnc = CType(lRow("IdDescuentoEnc"), System.Int32)
+
+                            If lRow("IdDescuentoDet") IsNot DBNull.Value AndAlso lRow("IdDescuentoDet") IsNot Nothing Then
+                                Obj.IdDescuentoDet = CType(lRow("IdDescuentoDet"), System.Int32)
+                            End If
+                            If lRow("IdDescuentoRef") IsNot DBNull.Value AndAlso lRow("IdDescuentoRef") IsNot Nothing Then
+                                Obj.IdDescuentoRef = CType(lRow("IdDescuentoRef"), System.Int32)
+                            End If
+                            If lRow("IdBeneficio") IsNot DBNull.Value AndAlso lRow("IdBeneficio") IsNot Nothing Then
+                                Obj.IdBeneficio = CType(lRow("IdBeneficio"), System.Int32)
+                            End If
+                            If lRow("NoCuota") IsNot DBNull.Value AndAlso lRow("NoCuota") IsNot Nothing Then
+                                Obj.NoCuota = CType(lRow("NoCuota"), System.Int32)
+                            End If
+                            If lRow("Monto") IsNot DBNull.Value AndAlso lRow("Monto") IsNot Nothing Then
+                                Obj.Monto = CType(lRow("Monto"), System.Decimal)
+                            End If
+                            If lRow("Abonado") IsNot DBNull.Value AndAlso lRow("Abonado") IsNot Nothing Then
+                                Obj.Abonado = CType(lRow("Abonado"), System.Decimal)
+                            End If
+                            If lRow("FechaCobro") IsNot DBNull.Value AndAlso lRow("FechaCobro") IsNot Nothing Then
+                                Obj.FechaCobro = CType(lRow("FechaCobro"), System.DateTime)
+                            End If
+                            If lRow("Pagada") IsNot DBNull.Value AndAlso lRow("Pagada") IsNot Nothing Then
+                                Obj.Pagada = CType(lRow("Pagada"), System.Boolean)
+                            End If
+                            If lRow("user_agr") IsNot DBNull.Value AndAlso lRow("user_agr") IsNot Nothing Then
+                                Obj.User_agr = CType(lRow("user_agr"), System.Int32)
+                            End If
+                            If lRow("fec_agr") IsNot DBNull.Value AndAlso lRow("fec_agr") IsNot Nothing Then
+                                Obj.Fec_agr = CType(lRow("fec_agr"), System.DateTime)
+                            End If
+                            If lRow("user_mod") IsNot DBNull.Value AndAlso lRow("user_mod") IsNot Nothing Then
+                                Obj.User_mod = CType(lRow("user_mod"), System.Int32)
+                            End If
+                            If lRow("fec_mod") IsNot DBNull.Value AndAlso lRow("fec_mod") IsNot Nothing Then
+                                Obj.Fec_mod = CType(lRow("fec_mod"), System.DateTime)
+                            End If
+                            If lRow("Anulada") IsNot DBNull.Value AndAlso lRow("Anulada") IsNot Nothing Then
+                                Obj.Anulada = CType(lRow("Anulada"), System.Boolean)
+                            End If
 
                             lReturnList.Add(Obj)
                         Next
@@ -404,6 +488,83 @@ Partial Public Class clsLnDescuento_ref
         Finally
             lConnection.Dispose()
             lTransaction.Dispose()
+        End Try
+
+    End Function
+
+    Public Shared Function GetCuotasByBeneficio(ByVal pObj As clsBeDescuento_det) As DataTable
+
+        Dim lTable As New DataTable("Result")
+
+        Try
+            Dim lSQl As String = String.Format("SELECT IdDescuentoRef,NoCuota AS 'No. Cuota',Abonado,Monto,Pagada,FechaCobro AS 'Fecha Cobro' FROM descuento_ref " _
+                                             & "WHERE IdDescuentoEnc={0} AND IdDescuentoDet={1} AND IdBeneficio={2}", _
+                                             pObj.IdDescuentoEnc, pObj.IdDescuentoDet, pObj.Beneficio.IdBeneficio)
+
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+                Using lDataAdapter As New MySqlDataAdapter(lSQl, lConnection)
+                    lDataAdapter.SelectCommand.CommandType = CommandType.Text
+                    lDataAdapter.Fill(lTable)
+                End Using
+            End Using
+            Return lTable
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function ActualizarByPago(ByRef oBeDescuento_ref As clsBeDescuento_ref, Optional ByVal pConection As MySqlConnection = Nothing, Optional ByVal pTransaction As MySqlTransaction = Nothing) As Integer
+
+        Dim cnn As New MySqlConnection(BD.CadenaConexion)
+        Dim cmd As New MySqlCommand()
+
+        Try
+
+            Upd.Init("descuento_ref")
+            Upd.Add("iddescuentoenc", "@iddescuentoenc", "F")
+            Upd.Add("iddescuentodet", "@iddescuentodet", "F")
+            Upd.Add("iddescuentoref", "@iddescuentoref", "F")
+            Upd.Add("abonado", "@abonado", "F")
+            Upd.Add("pagada", "@pagada", "F")
+            Upd.Add("anulada", "@anulada", "F")
+            Upd.Where("IdDescuentoEnc = @IdDescuentoEnc " & _
+                "AND IdDescuentoDet = @IdDescuentoDet " & _
+                "AND IdDescuentoRef = @IdDescuentoRef")
+
+            Dim sp As String = Upd.SQL()
+
+            Dim EsTransaccional As Boolean = (Not pConection Is Nothing AndAlso Not pTransaction Is Nothing)
+
+            cmd.CommandType = CommandType.Text
+
+
+            If EsTransaccional Then
+                cmd = New MySqlClient.MySqlCommand(sp, pConection)
+                cmd.Transaction = pTransaction
+            Else
+                cmd = New MySqlClient.MySqlCommand(sp, cnn)
+                cnn.Open()
+            End If
+
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOENC", oBeDescuento_ref.IdDescuentoEnc))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTODET", oBeDescuento_ref.IdDescuentoDet))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOREF", oBeDescuento_ref.IdDescuentoRef))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@ABONADO", oBeDescuento_ref.Abonado))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@PAGADA", oBeDescuento_ref.Pagada))
+          
+            Dim rowsAffected As Integer = 0
+            rowsAffected = cmd.ExecuteNonQuery()
+            Return rowsAffected
+
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If cnn.State = ConnectionState.Open Then cnn.Close()
+            cnn.Dispose()
+            cmd.Dispose()
         End Try
 
     End Function

@@ -1,17 +1,16 @@
 ﻿Imports DevExpress.XtraGrid.Columns
 Imports DevExpress.XtraGrid.Views.Grid
+Imports DevExpress.XtraEditors
 
 Public Class frmPago
 
-    Public pObjBeEnc As New clsBePago_enc
-    Public pObjBDesceEnc As New clsBeDescuento_enc
 
-    Private ObjLNenc As New clsLnPago_enc
+    Public pObjBeEnc As New clsBePago_enc
     Private ObjLnF As New clsLnFranquiciado
     Private ObjLnC As New clsLnCef
+    Private ListObjRef As New List(Of clsBeDescuento_ref)
+    Private ListObjPago As List(Of clsBePago_det)
 
-    Private ListObjDD As List(Of clsBePago_det)
-    Private ListObjDR As New List(Of clsBeDescuento_ref)
     Public Enum TipoTrans
         Nuevo = 1
         Editar = 2
@@ -36,13 +35,13 @@ Public Class frmPago
 
         Try
 
-            ListObjDD = New List(Of clsBePago_det)
+            ListObjPago = New List(Of clsBePago_det)
 
             Select Case Modo
 
                 Case TipoTrans.Nuevo
 
-                    Me.lblCodigo.Text = "-"
+                    'Me.lblCodigo.Text = "-"
 
                     User_agrTextEdit.Text = gUsuario.Codigo.ToString
                     Fec_agrDateEdit.Text = Now.ToShortDateString
@@ -82,7 +81,7 @@ Public Class frmPago
                 If GuardarDatos() Then
                     MsgBox("Se guardó el registro", MsgBoxStyle.Information, Me.Text)
                     If MessageBox.Show("¿Desea Imprimir el Reporte?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                        ImprimirReporte()
+                        'ImprimirReporte()
                     End If
                     Me.Close()
                 End If
@@ -97,29 +96,28 @@ Public Class frmPago
         Dim lConnection As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
         Dim lTransaction As MySql.Data.MySqlClient.MySqlTransaction = Nothing
 
+        Dim ObjLNenc As New clsLnPago_enc
         Dim ObjLNDet As New clsLnPago_det
 
         Try
 
+            lConnection.Open()
+            lTransaction = lConnection.BeginTransaction()
+
             pObjBeEnc = New clsBePago_enc
             pObjBeEnc.IdPagoEnc = clsLnPago_enc.Generar_Nuevo_IdPago
 
-            pObjBeEnc.CEF.IdCef = txtCodCEF.Text
+            pObjBeEnc.CEF.IdCef = txtCodCEF.Tag
             pObjBeEnc.Franquiciado.IdFranquiciado = txtCodigoFranquiciado.Tag
             pObjBeEnc.User_agr = gUsuario.IdUsuario
             pObjBeEnc.Fec_agr = Now
             pObjBeEnc.User_mod = gUsuario.IdUsuario
             pObjBeEnc.Fec_mod = Now
-            lConnection.Open()
-
-            lTransaction = lConnection.BeginTransaction()
 
             ObjLNenc.Insertar(pObjBeEnc, lConnection, lTransaction)
 
             Dim lMaxDet As Integer = clsLnPago_det.MaxID(pObjBeEnc.IdPagoEnc)
-
-
-            For Each Obj As clsBePago_det In ListObjDD
+            For Each Obj As clsBePago_det In ListObjPago
 
                 lMaxDet += 1
                 Obj.IdPagoEnc = pObjBeEnc.IdPagoEnc
@@ -130,10 +128,16 @@ Public Class frmPago
 
             Next
 
+            For Each Obj As clsBeDescuento_ref In ListObjRef
+                If Obj.IsNew = False Then
+                    clsLnDescuento_ref.ActualizarByPago(Obj, lConnection, lTransaction)
+                End If
+            Next
+
             lTransaction.Commit()
 
             GuardarDatos = True
-            lblCodigo.Text = pObjBeEnc.IdPagoEnc
+            'lblCodigo.Text = pObjBeEnc.IdPagoEnc
 
         Catch ex As Exception
             lTransaction.Rollback()
@@ -173,6 +177,7 @@ Public Class frmPago
     Private Sub mnuEliminar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuEliminar.ItemClick
 
         If CBool(MsgBox("¿Eliminar el Pago?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes) Then
+            Dim ObjLNenc As New clsLnPago_enc
             If ObjLNenc.Eliminar(pObjBeEnc) > 0 Then
                 MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
                 Me.Close()
@@ -202,26 +207,55 @@ Public Class frmPago
                 txtCodCEF.Text = FraList.Franqui.CEF.Codigo
                 txtNomCEF.Text = FraList.Franqui.CEF.Descripcion
 
-                CargaDescuentos()
+                CargaResumenDescuento()
+                CargaCuotas()
 
             End If
 
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
 
     End Sub
 
-    Private Sub CargaDescuentos()
+    Private Sub CargaResumenDescuento()
 
         Try
 
-            Dgrid.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciado(CInt(txtCodCEF.Tag), CInt(txtCodigoFranquiciado.Tag))
+            GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(CInt(txtCodCEF.Tag), CInt(txtCodigoFranquiciado.Tag))
 
-            GridViewPago.Columns("IdDescuentoEnc").Visible = False
-            GridViewPago.Columns("IdDescuentoDet").Visible = False
-            GridViewPago.Columns("IdDescuentoRef").Visible = False
-            GridViewPago.Columns("IdBeneficio").Visible = False
+            GridViewDescuento.Columns("IdDescuentoEnc").Visible = False
+            GridViewDescuento.Columns("IdDescuentoDet").Visible = False
+            GridViewDescuento.Columns("IdBeneficio").Visible = False
+
+            GridViewDescuento.Columns("Periodo").GroupIndex = 3
+
+            GridViewDescuento.OptionsView.ShowFooter = True
+
+            GridViewDescuento.Columns("Cuotas").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
+            GridViewDescuento.Columns("Cuotas").SummaryItem.DisplayFormat = "{0:n2}"
+
+            GridViewDescuento.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Sub
+
+    Private Sub CargaCuotas()
+
+        Try
+
+            GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(CInt(txtCodCEF.Tag), CInt(txtCodigoFranquiciado.Tag))
+
+            GridViewCuota.Columns("IdDescuentoEnc").Visible = False
+            GridViewCuota.Columns("IdDescuentoDet").Visible = False
+            GridViewCuota.Columns("IdDescuentoRef").Visible = False
+            GridViewCuota.Columns("IdBeneficio").Visible = False
+
+            GridViewCuota.OptionsView.ShowFooter = True
 
         Catch ex As Exception
             Throw ex
@@ -251,14 +285,32 @@ Public Class frmPago
 
     Private Sub cmdAgregar_Click(sender As Object, e As EventArgs) Handles cmdAgregar.Click
 
-        If String.IsNullOrEmpty(txtCodigoFranquiciado.Text) Then
-            MsgBox("Seleccione Persona.", MsgBoxStyle.Information, Me.Text)
-        Else
-            Dim Periodo As New frmPeriodo
-            Periodo.pIndex = -1
-            Periodo.Cargar = New frmPeriodo.Operar(AddressOf CargarDetalle)
-            Periodo.ShowDialog()
-        End If
+        Try
+
+            If String.IsNullOrEmpty(txtCodigoFranquiciado.Text) Then
+                MsgBox("Seleccione Persona.", MsgBoxStyle.Information, Me.Text)
+            Else
+
+                If GridViewDescuento.RowCount > 0 Then
+                    Dim Dr As DataRowView = GridViewDescuento.GetFocusedRow
+                    Dim Obj As New clsBeDescuento_det
+                    Obj.IdDescuentoEnc = CInt(Dr.Item("IdDescuentoEnc"))
+                    Obj.IdDescuentoDet = CInt(Dr.Item("IdDescuentoDet"))
+                    Obj.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio"))
+                    Dim Pago As New frmGeneraPago
+                    'Pago.pListObjDet = clsLnPago_det.GetAllByPagoEnc(Obj.IdDescuentoEnc, Obj.IdDescuentoDet)
+                    Pago.pObj = Obj
+                    Pago.pListObjDet = ListObjPago
+                    'Pago.Cargar = New frmGeneraPago.Operar(AddressOf CargaResumenDescuento)
+                    Pago.ShowDialog()
+                    Pago.Dispose()
+                End If
+
+            End If
+
+        Catch ex As Exception
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
 
     End Sub
 
@@ -266,9 +318,12 @@ Public Class frmPago
 
         Try
 
-            ObjLNenc.Obtener(pObjBeEnc)
+            If pObjBeEnc.IdPagoEnc = Nothing Then pObjBeEnc.IdPagoEnc = 0
+            pObjBeEnc = clsLnPago_enc.GetSingle(pObjBeEnc.IdCEF, pObjBeEnc.IdFranquiciado, pObjBeEnc.IdPagoEnc)
 
-            Me.lblCodigo.Text = pObjBeEnc.IdPagoEnc
+            'ObjLNenc.Obtener(pObjBeEnc)
+
+            'Me.lblCodigo.Text = pObjBeEnc.IdPagoEnc
 
             'Bitácora
             Dim UserBitacora As New clsBeUsuario
@@ -304,9 +359,10 @@ Public Class frmPago
             txtCodCEF.Text = ObjC.Codigo
             txtNomCEF.Text = ObjC.Descripcion
 
-            ListObjDD = clsLnPago_det.GetAllByPagoEnc(pObjBeEnc.IdPagoEnc)
-            CargarDetalle()
-            CargarCuota()
+            ListObjPago = clsLnPago_det.GetAllByPagoEnc(pObjBeEnc.IdPagoEnc)
+
+            CargaResumenDescuento()
+            CargaCuotas()
 
         Catch ex As Exception
             Throw ex
@@ -314,164 +370,181 @@ Public Class frmPago
 
     End Sub
 
-    Private Sub CargarDetalle()
+    Private Sub CargarPagosRealizados()
 
         Try
-
-            Dim ObjLnB As New clsLnBeneficio
-            Dim ObjLnTP As New clsLnTipobeneficio
 
             Dim DT As New DataTable("Result")
-            DT.Columns.Add("IdPagoDet", GetType(Integer))
-            DT.Columns.Add("IdBeneficio", GetType(Integer))
             DT.Columns.Add("Beneficio", GetType(String))
-            DT.Columns.Add("Modelo", GetType(String))
-            DT.Columns.Add("Chasis", GetType(String))
-            DT.Columns.Add("Placa", GetType(String))
-            DT.Columns.Add("No Teléfono", GetType(String))
-            DT.Columns.Add("Empresa", GetType(String))
-            DT.Columns.Add("Período (Días)", GetType(String))
-            DT.Columns.Add("Total", GetType(Decimal))
-            DT.Columns.Add("Cuotas", GetType(Integer))
-            DT.Columns.Add("Estado", GetType(String))
+            DT.Columns.Add("No. Cuota", GetType(Integer))
+            DT.Columns.Add("Monto Cuota", GetType(Double))
+            DT.Columns.Add("Monto Abonado", GetType(Double))
 
-            If ListObjDD IsNot Nothing AndAlso ListObjDD.Count > 0 Then
+            For Each Obj As clsBePago_det In ListObjPago
+                DT.Rows.Add(Obj.Beneficio.Nombre, Obj.NoCuota, Obj.MontoCuota, Obj.MontoAbono)
+            Next
 
-                Application.DoEvents()
-
-                For Each Obj As clsBePago_det In ListObjDD
-
-                    Dim ObjB As New clsBeBeneficio
-                    ObjB.IdBeneficio = Obj.IdBeneficio
-                    ObjLnB.Obtener(ObjB)
-
-                    Dim ObjTP As New clsBeTipobeneficio
-                    ObjTP.IdTipoBeneficio = ObjB.TipoBeneficio.IdTipoBeneficio
-                    ObjLnTP.Obtener(ObjTP)
-
-                    DT.Rows.Add(Obj.IdPagoDet, ObjB.IdBeneficio, ObjB.TipoBeneficio.Nombre, ObjB.Modelo, _
-                                ObjB.NoChasis, ObjB.NoPlaca, ObjB.NumeroTelefono, _
-                                ObjB.EmpresaTelco, "", _
-                                "Obj.MontoTotal", "Obj.Cuotas")
-
-                Next
-
-            End If
-
-            Dgrid.DataSource = DT
-            GridViewPago.Columns("IdPagoDet").Visible = False
-            GridViewPago.Columns("IdBeneficio").Visible = False
-            GridViewPago.Columns("Estado").Visible = False
+            GridPago.DataSource = DT
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            Throw ex
         End Try
 
     End Sub
 
-    Private Sub Dgrid_DoubleClick(sender As Object, e As EventArgs) Handles Dgrid.DoubleClick
+    'Private Sub CargarDetalle()
 
-        Try
+    '    Try
 
-            If GridViewPago.RowCount > 0 Then
+    '        Dim ObjLnB As New clsLnBeneficio
+    '        Dim ObjLnTP As New clsLnTipobeneficio
 
-                Dim Dr As DataRowView = GridViewPago.GetFocusedRow
-                Dim lIndex As Integer = ListObjDD.FindIndex(Function(b) b.IdBeneficio = CInt(Dr.Item("IdBeneficio")))
+    '        Dim DT As New DataTable("Result")
+    '        DT.Columns.Add("IdPagoDet", GetType(Integer))
+    '        DT.Columns.Add("IdBeneficio", GetType(Integer))
+    '        DT.Columns.Add("Beneficio", GetType(String))
+    '        DT.Columns.Add("Modelo", GetType(String))
+    '        DT.Columns.Add("Chasis", GetType(String))
+    '        DT.Columns.Add("Placa", GetType(String))
+    '        DT.Columns.Add("No Teléfono", GetType(String))
+    '        DT.Columns.Add("Empresa", GetType(String))
+    '        DT.Columns.Add("Período (Días)", GetType(String))
+    '        DT.Columns.Add("Total", GetType(Decimal))
+    '        DT.Columns.Add("Cuotas", GetType(Integer))
+    '        DT.Columns.Add("Estado", GetType(String))
 
-                Dim Periodo As New frmPeriodo
-                Periodo.ShowDialog()
+    '        If ListObjDD IsNot Nothing AndAlso ListObjDD.Count > 0 Then
 
-            End If
+    '            Application.DoEvents()
 
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
-        End Try
+    '            For Each Obj As clsBePago_det In ListObjDD
 
-    End Sub
-    Private Sub CargarCuota()
+    '                Dim ObjB As New clsBeBeneficio
+    '                ObjB.IdBeneficio = Obj.IdBeneficio
+    '                ObjLnB.Obtener(ObjB)
 
-        Try
+    '                Dim ObjTP As New clsBeTipobeneficio
+    '                ObjTP.IdTipoBeneficio = ObjB.TipoBeneficio.IdTipoBeneficio
+    '                ObjLnTP.Obtener(ObjTP)
 
-            ListObjDR = clsLnDescuento_ref.GetAllByEncabezado(pObjBDesceEnc.IdDescuentoEnc)
+    '                DT.Rows.Add(Obj.IdPagoDet, ObjB.IdBeneficio, ObjB.TipoBeneficio.Nombre, ObjB.Modelo, _
+    '                            ObjB.NoChasis, ObjB.NoPlaca, ObjB.NumeroTelefono, _
+    '                            ObjB.EmpresaTelco, "", _
+    '                            "Obj.MontoTotal", "Obj.Cuotas")
 
-            If ListObjDR IsNot Nothing AndAlso ListObjDR.Count > 0 Then
+    '            Next
 
-                Dim DT As New DataTable("Result")
-                DT.Columns.Add("Beneficio", GetType(String))
-                DT.Columns.Add("Fecha_Cobro", GetType(DateTime))
-                DT.Columns.Add("No_Cuota", GetType(Integer))
-                DT.Columns.Add("Monto", GetType(Decimal))
-                DT.Columns.Add("Abonado", GetType(Decimal))
-                DT.Columns.Add("Pagada", GetType(Boolean))
+    '        End If
 
-                For Each Obj As clsBeDescuento_ref In ListObjDR
+    '        Dgrid.DataSource = DT
+    '        GridViewPago.Columns("IdPagoDet").Visible = False
+    '        GridViewPago.Columns("IdBeneficio").Visible = False
+    '        GridViewPago.Columns("Estado").Visible = False
 
-                    Application.DoEvents()
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message)
+    '    End Try
 
-                    Dim Row As DataRow = DT.NewRow
+    'End Sub
 
-                    If Obj.EsVehiculo Then
-                        Row.Item(0) = String.Format("{0} {1} {2} {3} {4}", Obj.Beneficio.Nombre, Obj.Beneficio.Modelo, Obj.Beneficio.NoPlaca, Obj.Beneficio.Motor, Obj.Beneficio.NoChasis).Trim()
-                    ElseIf Obj.EsTelefono Then
-                        Row.Item(0) = String.Format("{0} {1} {2}", Obj.Beneficio.Nombre, Obj.Beneficio.NumeroTelefono, Obj.Beneficio.EmpresaTelco).Trim()
-                    ElseIf Obj.EsServicio Then
-                        Row.Item(0) = String.Format("{0}", Obj.Beneficio.Nombre).Trim()
-                    End If
+    'Private Sub Dgrid_DoubleClick(sender As Object, e As EventArgs) Handles Dgrid.DoubleClick
 
-                    Row.Item(1) = Obj.FechaCobro
-                    Row.Item(2) = Obj.NoCuota
-                    Row.Item(3) = Obj.Monto
-                    Row.Item(4) = Obj.Abonado
-                    Row.Item(5) = Obj.Pagada
-                    DT.Rows.Add(Row)
+    '    Try
 
-                Next
+    '        If GridViewPago.RowCount > 0 Then
 
-                GridCuota.DataSource = DT
-                GridViewCuota.Columns(0).GroupIndex = 1
-                GridViewCuota.OptionsView.ShowFooter = True
+    '            Dim Dr As DataRowView = GridViewPago.GetFocusedRow
+    '            Dim lIndex As Integer = ListObjDD.FindIndex(Function(b) b.IdBeneficio = CInt(Dr.Item("IdBeneficio")))
 
-                GridViewCuota.Columns("No_Cuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
-                GridViewCuota.Columns("No_Cuota").SummaryItem.DisplayFormat = "{0:n2}"
+    '            Dim Periodo As New frmPeriodo
+    '            Periodo.ShowDialog()
 
-                GridViewCuota.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+    '        End If
 
-                GridViewCuota.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewCuota.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
+    '    End Try
 
-                GridViewCuota.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-                GridViewCuota.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+    'End Sub
+    'Private Sub CargarCuota()
 
-                GridViewCuota.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-                GridViewCuota.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+    '    Try
 
-                GridViewCuota.Columns("Fecha_Cobro").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+    '        ListObjDR = clsLnDescuento_ref.GetAllByEncabezado(pObjBDesceEnc.IdDescuentoEnc)
 
-            End If
+    '        If ListObjDR IsNot Nothing AndAlso ListObjDR.Count > 0 Then
 
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
+    '            Dim DT As New DataTable("Result")
+    '            DT.Columns.Add("Beneficio", GetType(String))
+    '            DT.Columns.Add("Fecha_Cobro", GetType(DateTime))
+    '            DT.Columns.Add("No_Cuota", GetType(Integer))
+    '            DT.Columns.Add("Monto", GetType(Decimal))
+    '            DT.Columns.Add("Abonado", GetType(Decimal))
+    '            DT.Columns.Add("Pagada", GetType(Boolean))
 
-    End Sub
+    '            For Each Obj As clsBeDescuento_ref In ListObjDR
+
+    '                Application.DoEvents()
+
+    '                Dim Row As DataRow = DT.NewRow
+
+    '                If Obj.EsVehiculo Then
+    '                    Row.Item(0) = String.Format("{0} {1} {2} {3} {4}", Obj.Beneficio.Nombre, Obj.Beneficio.Modelo, Obj.Beneficio.NoPlaca, Obj.Beneficio.Motor, Obj.Beneficio.NoChasis).Trim()
+    '                ElseIf Obj.EsTelefono Then
+    '                    Row.Item(0) = String.Format("{0} {1} {2}", Obj.Beneficio.Nombre, Obj.Beneficio.NumeroTelefono, Obj.Beneficio.EmpresaTelco).Trim()
+    '                ElseIf Obj.EsServicio Then
+    '                    Row.Item(0) = String.Format("{0}", Obj.Beneficio.Nombre).Trim()
+    '                End If
+
+    '                Row.Item(1) = Obj.FechaCobro
+    '                Row.Item(2) = Obj.NoCuota
+    '                Row.Item(3) = Obj.Monto
+    '                Row.Item(4) = Obj.Abonado
+    '                Row.Item(5) = Obj.Pagada
+    '                DT.Rows.Add(Row)
+
+    '            Next
+
+    '            GridCuota.DataSource = DT
+    '            GridViewCuota.Columns(0).GroupIndex = 1
+    '            GridViewCuota.OptionsView.ShowFooter = True
+
+    '            GridViewCuota.Columns("No_Cuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
+    '            GridViewCuota.Columns("No_Cuota").SummaryItem.DisplayFormat = "{0:n2}"
+
+    '            GridViewCuota.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+    '            GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+
+    '            GridViewCuota.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+    '            GridViewCuota.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+
+    '            GridViewCuota.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+    '            GridViewCuota.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+
+    '            GridViewCuota.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+    '            GridViewCuota.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+
+    '            GridViewCuota.Columns("Fecha_Cobro").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+
+    '        End If
+
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message)
+    '    End Try
+
+    'End Sub
 
     Private Sub cmdImprimir_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles cmdImprimir1.ItemClick
 
         Try
 
-            If GridViewPago.RowCount > 0 Then
-                ImprimirReporte()
+            If GridViewDescuento.RowCount > 0 Then
+                'ImprimirReporte()
             End If
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
         End Try
-
-    End Sub
-
-    Private Sub ImprimirReporte()
-
 
     End Sub
 

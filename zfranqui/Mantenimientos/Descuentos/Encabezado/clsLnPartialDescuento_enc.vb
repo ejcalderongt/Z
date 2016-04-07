@@ -254,7 +254,35 @@ Partial Public Class clsLnDescuento_enc
 
     End Function
 
-    Public Shared Function GetAllByCefFranquiciado(ByVal pIdCef As Integer, ByVal pIdFranquiciado As Integer) As DataTable
+    Public Shared Function GetAllByCefFranquiciadoResumen(ByVal pIdCef As Integer, ByVal pIdFranquiciado As Integer) As DataTable
+
+        Dim lTable As New DataTable("Result")
+
+        Try
+            Dim lSQl As String = String.Format("SELECT det.IdDescuentoEnc,det.IdDescuentoDet,det.IdBeneficio,b.Nombre,b.Modelo," _
+                                             & "b.NoPlaca AS 'No. Placa', b.NoChasis AS 'No. Chasis', b.NumeroTelefono AS 'No. Telefono', b.EmpresaTelco AS Empresa, det.Cuotas, det.MontoTotal AS 'Monto Total', " _
+                                             & "tp.Nombre AS Periodo " _
+                                             & "FROM descuento_enc AS enc  " _
+                                             & "INNER JOIN descuento_det AS det ON enc.IdDescuentoEnc = det.IdDescuentoEnc " _
+                                             & "INNER JOIN beneficio AS b ON det.IdBeneficio = b.IdBeneficio " _
+                                             & "INNER JOIN tipodescuento AS tp ON enc.IdTipoDescuento = tp.IdTipoDescuento " _
+                                             & "WHERE enc.IdCEF={0} AND enc.IdFranquiciado={1}", pIdCef, pIdFranquiciado)
+
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+                Using lDataAdapter As New MySqlDataAdapter(lSQl, lConnection)
+                    lDataAdapter.SelectCommand.CommandType = CommandType.Text
+                    lDataAdapter.Fill(lTable)
+                End Using
+            End Using
+            Return lTable
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function GetAllByCefFranquiciadoCuota(ByVal pIdCef As Integer, ByVal pIdFranquiciado As Integer) As DataTable
 
         Dim lTable As New DataTable("Result")
 
@@ -269,7 +297,7 @@ Partial Public Class clsLnDescuento_enc
                                              & "INNER JOIN beneficio AS b ON det.IdBeneficio = b.IdBeneficio " _
                                              & "INNER JOIN tipodescuento AS tp ON enc.IdTipoDescuento = tp.IdTipoDescuento " _
                                              & "AND det.IdDescuentoDet = ref.IdDescuentoDet " _
-                                             & "WHERE Idcef={0} AND IdFranquiciado={1} " _
+                                             & "WHERE Idcef={0} AND IdFranquiciado={1} AND ref.Anulada=0 " _
                                              & "ORDER BY enc.IdTipoDescuento", pIdCef, pIdFranquiciado)
 
             Using lConnection As New MySqlConnection(BD.CadenaConexion)

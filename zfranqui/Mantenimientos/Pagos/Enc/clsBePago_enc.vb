@@ -30,8 +30,8 @@ Public Class clsBePago_enc
         End Set
     End Property
 
-    Public Property CEF() As clsBeCef
-    Public Property Franquiciado() As clsBeFranquiciado
+    Public Property CEF() As New clsBeCef
+    Public Property Franquiciado() As New clsBeFranquiciado
 
     Public Property IdFranquiciado() As Integer
         Get

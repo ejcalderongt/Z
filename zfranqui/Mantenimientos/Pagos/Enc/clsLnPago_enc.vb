@@ -57,16 +57,16 @@ Public Class clsLnPago_enc
             End If
 
 
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@IDCEF", oBePago_enc.IdCEF))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@IDFRANQUICIADO", oBePago_enc.IdFranquiciado))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@NODEPOSITO", oBePago_enc.NoDeposito))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@FECHAPAGO", oBePago_enc.FechaPago))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@FEC_AGR", oBePago_enc.Fec_agr))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@FEC_MOD", oBePago_enc.Fec_mod))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@USER_AGR", oBePago_enc.User_agr))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@USER_MOD", oBePago_enc.User_mod))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@ANULADO", oBePago_enc.Anulado))
+            cmd.Parameters.Add(New MySqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
+            cmd.Parameters.Add(New MySqlParameter("@IDCEF", oBePago_enc.CEF.IdCef))
+            cmd.Parameters.Add(New MySqlParameter("@IDFRANQUICIADO", oBePago_enc.Franquiciado.IdFranquiciado))
+            cmd.Parameters.Add(New MySqlParameter("@NODEPOSITO", oBePago_enc.NoDeposito))
+            cmd.Parameters.Add(New MySqlParameter("@FECHAPAGO", oBePago_enc.FechaPago))
+            cmd.Parameters.Add(New MySqlParameter("@FEC_AGR", oBePago_enc.Fec_agr))
+            cmd.Parameters.Add(New MySqlParameter("@FEC_MOD", oBePago_enc.Fec_mod))
+            cmd.Parameters.Add(New MySqlParameter("@USER_AGR", oBePago_enc.User_agr))
+            cmd.Parameters.Add(New MySqlParameter("@USER_MOD", oBePago_enc.User_mod))
+            cmd.Parameters.Add(New MySqlParameter("@ANULADO", oBePago_enc.Anulado))
 
             Dim rowsAffected As Integer = 0
             rowsAffected = cmd.ExecuteNonQuery()
@@ -119,16 +119,16 @@ Public Class clsLnPago_enc
                 cnn.Open()
             End If
 
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@IDCEF", oBePago_enc.IdCEF))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@IDFRANQUICIADO", oBePago_enc.IdFranquiciado))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@NODEPOSITO", oBePago_enc.NoDeposito))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@FECHAPAGO", oBePago_enc.FechaPago))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@FEC_AGR", oBePago_enc.Fec_agr))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@FEC_MOD", oBePago_enc.Fec_mod))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@USER_AGR", oBePago_enc.User_agr))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@USER_MOD", oBePago_enc.User_mod))
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@ANULADO", oBePago_enc.Anulado))
+            cmd.Parameters.Add(New MySqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
+            cmd.Parameters.Add(New MySqlParameter("@IDCEF", oBePago_enc.IdCEF))
+            cmd.Parameters.Add(New MySqlParameter("@IDFRANQUICIADO", oBePago_enc.IdFranquiciado))
+            cmd.Parameters.Add(New MySqlParameter("@NODEPOSITO", oBePago_enc.NoDeposito))
+            cmd.Parameters.Add(New MySqlParameter("@FECHAPAGO", oBePago_enc.FechaPago))
+            cmd.Parameters.Add(New MySqlParameter("@FEC_AGR", oBePago_enc.Fec_agr))
+            cmd.Parameters.Add(New MySqlParameter("@FEC_MOD", oBePago_enc.Fec_mod))
+            cmd.Parameters.Add(New MySqlParameter("@USER_AGR", oBePago_enc.User_agr))
+            cmd.Parameters.Add(New MySqlParameter("@USER_MOD", oBePago_enc.User_mod))
+            cmd.Parameters.Add(New MySqlParameter("@ANULADO", oBePago_enc.Anulado))
 
             Dim rowsAffected As Integer = 0
             rowsAffected = cmd.ExecuteNonQuery()
@@ -174,7 +174,7 @@ Public Class clsLnPago_enc
             End If
 
 
-            cmd.Parameters.Add(New SqlClient.SqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
+            cmd.Parameters.Add(New MySqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
 
             Dim rowsAffected As Integer = 0
             rowsAffected = cmd.ExecuteNonQuery()
@@ -221,7 +221,7 @@ Public Class clsLnPago_enc
 
 
             Dim dad As New MySqlDataAdapter(cmd)
-            dad.SelectCommand.Parameters.Add(New SqlClient.SqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
+            dad.SelectCommand.Parameters.Add(New MySqlParameter("@IDPAGOENC", oBePago_enc.IdPagoEnc))
 
             Dim dt As New DataTable
             dad.Fill(dt)
