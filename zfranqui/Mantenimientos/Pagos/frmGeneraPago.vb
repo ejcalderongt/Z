@@ -10,9 +10,45 @@ Public Class frmGeneraPago
 
         Try
 
+            'IdDescuentoRef()
+            'No.Cuota()
+            'Abonado()
+            'Monto()
+            'Pagada()
+            'FechaCobro()
+
             If pObj IsNot Nothing Then
-                Dgrid.DataSource = clsLnDescuento_ref.GetCuotasByBeneficio(pObj)
-                GridView1.Columns("IdDescuentoRef").Visible = False
+                Dim DTT As New DataTable("Result")
+                DTT.Columns.Add("IdDescuentoRef", GetType(Integer))
+                DTT.Columns.Add("No. Cuota", GetType(Integer))
+                DTT.Columns.Add("Abonado", GetType(Double))
+                DTT.Columns.Add("Monto", GetType(Double))
+                DTT.Columns.Add("Pagada", GetType(Boolean))
+                DTT.Columns.Add("Fecha Cobro", GetType(DateTime))
+                DTT.Columns.Add("IsNew", GetType(Boolean))
+                Dim DT As DataTable = clsLnDescuento_ref.GetCuotasByBeneficio(pObj)
+                For Each r As DataRow In DT.Rows
+                    Dim lRow As DataRow = DTT.NewRow
+                    Dim lAbonado As Double = CDbl(r(2))
+                    lRow(0) = r(0)
+                    lRow(1) = r(1)
+                    lRow(2) = lAbonado
+                    lRow(3) = r(3)
+                    lRow(4) = r(4)
+                    lRow(5) = r(5)
+                    If lAbonado > 0 Then
+                        lRow(6) = True
+                    Else
+                        lRow(6) = False
+                    End If
+                    DTT.Rows.Add(lRow)
+                Next
+
+                Dgrid.DataSource = DTT
+                If GridView1.RowCount > 0 Then
+                    GridView1.Columns("IdDescuentoRef").Visible = False
+                    GridView1.Columns("IsNew").Visible = False
+                End If
             End If
 
         Catch ex As Exception
@@ -37,6 +73,7 @@ Public Class frmGeneraPago
                 txtCuota.Tag = Dr.Item("IdDescuentoRef")
                 txtCuota.Value = Dr.Item("No. Cuota")
                 txtMontoCancelar.Value = Dr.Item("Monto")
+                txtAbono.Tag = Dr.Item("IsNew")
                 txtAbono.Value = Dr.Item("Abonado")
             End If
 
@@ -53,6 +90,7 @@ Public Class frmGeneraPago
         txtCuota.Tag = Nothing
         txtCuota.Value = 0
         txtMontoCancelar.Value = 0.0
+        txtAbono.Tag = Nothing
         txtAbono.Value = 0.0
 
     End Sub
