@@ -163,7 +163,7 @@ Partial Public Class clsLnPago_enc
         Dim lTable As New DataTable("Result")
 
         Try
-            Dim lSQl As String = "SELECT enc.IdPagoEnc,c.Codigo , c.Descripcion, " _
+            Dim lSQl As String = "SELECT enc.IdPago,c.Codigo , c.Descripcion, " _
                                              & "f.Codigo AS cf , f.Nombres, enc.FechaPago " _
                                              & "FROM pago_enc AS enc  " _
                                              & "INNER JOIN cef AS c ON enc.IdCef = c.IdCEF  " _
@@ -175,6 +175,7 @@ Partial Public Class clsLnPago_enc
                     lDataAdapter.Fill(lTable)
                 End Using
             End Using
+
             Return lTable
 
         Catch ex As Exception
