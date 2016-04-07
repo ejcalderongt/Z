@@ -155,7 +155,7 @@ Partial Public Class clsLnPago_enc
             Return Nothing
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            Throw ex
         End Try
 
     End Function
@@ -181,7 +181,7 @@ Partial Public Class clsLnPago_enc
             Return lTable
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            Throw ex
         End Try
 
     End Function
