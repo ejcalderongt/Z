@@ -413,7 +413,7 @@ Partial Public Class clsLnDescuento_ref
         AnularDetalleDescuento = False
 
         Dim DT As New DataTable
-        
+
         Try
 
             Dim cmd As New MySqlCommand()
