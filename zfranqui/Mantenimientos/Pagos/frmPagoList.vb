@@ -71,13 +71,13 @@ Public Class frmPagoList
             For Each r As DataRow In DT.Rows
                 Dim c As String = r.Item("Codigo").ToString & " " & r.Item("Descripcion").ToString
                 Dim f As String = r.Item("cf").ToString & " " & r.Item("Nombres").ToString
-                D.Rows.Add(r.Item("IdPagoEnc"), c, f, r.Item("FechaPago"))
+                D.Rows.Add(r.Item("IdPagoEnc"), r.Item("IdCef"), r.Item("IdFranquiciado"), c, f, r.Item("FechaPago"))
             Next
 
             Dgrid.DataSource = D
             If GridView1.RowCount > 0 Then
-                GridView1.Columns(1).GroupIndex = 0
-                GridView1.Columns(2).GroupIndex = 1
+                GridView1.Columns(3).GroupIndex = 0
+                GridView1.Columns(4).GroupIndex = 1
                 GridView1.Columns("IdCef").Visible = False
                 GridView1.Columns("IdFranquiciado").Visible = False
             End If

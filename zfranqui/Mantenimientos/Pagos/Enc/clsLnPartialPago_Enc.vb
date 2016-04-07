@@ -165,8 +165,8 @@ Partial Public Class clsLnPago_enc
         Dim lTable As New DataTable("Result")
 
         Try
-            Dim lSQl As String = "SELECT enc.IdPago,c.Codigo , c.Descripcion, " _
-                                             & "f.Codigo AS cf , f.Nombres, enc.FechaPago " _
+            Dim lSQl As String = "SELECT enc.IdPagoEnc,c.Codigo , c.Descripcion, " _
+                                             & "f.Codigo AS cf , f.Nombres, enc.FechaPago,enc.IdCef,enc.IdFranquiciado " _
                                              & "FROM pago_enc AS enc  " _
                                              & "INNER JOIN cef AS c ON enc.IdCef = c.IdCEF  " _
                                              & "INNER JOIN franquiciado AS f ON enc.IdFranquiciado = f.IdFranquiciado "
