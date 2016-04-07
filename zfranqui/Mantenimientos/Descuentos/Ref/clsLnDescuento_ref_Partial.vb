@@ -446,4 +446,81 @@ Partial Public Class clsLnDescuento_ref
 
     End Function
 
+    Public Shared Function GetSingle(ByVal pIdDescuentoEnc As Integer, _
+                                     ByVal pIdDescuentoDet As Integer, _
+                                     ByVal pIdDescuentoRef As Integer) As clsBeDescuento_ref
+
+        Try
+
+            'Validacion y estandarización de los datos
+            Using lCnn As New MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lDTA As New MySqlDataAdapter("SELECT * FROM descuento_ref WHERE IdDescuentoEnc=@IdDescuentoEnc AND IdDescuentoDet=@IdDescuentoDet AND IdDescuentoRef=@IdDescuentoRef ", lCnn)
+
+                    lDTA.SelectCommand.CommandType = CommandType.Text
+                    lDTA.SelectCommand.Parameters.AddWithValue("@IdDescuentoEnc", pIdDescuentoEnc)
+                    lDTA.SelectCommand.Parameters.AddWithValue("@IdDescuentoDet", pIdDescuentoDet)
+                    lDTA.SelectCommand.Parameters.AddWithValue("@IdDescuentoRef", pIdDescuentoRef)
+
+                    Dim lDT As New DataTable
+                    lDTA.Fill(lDT)
+
+                    If lDT IsNot Nothing AndAlso lDT.Rows.Count > 0 Then
+                        Dim lRow As DataRow = lDT.Rows(0)
+                        Dim ObjPE As New clsBeDescuento_ref()
+                        ObjPE.IdDescuentoEnc = CType(lRow("IdDescuentoEnc"), System.Int32)
+                        ObjPE.IdDescuentoDet = CType(lRow("IdDescuentoDet"), System.Int32)
+                        ObjPE.IdDescuentoRef = CType(lRow("IdDescuentoRef"), System.Int32)
+
+                        If lRow("IdBeneficio") IsNot DBNull.Value AndAlso lRow("IdBeneficio") IsNot Nothing Then
+                            ObjPE.IdBeneficio = CType(lRow("IdBeneficio"), System.Int32)
+                        End If
+                        If lRow("NoCuota") IsNot DBNull.Value AndAlso lRow("NoCuota") IsNot Nothing Then
+                            ObjPE.NoCuota = CType(lRow("NoCuota"), System.Int32)
+                        End If
+                        If lRow("Monto") IsNot DBNull.Value AndAlso lRow("Monto") IsNot Nothing Then
+                            ObjPE.Monto = CType(lRow("Monto"), System.Double)
+                        End If
+                        If lRow("Abonado") IsNot DBNull.Value AndAlso lRow("Abonado") IsNot Nothing Then
+                            ObjPE.Abonado = CType(lRow("Abonado"), System.Double)
+                        End If
+                        If lRow("FechaCobro") IsNot DBNull.Value AndAlso lRow("FechaCobro") IsNot Nothing Then
+                            ObjPE.FechaCobro = CType(lRow("FechaCobro"), System.DateTime)
+                        End If
+                        If lRow("Pagada") IsNot DBNull.Value AndAlso lRow("Pagada") IsNot Nothing Then
+                            ObjPE.Pagada = CType(lRow("Pagada"), System.Boolean)
+                        End If
+                        If lRow("fec_agr") IsNot DBNull.Value AndAlso lRow("fec_agr") IsNot Nothing Then
+                            ObjPE.Fec_agr = CType(lRow("fec_agr"), System.DateTime)
+                        End If
+                        If lRow("user_agr") IsNot DBNull.Value AndAlso lRow("user_agr") IsNot Nothing Then
+                            ObjPE.User_agr = CType(lRow("user_agr"), System.String)
+                        End If
+                        If lRow("fec_agr") IsNot DBNull.Value AndAlso lRow("fec_agr") IsNot Nothing Then
+                            ObjPE.Fec_agr = CType(lRow("fec_agr"), System.DateTime)
+                        End If
+                        If lRow("user_mod") IsNot DBNull.Value AndAlso lRow("user_mod") IsNot Nothing Then
+                            ObjPE.User_mod = CType(lRow("user_mod"), System.String)
+                        End If
+                        If lRow("fec_mod") IsNot DBNull.Value AndAlso lRow("fec_mod") IsNot Nothing Then
+                            ObjPE.Fec_mod = CType(lRow("fec_mod"), System.DateTime)
+                        End If
+                        If lRow("Anulada") IsNot DBNull.Value AndAlso lRow("Anulada") IsNot Nothing Then
+                            ObjPE.Anulada = CType(lRow("Anulada"), System.Boolean)
+                        End If
+                        Return ObjPE
+                    End If
+                End Using
+
+            End Using
+
+            Return Nothing
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
 End Class

@@ -22,6 +22,7 @@ Partial Class frmGeneraPago
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim Label2 As System.Windows.Forms.Label
         Dim Label5 As System.Windows.Forms.Label
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
@@ -32,22 +33,23 @@ Partial Class frmGeneraPago
         Me.Label3 = New System.Windows.Forms.Label()
         Me.dtmFechaCobro = New System.Windows.Forms.DateTimePicker()
         Me.Label4 = New System.Windows.Forms.Label()
-        Me.lblPeriodo = New System.Windows.Forms.Label()
         Me.txtAbono = New System.Windows.Forms.NumericUpDown()
         Me.txtCuota = New System.Windows.Forms.NumericUpDown()
         Me.GroupControl2 = New DevExpress.XtraEditors.GroupControl()
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.BarManager = New DevExpress.XtraBars.BarManager()
+        Me.BarManager = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdGrabar = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarStaticItem1 = New DevExpress.XtraBars.BarStaticItem()
-        Me.cmdCancelar = New DevExpress.XtraBars.BarButtonItem()
         Me.Bar3 = New DevExpress.XtraBars.Bar()
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
+        Me.cmdCancelar = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarStaticItem1 = New DevExpress.XtraBars.BarStaticItem()
+        Me.lblInformacionBeneficio = New System.Windows.Forms.Label()
+        Me.lblTipoPeriodo = New System.Windows.Forms.Label()
         Label2 = New System.Windows.Forms.Label()
         Label5 = New System.Windows.Forms.Label()
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -90,11 +92,10 @@ Partial Class frmGeneraPago
         Me.GroupControl1.Controls.Add(Me.Label3)
         Me.GroupControl1.Controls.Add(Me.dtmFechaCobro)
         Me.GroupControl1.Controls.Add(Me.Label4)
-        Me.GroupControl1.Controls.Add(Me.lblPeriodo)
         Me.GroupControl1.Controls.Add(Me.txtAbono)
         Me.GroupControl1.Controls.Add(Me.txtCuota)
         Me.GroupControl1.Controls.Add(Label2)
-        Me.GroupControl1.Location = New System.Drawing.Point(2, 28)
+        Me.GroupControl1.Location = New System.Drawing.Point(2, 79)
         Me.GroupControl1.Name = "GroupControl1"
         Me.GroupControl1.Size = New System.Drawing.Size(704, 192)
         Me.GroupControl1.TabIndex = 1
@@ -178,16 +179,6 @@ Partial Class frmGeneraPago
         Me.Label4.TabIndex = 9
         Me.Label4.Text = "Cuota:"
         '
-        'lblPeriodo
-        '
-        Me.lblPeriodo.AutoSize = True
-        Me.lblPeriodo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, CType(((System.Drawing.FontStyle.Bold Or System.Drawing.FontStyle.Italic) _
-                Or System.Drawing.FontStyle.Underline), System.Drawing.FontStyle), System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblPeriodo.Location = New System.Drawing.Point(304, 36)
-        Me.lblPeriodo.Name = "lblPeriodo"
-        Me.lblPeriodo.Size = New System.Drawing.Size(0, 13)
-        Me.lblPeriodo.TabIndex = 2
-        '
         'txtAbono
         '
         Me.txtAbono.DecimalPlaces = 2
@@ -211,9 +202,9 @@ Partial Class frmGeneraPago
         'GroupControl2
         '
         Me.GroupControl2.Controls.Add(Me.Dgrid)
-        Me.GroupControl2.Location = New System.Drawing.Point(2, 226)
+        Me.GroupControl2.Location = New System.Drawing.Point(2, 277)
         Me.GroupControl2.Name = "GroupControl2"
-        Me.GroupControl2.Size = New System.Drawing.Size(704, 222)
+        Me.GroupControl2.Size = New System.Drawing.Size(704, 206)
         Me.GroupControl2.TabIndex = 0
         Me.GroupControl2.Text = "Lista de Cuotas"
         '
@@ -224,7 +215,7 @@ Partial Class frmGeneraPago
         Me.Dgrid.Location = New System.Drawing.Point(2, 21)
         Me.Dgrid.MainView = Me.GridView1
         Me.Dgrid.Name = "Dgrid"
-        Me.Dgrid.Size = New System.Drawing.Size(700, 199)
+        Me.Dgrid.Size = New System.Drawing.Size(700, 183)
         Me.Dgrid.TabIndex = 0
         Me.Dgrid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -265,19 +256,6 @@ Partial Class frmGeneraPago
         Me.cmdGrabar.Id = 0
         Me.cmdGrabar.Name = "cmdGrabar"
         '
-        'BarStaticItem1
-        '
-        Me.BarStaticItem1.Caption = "|"
-        Me.BarStaticItem1.Id = 2
-        Me.BarStaticItem1.Name = "BarStaticItem1"
-        Me.BarStaticItem1.TextAlignment = System.Drawing.StringAlignment.Near
-        '
-        'cmdCancelar
-        '
-        Me.cmdCancelar.Caption = "Cancelar"
-        Me.cmdCancelar.Id = 1
-        Me.cmdCancelar.Name = "cmdCancelar"
-        '
         'Bar3
         '
         Me.Bar3.BarName = "Status bar"
@@ -301,7 +279,7 @@ Partial Class frmGeneraPago
         '
         Me.barDockControlBottom.CausesValidation = False
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 454)
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 489)
         Me.barDockControlBottom.Size = New System.Drawing.Size(708, 23)
         '
         'barDockControlLeft
@@ -309,20 +287,57 @@ Partial Class frmGeneraPago
         Me.barDockControlLeft.CausesValidation = False
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.barDockControlLeft.Location = New System.Drawing.Point(0, 22)
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 432)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 467)
         '
         'barDockControlRight
         '
         Me.barDockControlRight.CausesValidation = False
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
         Me.barDockControlRight.Location = New System.Drawing.Point(708, 22)
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 432)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 467)
+        '
+        'cmdCancelar
+        '
+        Me.cmdCancelar.Caption = "Cancelar"
+        Me.cmdCancelar.Id = 1
+        Me.cmdCancelar.Name = "cmdCancelar"
+        '
+        'BarStaticItem1
+        '
+        Me.BarStaticItem1.Caption = "|"
+        Me.BarStaticItem1.Id = 2
+        Me.BarStaticItem1.Name = "BarStaticItem1"
+        Me.BarStaticItem1.TextAlignment = System.Drawing.StringAlignment.Near
+        '
+        'lblInformacionBeneficio
+        '
+        Me.lblInformacionBeneficio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInformacionBeneficio.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.lblInformacionBeneficio.Location = New System.Drawing.Point(12, 29)
+        Me.lblInformacionBeneficio.Name = "lblInformacionBeneficio"
+        Me.lblInformacionBeneficio.Size = New System.Drawing.Size(682, 23)
+        Me.lblInformacionBeneficio.TabIndex = 231
+        Me.lblInformacionBeneficio.Text = "Beneficio"
+        Me.lblInformacionBeneficio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'lblTipoPeriodo
+        '
+        Me.lblTipoPeriodo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTipoPeriodo.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.lblTipoPeriodo.Location = New System.Drawing.Point(12, 52)
+        Me.lblTipoPeriodo.Name = "lblTipoPeriodo"
+        Me.lblTipoPeriodo.Size = New System.Drawing.Size(682, 23)
+        Me.lblTipoPeriodo.TabIndex = 230
+        Me.lblTipoPeriodo.Text = "Tipo Descuento"
+        Me.lblTipoPeriodo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'frmGeneraPago
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(708, 477)
+        Me.ClientSize = New System.Drawing.Size(708, 512)
+        Me.Controls.Add(Me.lblInformacionBeneficio)
+        Me.Controls.Add(Me.lblTipoPeriodo)
         Me.Controls.Add(Me.GroupControl2)
         Me.Controls.Add(Me.GroupControl1)
         Me.Controls.Add(Me.barDockControlLeft)
@@ -330,6 +345,8 @@ Partial Class frmGeneraPago
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
+        Me.MaximumSize = New System.Drawing.Size(724, 546)
+        Me.MinimumSize = New System.Drawing.Size(724, 546)
         Me.Name = "frmGeneraPago"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Pago"
@@ -353,7 +370,6 @@ Partial Class frmGeneraPago
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents txtAbono As System.Windows.Forms.NumericUpDown
     Friend WithEvents txtCuota As System.Windows.Forms.NumericUpDown
-    Friend WithEvents lblPeriodo As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents BarManager As DevExpress.XtraBars.BarManager
     Friend WithEvents Bar2 As DevExpress.XtraBars.Bar
@@ -371,4 +387,6 @@ Partial Class frmGeneraPago
     Friend WithEvents dtmFechaCobro As System.Windows.Forms.DateTimePicker
     Friend WithEvents txtMontoCancelar As System.Windows.Forms.NumericUpDown
     Friend WithEvents cmdGuardarPago As System.Windows.Forms.Button
+    Friend WithEvents lblInformacionBeneficio As System.Windows.Forms.Label
+    Friend WithEvents lblTipoPeriodo As System.Windows.Forms.Label
 End Class

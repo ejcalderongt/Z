@@ -224,7 +224,11 @@ Public Class frmPago
 
         Try
 
-            GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            If pObjBeEnc.CEF.IdCef <> 0 Then
+                GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            ElseIf String.IsNullOrEmpty(txtCodCEF.Tag) = False AndAlso IsNumeric(txtCodCEF.Tag) AndAlso txtCodCEF.Tag <> 0 Then
+                GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(CInt(txtCodCEF.Tag), pObjBeEnc.Franquiciado.IdFranquiciado)
+            End If
 
             If GridViewDescuento.RowCount > 0 Then
                 GridViewDescuento.Columns("IdDescuentoEnc").Visible = False
@@ -252,7 +256,20 @@ Public Class frmPago
 
         Try
 
-            GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            If pObjBeEnc.CEF.IdCef <> 0 Then
+                GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            ElseIf String.IsNullOrEmpty(txtCodCEF.Tag) = False AndAlso IsNumeric(txtCodCEF.Tag) AndAlso txtCodCEF.Tag <> 0 Then
+                GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(CInt(txtCodCEF.Tag), pObjBeEnc.Franquiciado.IdFranquiciado)
+            End If
+
+            'For Each r As DataRow In DT.Rows
+            '    Dim Obj As clsBeDescuento_ref = clsLnDescuento_ref.GetSingle(CInt(r("IdDescuentoEnc")), _
+            '                                                                 CInt(r("IdDescuentoDet")), _
+            '                                                                 CInt(r("IdDescuentoRef")))
+            '    If Obj IsNot Nothing Then
+
+            '    End If
+            'Next
 
             If GridViewCuota.RowCount > 0 Then
                 GridViewCuota.Columns("IdDescuentoEnc").Visible = False
@@ -335,10 +352,20 @@ Public Class frmPago
                     Obj.IdDescuentoEnc = CInt(Dr.Item("IdDescuentoEnc"))
                     Obj.IdDescuentoDet = CInt(Dr.Item("IdDescuentoDet"))
                     Obj.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio"))
+
+                    Dim lBeneficio As String = String.Format("{0} {1} {2} {3} {4} {5}", Dr.Item("Nombre"), _
+                                                             Dr.Item("Modelo"), Dr.Item("No. Placa"), _
+                                                             Dr.Item("No. Chasis"), Dr.Item("No. Telefono"), Dr.Item("Empresa")).ToString.Trim()
+
+                    Dim lTipoPeriodo As String = Dr.Item("Periodo").ToString.Trim
+
                     Dim Pago As New frmGeneraPago
                     'Pago.pListObjDet = clsLnPago_det.GetAllByPagoEnc(Obj.IdDescuentoEnc, Obj.IdDescuentoDet)
                     Pago.pObj = Obj
                     Pago.pListObjDet = ListObjPago
+                    Pago.pListObjRef = ListObjRef
+                    Pago.lblInformacionBeneficio.Text = lBeneficio
+                    Pago.lblTipoPeriodo.Text = lTipoPeriodo
                     'Pago.Cargar = New frmGeneraPago.Operar(AddressOf CargaResumenDescuento)
                     Pago.ShowDialog()
                     Pago.Dispose()

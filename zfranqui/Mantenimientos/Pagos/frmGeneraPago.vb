@@ -3,10 +3,8 @@
 Public Class frmGeneraPago
 
     Public pObj As clsBeDescuento_det
-    'Public pListObjEnc As List(Of clsBePago_enc)
-    '
-    Public pListObjRef As List(Of clsBeDescuento_ref)
     Public pListObjDet As List(Of clsBePago_det)
+    Public pListObjRef As List(Of clsBeDescuento_ref)
 
     Private Sub CargarCuotas()
 
@@ -83,6 +81,7 @@ Public Class frmGeneraPago
                 If lIndex >= 0 Then
                     pListObjDet(lIndex).MontoAbono = txtAbono.Value
                     setAbono(pListObjDet(lIndex).IdDescuentoRef, pListObjDet(lIndex).MontoAbono)
+                    pListObjRef(lIndex).Abonado = pListObjDet(lIndex).MontoAbono
                 Else
                     Dim Obj As New clsBePago_det
                     Obj.IdDescuentoEnc = pObj.IdDescuentoEnc
@@ -101,10 +100,10 @@ Public Class frmGeneraPago
                     setAbono(Obj.IdDescuentoRef, Obj.MontoAbono)
 
                     Dim ObjR As New clsBeDescuento_ref
-                    ObjR.IdDescuentoEnc = Obj.IdDescuentoEnc
-                    ObjR.IdDescuentoDet = Obj.IdDescuentoDet
-                    ObjR.IdDescuentoRef = Obj.IdDescuentoRef
-                    ObjR.Abonado = Obj.MontoAbono
+                    ObjR = clsLnDescuento_ref.GetSingle(Obj.IdDescuentoEnc, Obj.IdDescuentoDet, Obj.IdDescuentoRef)
+                    If ObjR IsNot Nothing Then
+                        ObjR.Abonado += Obj.MontoAbono
+                    End If
 
                     If Obj.MontoAbono = Obj.MontoCuota Then
                         ObjR.Pagada = True

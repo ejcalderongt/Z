@@ -316,7 +316,6 @@ Public Class clsLnDescuento_ref
             Upd.Add("iddescuentoref", "@iddescuentoref", "F")
             Upd.Add("abonado", "@abonado", "F")
             Upd.Add("pagada", "@pagada", "F")
-            Upd.Add("anulada", "@anulada", "F")
             Upd.Where("IdDescuentoEnc = @IdDescuentoEnc " & _
                 "AND IdDescuentoDet = @IdDescuentoDet " & _
                 "AND IdDescuentoRef = @IdDescuentoRef")
