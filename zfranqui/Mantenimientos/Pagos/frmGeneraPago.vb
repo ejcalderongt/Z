@@ -22,10 +22,11 @@ Public Class frmGeneraPago
                 DTT.Columns.Add("IdDescuentoRef", GetType(Integer))
                 DTT.Columns.Add("No. Cuota", GetType(Integer))
                 DTT.Columns.Add("Abonado", GetType(Double))
+                DTT.Columns.Add("setAbonado", GetType(Double))
                 DTT.Columns.Add("Monto", GetType(Double))
                 DTT.Columns.Add("Pagada", GetType(Boolean))
                 DTT.Columns.Add("Fecha Cobro", GetType(DateTime))
-                DTT.Columns.Add("IsNew", GetType(Boolean))
+                'DTT.Columns.Add("IsNew", GetType(Boolean))
                 Dim DT As DataTable = clsLnDescuento_ref.GetCuotasByBeneficio(pObj)
                 For Each r As DataRow In DT.Rows
                     Dim lRow As DataRow = DTT.NewRow
@@ -33,21 +34,22 @@ Public Class frmGeneraPago
                     lRow(0) = r(0)
                     lRow(1) = r(1)
                     lRow(2) = lAbonado
-                    lRow(3) = r(3)
-                    lRow(4) = r(4)
-                    lRow(5) = r(5)
-                    If lAbonado > 0 Then
-                        lRow(6) = True
-                    Else
-                        lRow(6) = False
-                    End If
+                    lRow(3) = lAbonado
+                    lRow(4) = r(3)
+                    lRow(5) = r(4)
+                    lRow(6) = r(5)
+                    'If lAbonado > 0 Then
+                    '    lRow(7) = True
+                    'Else
+                    '    lRow(7) = False
+                    'End If
                     DTT.Rows.Add(lRow)
                 Next
 
                 Dgrid.DataSource = DTT
                 If GridView1.RowCount > 0 Then
                     GridView1.Columns("IdDescuentoRef").Visible = False
-                    GridView1.Columns("IsNew").Visible = False
+                    GridView1.Columns("setAbonado").Visible = False
                 End If
             End If
 
@@ -73,7 +75,7 @@ Public Class frmGeneraPago
                 txtCuota.Tag = Dr.Item("IdDescuentoRef")
                 txtCuota.Value = Dr.Item("No. Cuota")
                 txtMontoCancelar.Value = Dr.Item("Monto")
-                txtAbono.Tag = Dr.Item("IsNew")
+                txtAbono.Tag = Dr.Item("setAbonado")
                 txtAbono.Value = Dr.Item("Abonado")
             End If
 
@@ -117,9 +119,9 @@ Public Class frmGeneraPago
                                                    And b.IdDescuentoDet = pObj.IdDescuentoDet _
                                                    And b.IdDescuentoRef = CInt(txtCuota.Tag))
                 If lIndex >= 0 Then
-                    pListObjDet(lIndex).MontoAbono = txtAbono.Value
-                    setAbono(pListObjDet(lIndex).IdDescuentoRef, pListObjDet(lIndex).MontoAbono)
+                    pListObjDet(lIndex).MontoAbono = txtAbono.Value + txtAbono.Tag
                     pListObjRef(lIndex).Abonado = pListObjDet(lIndex).MontoAbono
+                    setAbono(pListObjDet(lIndex).IdDescuentoRef, pListObjDet(lIndex).MontoAbono)
                 Else
                     Dim Obj As New clsBePago_det
                     Obj.IdDescuentoEnc = pObj.IdDescuentoEnc
@@ -128,14 +130,13 @@ Public Class frmGeneraPago
                     Obj.IdBeneficio = pObj.Beneficio.IdBeneficio
                     Obj.NoCuota = txtCuota.Value
                     Obj.MontoCuota = txtMontoCancelar.Value
-                    Obj.MontoAbono = txtAbono.Value
+                    Obj.MontoAbono = txtAbono.Value - txtAbono.Tag
                     Obj.Fec_agr = Now
                     Obj.User_agr = gUsuario.IdUsuario
                     Obj.Fec_mod = Now
                     Obj.User_mod = gUsuario.IdUsuario
                     Obj.IsNew = True
                     pListObjDet.Add(Obj)
-                    setAbono(Obj.IdDescuentoRef, Obj.MontoAbono)
 
                     Dim ObjR As New clsBeDescuento_ref
                     ObjR = clsLnDescuento_ref.GetSingle(Obj.IdDescuentoEnc, Obj.IdDescuentoDet, Obj.IdDescuentoRef)
@@ -143,13 +144,14 @@ Public Class frmGeneraPago
                         ObjR.Abonado += Obj.MontoAbono
                     End If
 
-                    If Obj.MontoAbono = Obj.MontoCuota Then
+                    If ObjR.Abonado = Obj.MontoCuota Then
                         ObjR.Pagada = True
                     Else
                         ObjR.Pagada = False
                     End If
                     ObjR.IsNew = False
                     pListObjRef.Add(ObjR)
+                    setAbono(Obj.IdDescuentoRef, ObjR.Abonado)
 
                 End If
             End If
