@@ -158,34 +158,13 @@ Partial Public Class clsLnDescuento_enc
                     " usuario AS usuario_1 ON descuento_enc.user_mod = usuario_1.IdUsuario " & _
                     " WHERE descuento_enc.IdDescuentoEnc=@IdDescuentoEnc"
 
-            'vSQL = " SELECT descuento_enc.IdDescuentoEnc, descuento_enc.IdCEF, descuento_enc.IdFranquiciado, descuento_enc.fec_agr, descuento_enc.fec_mod, " & _
-            '        " descuento_enc.user_agr, descuento_enc.user_mod, descuento_enc.IdTipoDescuento, tipodescuento.Nombre AS NomTipoDescuento, " & _
-            '        " franquiciado.Codigo AS CodigoFrnquiciado, franquiciado.Nombres AS NomFranquiciado, franquiciado.Apellidos AS ApeFranquiciado,  " & _
-            '        " cef.Codigo AS CodigoCEF, cef.Descripcion AS NomCEF, usuario_1.Nombre AS NomUsuarioModifico, usuario.Nombre AS NomUsuarioAgrego " & _
-            '        " FROM   descuento_enc INNER JOIN " & _
-            '        " cef ON descuento_enc.IdCEF = cef.IdCef INNER JOIN " & _
-            '        " franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado INNER JOIN " & _
-            '        " tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento INNER JOIN " & _
-            '        " usuario ON descuento_enc.user_agr = usuario.IdUsuario INNER JOIN " & _
-            '        " usuario AS usuario_1 ON descuento_enc.user_mod = usuario_1.IdUsuario " & _
-            '        " WHERE descuento_enc.IdCef=@IdCef AND descuento_enc.IdTipoDescuento=@IdTipoDescuento AND descuento_enc.IdFranquiciado=@IdFranquiciado"
-
-            'If pSeleccionado Then
-            '    vSQL += " AND descuento_enc.IdDescuentoEnc=@IdDescuentoEnc"
-            'End If
 
             Dim cnn As New MySqlConnection(BD.CadenaConexion)
             Dim cmd As New MySqlCommand(vSQL, cnn)
             cmd.CommandType = CommandType.Text
 
             Dim dad As New MySqlDataAdapter(cmd)
-            'If pSeleccionado Then
             dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOENC", oBeDescuento_enc.IdDescuentoEnc))
-            'End If
-
-            'dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IdCef", oBeDescuento_enc.CEF.IdCef))
-            'dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IdTipoDescuento", oBeDescuento_enc.IdTipoDescuento))
-            'dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IdFranquiciado", oBeDescuento_enc.Franquiciado.IdFranquiciado))
 
             Dim dt As New DataTable
             dad.Fill(dt)
@@ -272,6 +251,98 @@ Partial Public Class clsLnDescuento_enc
         Catch ex As Exception
             Throw ex
         End Try
+
+    End Function
+
+    Public Shared Function GetAllByCefFranquiciadoResumen(ByVal pIdCef As Integer, ByVal pIdFranquiciado As Integer) As DataTable
+
+        Dim lTable As New DataTable("Result")
+
+        Try
+            Dim lSQl As String = String.Format("SELECT det.IdDescuentoEnc,det.IdDescuentoDet,det.IdBeneficio,b.Nombre,b.Modelo," _
+                                             & "b.NoPlaca AS 'No. Placa', b.NoChasis AS 'No. Chasis', b.NumeroTelefono AS 'No. Telefono', b.EmpresaTelco AS Empresa, det.Cuotas, det.MontoTotal AS 'Monto Total', " _
+                                             & "tp.Nombre AS Periodo " _
+                                             & "FROM descuento_enc AS enc  " _
+                                             & "INNER JOIN descuento_det AS det ON enc.IdDescuentoEnc = det.IdDescuentoEnc " _
+                                             & "INNER JOIN beneficio AS b ON det.IdBeneficio = b.IdBeneficio " _
+                                             & "INNER JOIN tipodescuento AS tp ON enc.IdTipoDescuento = tp.IdTipoDescuento " _
+                                             & "WHERE enc.IdCEF={0} AND enc.IdFranquiciado={1}", pIdCef, pIdFranquiciado)
+
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+                Using lDataAdapter As New MySqlDataAdapter(lSQl, lConnection)
+                    lDataAdapter.SelectCommand.CommandType = CommandType.Text
+                    lDataAdapter.Fill(lTable)
+                End Using
+            End Using
+            Return lTable
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function GetAllByCefFranquiciadoCuota(ByVal pIdCef As Integer, ByVal pIdFranquiciado As Integer) As DataTable
+
+        Dim lTable As New DataTable("Result")
+
+        Try
+            Dim lSQl As String = String.Format("SELECT det.IdDescuentoEnc,det.IdDescuentoDet,ref.IdDescuentoRef, " _
+                                             & "det.IdBeneficio,b.Nombre,b.Modelo,b.NoChasis AS Chasis,b.NoPlaca AS Placa," _
+                                             & "b.NumeroTelefono AS 'No. Telefono',b.EmpresaTelco AS Empresa,ref.NoCuota AS 'No. Cuota',ref.Monto," _
+                                             & "ref.Abonado,det.MontoTotal AS 'Monto Total',tp.Nombre AS 'Tipo Periodo' " _
+                                             & "FROM descuento_enc AS enc " _
+                                             & "INNER JOIN descuento_det AS det ON enc.IdDescuentoEnc = det.IdDescuentoEnc " _
+                                             & "INNER JOIN descuento_ref AS ref ON det.IdDescuentoEnc = ref.IdDescuentoEnc " _
+                                             & "INNER JOIN beneficio AS b ON det.IdBeneficio = b.IdBeneficio " _
+                                             & "INNER JOIN tipodescuento AS tp ON enc.IdTipoDescuento = tp.IdTipoDescuento " _
+                                             & "AND det.IdDescuentoDet = ref.IdDescuentoDet " _
+                                             & "WHERE Idcef={0} AND IdFranquiciado={1} AND ref.Anulada=0 " _
+                                             & "ORDER BY enc.IdTipoDescuento", pIdCef, pIdFranquiciado)
+
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+                Using lDataAdapter As New MySqlDataAdapter(lSQl, lConnection)
+                    lDataAdapter.SelectCommand.CommandType = CommandType.Text
+                    lDataAdapter.Fill(lTable)
+                End Using
+            End Using
+            Return lTable
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function AnularDescuento(ByVal Obj As clsBeDescuento_enc) As Boolean
+
+        AnularDescuento = False
+
+        Dim cnn As New MySqlConnection(BD.CadenaConexion)
+        Dim lTrans As MySqlTransaction = Nothing
+
+        Try
+
+            cnn.Open()
+
+            lTrans = cnn.BeginTransaction
+
+            Dim Enc As New clsLnDescuento_enc
+            Enc.Eliminar(Obj, cnn, lTrans)
+
+            For Each D As clsBeDescuento_det In Obj.Detalle
+                clsLnDescuento_ref.AnularDetalleDescuento(D, cnn, lTrans)
+            Next
+
+            lTrans.Commit()
+
+            AnularDescuento = True
+
+        Catch ex As Exception
+            If Not lTrans Is Nothing Then lTrans.Rollback()
+            MsgBox(ex.Message)
+        End Try
+
 
     End Function
 

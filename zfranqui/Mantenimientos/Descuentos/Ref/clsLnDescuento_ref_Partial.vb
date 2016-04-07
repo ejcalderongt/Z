@@ -1,4 +1,7 @@
-﻿Partial Public Class clsLnDescuento_ref
+﻿Imports MySql.Data.MySqlClient
+Imports MySql.Data
+
+Partial Public Class clsLnDescuento_ref
 
     Public Shared Function GetAllByDetalle(ByVal pIdDescuentoEnc As Integer, ByVal pIdDescuentoDet As Integer) As List(Of clsBeDescuento_ref)
 
@@ -87,7 +90,8 @@
             'Validacion y estandarización de los datos
             Using lCnn As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
 
-                Dim lSQL As String = String.Format("SELECT b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
+                Dim lSQL As String = String.Format("SELECT r.IdDescuentoEnc, r.IdDescuentoDet, r.IdDescuentoRef, r.IdBeneficio, " _
+                                                 & " b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
                                                  & " b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, r.FechaCobro, r.NoCuota, r.Monto, " _
                                                  & "r.Abonado, det.MontoTotal, r.pagada " _
                                                  & "FROM descuento_ref AS r " _
@@ -95,7 +99,8 @@
                                                  & "AND r.IdDescuentoDet = det.IdDescuentoDet " _
                                                  & "INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " _
                                                  & "INNER JOIN TipoBeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " _
-                                                 & "WHERE r.IdDescuentoEnc={0}", pIdDescuentoEnc)
+                                                 & "WHERE r.IdDescuentoEnc={0} AND r.Anulada = 0 ", pIdDescuentoEnc)
+
 
                 'Acceso a los datos.
                 Using lDTA As New MySql.Data.MySqlClient.MySqlDataAdapter(lSQL, lCnn)
@@ -116,6 +121,11 @@
                             If lRow("Nombre") IsNot DBNull.Value AndAlso lRow("Nombre") IsNot Nothing Then
 
                                 Obj.Beneficio = New clsBeBeneficio
+                                Obj.IdDescuentoEnc = CType(lRow("IdDescuentoEnc"), System.Int32)
+                                Obj.IdDescuentoDet = CType(lRow("IdDescuentoDet"), System.Int32)
+                                Obj.IdDescuentoRef = CType(lRow("IdDescuentoRef"), System.Int32)
+                                Obj.IdBeneficio = CType(lRow("IdBeneficio"), System.Int32)
+
                                 Obj.Beneficio.Nombre = CType(lRow("Nombre"), System.String)
 
                                 If lRow("Modelo") IsNot DBNull.Value AndAlso lRow("Modelo") IsNot Nothing Then
@@ -195,7 +205,7 @@
             Return lReturnList
 
         Catch ex As Exception
-            Throw ex
+            MsgBox("GetAllByEncabezado " & ex.Message, MsgBoxStyle.Exclamation, "Error")
         End Try
 
     End Function
@@ -274,6 +284,164 @@
 
         Catch ex As Exception
             MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function TienePago(ByVal DetRef As clsBeDescuento_ref) As Boolean
+
+        TienePago = False
+
+        Dim DT As New DataTable
+
+        Try
+
+            vSQL = "select * from pago_det where IdDescuentoEnc = " & DetRef.IdDescuentoEnc & _
+                " and IdDescuentoDet =" & DetRef.IdDescuentoDet & _
+                " and IdDescuentoRef =" & DetRef.IdDescuentoRef & _
+                " and IdBeneficio = " & DetRef.IdBeneficio
+            BD.OpenDT(DT, vSQL)
+
+            TienePago = DT.Rows.Count > 0
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function TienePago(ByVal DescuentoDet As clsBeDescuento_det) As Boolean
+
+        TienePago = False
+
+        Dim DT As New DataTable
+
+        Try
+
+            vSQL = "select * from pago_det where IdDescuentoEnc = " & DescuentoDet.IdDescuentoEnc & _
+                " and IdDescuentoDet =" & DescuentoDet.IdDescuentoDet & _
+                " and IdBeneficio = " & DescuentoDet.Beneficio.IdBeneficio
+            BD.OpenDT(DT, vSQL)
+
+            TienePago = DT.Rows.Count > 0
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function AnularCuota(ByVal DetRef As clsBeDescuento_ref) As Boolean
+
+        AnularCuota = False
+
+        Dim DT As New DataTable
+
+        Try
+
+
+            Upd.Init("descuento_ref")
+            Upd.Add("anulada", "1", "N")
+            Upd.Where("IdDescuentoEnc=" & DetRef.IdDescuentoEnc & _
+                      " and IdDescuentoDet =" & DetRef.IdDescuentoDet & _
+                      " and IdDescuentoRef =" & DetRef.IdDescuentoRef & _
+                      " and IdBeneficio =" & DetRef.IdBeneficio)
+            BD.Xcute(Upd.SQL())
+
+            AnularCuota = True
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
+    Public Shared Function AnularDetalleDescuento(ByVal Det As clsBeDescuento_det) As Boolean
+
+        AnularDetalleDescuento = False
+
+        Dim DT As New DataTable
+        Dim lConnection As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
+        Dim lTransaction As MySql.Data.MySqlClient.MySqlTransaction = Nothing
+
+        Try
+
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand()
+
+            lConnection.Open()
+            lTransaction = lConnection.BeginTransaction()
+
+            vSQL = "DELETE FROM DESCUENTO_DET " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, lConnection)
+            cmd.Transaction = lTransaction
+            cmd.ExecuteNonQuery()
+
+            vSQL = "DELETE FROM DESCUENTO_REF " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, lConnection)
+            cmd.Transaction = lTransaction
+            cmd.ExecuteNonQuery()
+
+            AnularDetalleDescuento = True
+
+            lTransaction.Commit()
+            lConnection.Close()
+
+        Catch ex As Exception
+            lTransaction.Rollback()
+            lConnection.Dispose()
+            MsgBox(ex.Message)
+        Finally
+            lConnection.Dispose()
+            lTransaction.Dispose()
+        End Try
+
+    End Function
+
+    Public Shared Function AnularDetalleDescuento(ByVal Det As clsBeDescuento_det, Optional ByVal pConection As MySqlConnection = Nothing, Optional ByVal pTransaction As MySqlTransaction = Nothing) As Boolean
+
+        AnularDetalleDescuento = False
+
+        Dim DT As New DataTable
+
+        Try
+
+            Dim cmd As New MySqlCommand()
+
+            vSQL = "DELETE FROM DESCUENTO_DET " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, pConection)
+            cmd.Transaction = pTransaction
+            cmd.ExecuteNonQuery()
+
+            vSQL = "DELETE FROM DESCUENTO_REF " & _
+                " WHERE IDDESCUENTOENC =" & Det.IdDescuentoEnc & _
+                " AND IDDESCUENTODET =" & Det.IdDescuentoDet & _
+                " AND IDBENEFICIO =" & Det.Beneficio.IdBeneficio
+
+            cmd.CommandType = CommandType.Text
+            cmd = New MySqlClient.MySqlCommand(vSQL, pConection)
+            cmd.Transaction = pTransaction
+            cmd.ExecuteNonQuery()
+
+            AnularDetalleDescuento = True
+
+        Catch ex As Exception
+            Throw ex
         End Try
 
     End Function

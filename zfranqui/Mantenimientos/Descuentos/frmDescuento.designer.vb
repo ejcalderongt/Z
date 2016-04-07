@@ -212,7 +212,7 @@ Partial Class frmDescuento
         '
         'mnuEliminar
         '
-        Me.mnuEliminar.Caption = "Eliminar"
+        Me.mnuEliminar.Caption = "Anular"
         Me.mnuEliminar.Glyph = CType(resources.GetObject("mnuEliminar.Glyph"), System.Drawing.Image)
         Me.mnuEliminar.Id = 3
         Me.mnuEliminar.LargeGlyph = CType(resources.GetObject("mnuEliminar.LargeGlyph"), System.Drawing.Image)
@@ -501,8 +501,8 @@ Partial Class frmDescuento
         '
         Me.mnuEliminarCuota.Image = Global.zfranqui.My.Resources.Resources._error
         Me.mnuEliminarCuota.Name = "mnuEliminarCuota"
-        Me.mnuEliminarCuota.Size = New System.Drawing.Size(78, 20)
-        Me.mnuEliminarCuota.Text = "Eliminar"
+        Me.mnuEliminarCuota.Size = New System.Drawing.Size(70, 20)
+        Me.mnuEliminarCuota.Text = "Anular"
         '
         'GridCuota
         '
@@ -537,7 +537,7 @@ Partial Class frmDescuento
         Me.TaDetalle.Padding = New System.Windows.Forms.Padding(3)
         Me.TaDetalle.Size = New System.Drawing.Size(989, 275)
         Me.TaDetalle.TabIndex = 0
-        Me.TaDetalle.Text = "Detalles de Descuento"
+        Me.TaDetalle.Text = "Detalle de Descuentos"
         '
         'GrpCliente
         '

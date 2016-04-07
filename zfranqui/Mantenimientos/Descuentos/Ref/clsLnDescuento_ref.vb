@@ -279,4 +279,84 @@ Public Class clsLnDescuento_ref
 
     End Function
 
+
+    Public Shared Function GetCuotasByBeneficio(ByVal pObj As clsBeDescuento_det) As DataTable
+
+        Dim lTable As New DataTable("Result")
+
+        Try
+            Dim lSQl As String = String.Format("SELECT IdDescuentoRef,NoCuota AS 'No. Cuota',Abonado,Monto,Pagada,FechaCobro AS 'Fecha Cobro' FROM descuento_ref " _
+                                             & "WHERE IdDescuentoEnc={0} AND IdDescuentoDet={1} AND IdBeneficio={2}", _
+                                             pObj.IdDescuentoEnc, pObj.IdDescuentoDet, pObj.Beneficio.IdBeneficio)
+
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+                Using lDataAdapter As New MySqlDataAdapter(lSQl, lConnection)
+                    lDataAdapter.SelectCommand.CommandType = CommandType.Text
+                    lDataAdapter.Fill(lTable)
+                End Using
+            End Using
+            Return lTable
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function ActualizarByPago(ByRef oBeDescuento_ref As clsBeDescuento_ref, Optional ByVal pConection As MySqlConnection = Nothing, Optional ByVal pTransaction As MySqlTransaction = Nothing) As Integer
+
+        Dim cnn As New MySqlConnection(BD.CadenaConexion)
+        Dim cmd As New MySqlCommand()
+
+        Try
+
+            Upd.Init("descuento_ref")
+            Upd.Add("iddescuentoenc", "@iddescuentoenc", "F")
+            Upd.Add("iddescuentodet", "@iddescuentodet", "F")
+            Upd.Add("iddescuentoref", "@iddescuentoref", "F")
+            Upd.Add("abonado", "@abonado", "F")
+            Upd.Add("pagada", "@pagada", "F")
+            Upd.Add("anulada", "@anulada", "F")
+            Upd.Where("IdDescuentoEnc = @IdDescuentoEnc " & _
+                "AND IdDescuentoDet = @IdDescuentoDet " & _
+                "AND IdDescuentoRef = @IdDescuentoRef")
+
+            Dim sp As String = Upd.SQL()
+
+            Dim EsTransaccional As Boolean = (Not pConection Is Nothing AndAlso Not pTransaction Is Nothing)
+
+            cmd.CommandType = CommandType.Text
+
+
+            If EsTransaccional Then
+                cmd = New MySqlClient.MySqlCommand(sp, pConection)
+                cmd.Transaction = pTransaction
+            Else
+                cmd = New MySqlClient.MySqlCommand(sp, cnn)
+                cnn.Open()
+            End If
+
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOENC", oBeDescuento_ref.IdDescuentoEnc))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTODET", oBeDescuento_ref.IdDescuentoDet))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOREF", oBeDescuento_ref.IdDescuentoRef))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@ABONADO", oBeDescuento_ref.Abonado))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@PAGADA", oBeDescuento_ref.Pagada))
+
+            Dim rowsAffected As Integer = 0
+            rowsAffected = cmd.ExecuteNonQuery()
+            Return rowsAffected
+
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If cnn.State = ConnectionState.Open Then cnn.Close()
+            cnn.Dispose()
+            cmd.Dispose()
+        End Try
+
+    End Function
+
+
+
 End Class
