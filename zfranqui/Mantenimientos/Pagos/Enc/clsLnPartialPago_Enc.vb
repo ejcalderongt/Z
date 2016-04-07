@@ -28,6 +28,8 @@ Partial Public Class clsLnPago_enc
             dad.Dispose()
             dt.Dispose()
 
+            'liberar recursos
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -153,7 +155,7 @@ Partial Public Class clsLnPago_enc
             Return Nothing
 
         Catch ex As Exception
-            Throw ex
+            MsgBox(ex.Message)
         End Try
 
     End Function
@@ -179,7 +181,7 @@ Partial Public Class clsLnPago_enc
             Return lTable
 
         Catch ex As Exception
-            Throw ex
+            MsgBox(ex.Message)
         End Try
 
     End Function
