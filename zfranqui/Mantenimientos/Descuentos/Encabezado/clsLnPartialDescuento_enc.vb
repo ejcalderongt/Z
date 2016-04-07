@@ -314,4 +314,36 @@ Partial Public Class clsLnDescuento_enc
 
     End Function
 
+    Public Shared Function AnularDescuento(ByVal Obj As clsBeDescuento_enc) As Boolean
+
+        AnularDescuento = False
+
+        Dim cnn As New MySqlConnection(BD.CadenaConexion)
+        Dim lTrans As MySqlTransaction = Nothing
+
+        Try
+
+            cnn.Open()
+
+            lTrans = cnn.BeginTransaction
+
+            Dim Enc As New clsLnDescuento_enc
+            Enc.Eliminar(Obj, cnn, lTrans)
+
+            For Each D As clsBeDescuento_det In Obj.Detalle
+                clsLnDescuento_ref.AnularDetalleDescuento(D, cnn, lTrans)
+            Next
+
+            lTrans.Commit()
+
+            AnularDescuento = True
+
+        Catch ex As Exception
+            If Not lTrans Is Nothing Then lTrans.Rollback()
+            MsgBox(ex.Message)
+        End Try
+
+
+    End Function
+
 End Class

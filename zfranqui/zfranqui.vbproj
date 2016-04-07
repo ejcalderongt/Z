@@ -117,6 +117,8 @@
     <Reference Include="DevExpress.Utils.v14.1" />
     <Reference Include="DevExpress.XtraBars.v14.1, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraEditors.v14.1" />
+    <Reference Include="DevExpress.XtraGauges.v14.1.Core, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraGauges.v14.1.Win, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
@@ -419,6 +421,18 @@
     <Compile Include="Reportes\Descuento\DsetRep.vb">
       <DependentUpon>DsetRep.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Descuento\frmRepSaldoVehiculos.Designer.vb">
+      <DependentUpon>frmRepSaldoVehiculos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepSaldoVehiculos.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepEstadoCuentaDef.Designer.vb">
+      <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepEstadoCuentaDef.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Reportes\Descuento\frmRepDescuentoFran.Designer.vb">
       <DependentUpon>frmRepDescuentoFran.vb</DependentUpon>
     </Compile>
@@ -554,6 +568,14 @@
     <EmbeddedResource Include="Principales\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepSaldoVehiculos.resx">
+      <DependentUpon>frmRepSaldoVehiculos.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepEstadoCuentaDef.resx">
+      <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Descuento\frmRepDescuentoFran.resx">
       <DependentUpon>frmRepDescuentoFran.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -564,6 +586,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Descuento\frmRepDescuentoDet.resx">
       <DependentUpon>frmRepDescuentoDet.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\frmRepView.resx">
       <DependentUpon>frmRepView.vb</DependentUpon>

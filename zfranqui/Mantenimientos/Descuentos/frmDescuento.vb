@@ -38,7 +38,8 @@ Public Class frmDescuento
                 If GuardarDatos() Then
                     XtraMessageBox.Show("Se guardó el registro.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
                     If XtraMessageBox.Show("¿Desea Imprimir el Reporte?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                        ImprimirReporte()
+                        'ImprimirReporte()
+                        ImprimirReporteGrid()
                         Me.Close()
                     End If
                 End If
@@ -183,6 +184,11 @@ Public Class frmDescuento
 
             For Each D As clsBeDescuento_det In pObjEnc.Detalle
 
+                If clsLnDescuento_ref.TienePago(D) Then
+                    DescuentoTieneAlgunPago = True
+                    Exit Function
+                End If
+
             Next
 
         Catch ex As Exception
@@ -194,10 +200,18 @@ Public Class frmDescuento
     Private Sub mnuEliminar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuEliminar.ItemClick
 
         If CBool(MsgBox("¿Anular el Descuento?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes) Then
-            If ObjLNenc.Eliminar(pObjEnc) > 0 Then
-                MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
-                Me.Close()
+
+            If Not DescuentoTieneAlgunPago() Then
+
+                If clsLnDescuento_enc.AnularDescuento(pObjEnc) Then
+                    MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
+                    Me.Close()
+                End If
+                
+            Else
+                MsgBox("Ya se han realizado pagos sobre los beneficios de éste descuento, no se puede anular el registro", MsgBoxStyle.Exclamation, Me.Text)
             End If
+
         End If
 
     End Sub
@@ -574,19 +588,7 @@ Public Class frmDescuento
 
             Try
 
-                Dim lSQL As String = String.Format("SELECT b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
-                                                   & " b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, r.FechaCobro, r.NoCuota, r.Monto, " _
-                                                   & "r.Abonado, r.pagada, tipodescuento.Nombre AS TipoDescuento " _
-                                                   & "FROM descuento_ref AS r " _
-                                                   & "INNER JOIN descuento_det AS det ON r.IdDescuentoEnc= det.IdDescuentoEnc " _
-                                                   & "AND r.IdDescuentoDet = det.IdDescuentoDet " _
-                                                   & "INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " _
-                                                   & "INNER JOIN TipoBeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " _
-                                                   & "INNER JOIN descuento_enc AS enc ON det.IdDescuentoEnc = enc.IdDescuentoEnc " _
-                                                   & "INNER JOIN tipodescuento ON enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " _
-                                                   & "WHERE r.IdDescuentoEnc={0}", pObjEnc.IdDescuentoEnc)
-
-                Dim repG As New frmRepDescuentoDet(lSQL, frmRepDescuentoDet.TipoReporte.CuotasDetalleDescuento)
+                Dim repG As New frmRepDescuentoDet(frmRepDescuentoDet.TipoReporte.CuotasDetalleDescuento)
                 repG.DescuentoEnc = pObjEnc
                 repG.ShowDialog()
                 repG.Dispose()

@@ -1,4 +1,4 @@
-﻿Public Class frmRepDescuentoFran
+﻿Public Class frmRepSaldoVehiculos
 
     Enum TipoReporte As Integer
 
@@ -140,7 +140,8 @@
                    "   AND r.IdDescuentoDet = descuento_det.IdDescuentoDet " & _
                    "   AND r.IdBeneficio = descuento_det.IdBeneficio " & _
                    "   WHERE cast(descuento_enc.fec_agr AS DATE) BETWEEN " & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
-                   "   AND " & FormatoFechas.fFecha(dtpFechaHasta.Value)
+                   "   AND " & FormatoFechas.fFecha(dtpFechaHasta.Value) & _
+                   "   AND tipobeneficio.EsVehiculo = 1 "
 
             If txtFiltro.Text.Trim <> "" Then
                 vSQL += "AND (franquiciado.Codigo LIKE '%" & txtFiltro.Text.Trim & "%'" & _
@@ -174,8 +175,7 @@
                     "	descuento_enc.fec_agr, " & _
                     "	descuento_det.MontoTotal "
 
-            'Se hace a traves del campo activo cuando un descuento se pagó en su totalidad se actualiza la bandera activo = false
-            'vSQL += " HAVING descuento_det.MontoTotal > SUM(r.Abonado) "
+            vSQL += ""
 
             Dim DT As New DataTable
             BD.OpenDT(DT, vSQL)
