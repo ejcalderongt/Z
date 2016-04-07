@@ -83,7 +83,7 @@ Public Class frmPago
                 If GuardarDatos() Then
                     MsgBox("Se guardó el registro", MsgBoxStyle.Information, Me.Text)
                     If MessageBox.Show("¿Desea Imprimir el Reporte?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                        'ImprimirReporte()
+                        ImprimirReporte()
                     End If
                     Me.Close()
                 End If
@@ -616,12 +616,21 @@ Public Class frmPago
         Try
 
             If GridViewDescuento.RowCount > 0 Then
-                'ImprimirReporte()
+                ImprimirReporte()
             End If
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
         End Try
+
+    End Sub
+
+    Private Sub ImprimirReporte()
+
+        Dim Reporte As New frmRepPagoRealizado
+        Reporte.pObjPagoEnc = pObjBeEnc
+        Reporte.ShowDialog()
+        Reporte.Dispose()
 
     End Sub
 

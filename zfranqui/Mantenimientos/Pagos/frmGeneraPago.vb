@@ -130,7 +130,7 @@ Public Class frmGeneraPago
                     Obj.IdBeneficio = pObj.Beneficio.IdBeneficio
                     Obj.NoCuota = txtCuota.Value
                     Obj.MontoCuota = txtMontoCancelar.Value
-                    Obj.MontoAbono = txtAbono.Value - txtAbono.Tag
+                    Obj.MontoAbono = txtAbono.Value
                     Obj.Fec_agr = Now
                     Obj.User_agr = gUsuario.IdUsuario
                     Obj.Fec_mod = Now

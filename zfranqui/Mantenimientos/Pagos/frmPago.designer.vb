@@ -205,6 +205,7 @@ Partial Class frmPago
         Me.mnuEliminar.Id = 3
         Me.mnuEliminar.LargeGlyph = CType(resources.GetObject("mnuEliminar.LargeGlyph"), System.Drawing.Image)
         Me.mnuEliminar.Name = "mnuEliminar"
+        Me.mnuEliminar.Visibility = DevExpress.XtraBars.BarItemVisibility.Never
         '
         'cmdImprimir1
         '
