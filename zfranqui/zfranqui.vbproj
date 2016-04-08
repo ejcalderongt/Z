@@ -421,6 +421,12 @@
     <Compile Include="Reportes\Descuento\DsetRep.vb">
       <DependentUpon>DsetRep.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Descuento\frmRepEstadoCuentaDef.Designer.vb">
+      <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepEstadoCuentaDef.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Reportes\Descuento\frmRepSaldoVehiculos.Designer.vb">
       <DependentUpon>frmRepSaldoVehiculos.vb</DependentUpon>
     </Compile>

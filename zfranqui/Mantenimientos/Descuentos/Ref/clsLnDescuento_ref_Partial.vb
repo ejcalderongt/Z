@@ -205,7 +205,8 @@ Partial Public Class clsLnDescuento_ref
             Return lReturnList
 
         Catch ex As Exception
-            MsgBox("GetAllByEncabezado " & ex.Message, MsgBoxStyle.Exclamation, "Error")
+            'MsgBox("GetAllByEncabezado " & ex.Message, MsgBoxStyle.Exclamation, "Error")
+            Throw ex
         End Try
 
     End Function
