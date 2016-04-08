@@ -606,4 +606,18 @@ Public Class frmMenu
 
     End Sub
 
+    Private Sub mnuRepDescuentosTipo_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuRepDescuentosTipo.ItemClick
+
+        Try
+
+            Dim DescuentosDetTipo As New frmRepDescuentoTipoDet()
+            DescuentosDetTipo.ShowDialog()
+            DescuentosDetTipo.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
 End Class

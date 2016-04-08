@@ -421,6 +421,12 @@
     <Compile Include="Reportes\Descuento\DsetRep.vb">
       <DependentUpon>DsetRep.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Descuento\frmRepDescuentoTipoDet.Designer.vb">
+      <DependentUpon>frmRepDescuentoTipoDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepDescuentoTipoDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Reportes\Descuento\frmRepEstadoCuentaDef.Designer.vb">
       <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
     </Compile>
@@ -573,6 +579,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Principales\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepDescuentoTipoDet.resx">
+      <DependentUpon>frmRepDescuentoTipoDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Descuento\frmRepSaldoVehiculos.resx">
       <DependentUpon>frmRepSaldoVehiculos.vb</DependentUpon>

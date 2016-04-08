@@ -22,7 +22,7 @@ Partial Class frmRepDescuentoDet
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmRepDescuentoDet))
+        Me.components = New System.ComponentModel.Container()
         Me.dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colNombre = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -40,8 +40,9 @@ Partial Class frmRepDescuentoDet
         Me.colMonto = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colpagada = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.RepositoryItemCheckEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit()
         Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdActualizar = New DevExpress.XtraBars.BarButtonItem()
@@ -49,11 +50,10 @@ Partial Class frmRepDescuentoDet
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlRight = New DevExpress.XtraBars.BarDockControl()
-        Me.RepositoryItemCheckEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit()
         CType(Me.dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'dgrid
@@ -197,6 +197,11 @@ Partial Class frmRepDescuentoDet
         Me.colpagada.Visible = True
         Me.colpagada.VisibleIndex = 13
         '
+        'RepositoryItemCheckEdit1
+        '
+        Me.RepositoryItemCheckEdit1.AutoHeight = False
+        Me.RepositoryItemCheckEdit1.Name = "RepositoryItemCheckEdit1"
+        '
         'colTipoDescuento
         '
         Me.colTipoDescuento.FieldName = "TipoDescuento"
@@ -267,11 +272,6 @@ Partial Class frmRepDescuentoDet
         Me.barDockControlRight.Location = New System.Drawing.Point(757, 22)
         Me.barDockControlRight.Size = New System.Drawing.Size(0, 350)
         '
-        'RepositoryItemCheckEdit1
-        '
-        Me.RepositoryItemCheckEdit1.AutoHeight = False
-        Me.RepositoryItemCheckEdit1.Name = "RepositoryItemCheckEdit1"
-        '
         'frmRepDescuentoDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -284,12 +284,12 @@ Partial Class frmRepDescuentoDet
         Me.Controls.Add(Me.barDockControlTop)
         Me.Name = "frmRepDescuentoDet"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Reporte"
+        Me.Text = "Reporte: Detalle de descuentos"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.dgrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub

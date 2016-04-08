@@ -99,7 +99,6 @@ FROM            descuento_ref r INNER JOIN
                          cef ON descuento_enc.IdCEF = cef.IdCef INNER JOIN
                          descuento_det ON r.IdDescuentoEnc = descuento_det.IdDescuentoEnc AND r.IdDescuentoDet = descuento_det.IdDescuentoDet AND 
                          r.IdBeneficio = descuento_det.IdBeneficio
-WHERE        (r.IdDescuentoEnc = 1)
 GROUP BY b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, tipodescuento.Nombre, 
                          franquiciado.Codigo, franquiciado.Nombres, cef.Codigo, cef.Descripcion, descuento_enc.fec_agr, descuento_det.MontoTotal</CommandText>
                     <Parameters />
@@ -127,6 +126,51 @@ GROUP BY b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b
             </Mappings>
             <Sources />
           </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="dtDetalleDescuentosTipoServTableAdapter" GeneratorDataComponentClassName="dtDetalleDescuentosTipoServTableAdapter" Name="dtDetalleDescuentosTipoServ" UserDataComponentName="dtDetalleDescuentosTipoServTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ZETAFRANQUICIADOSConnectionString (Settings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        descuento_enc.fec_agr AS FechaDescuento, b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b.EmpresaTelco, 
+                         descuento_det.MontoTotal AS Monto, r.NoCuota, SUM(r.Abonado) AS Abonado, tipodescuento.Nombre AS TipoDescuento, CONCAT(franquiciado.Codigo, ' ', 
+                         franquiciado.Nombres) AS Franquiciado, CONCAT(cef.Codigo, ' ', cef.Descripcion) AS CEF, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio
+FROM            descuento_ref r INNER JOIN
+                         beneficio b ON r.IdBeneficio = b.IdBeneficio INNER JOIN
+                         tipobeneficio tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio INNER JOIN
+                         descuento_enc ON r.IdDescuentoEnc = descuento_enc.IdDescuentoEnc INNER JOIN
+                         tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento INNER JOIN
+                         franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado INNER JOIN
+                         cef ON descuento_enc.IdCEF = cef.IdCef INNER JOIN
+                         descuento_det ON r.IdDescuentoEnc = descuento_det.IdDescuentoEnc AND r.IdDescuentoDet = descuento_det.IdDescuentoDet AND 
+                         r.IdBeneficio = descuento_det.IdBeneficio
+GROUP BY b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, tipodescuento.Nombre, 
+                         franquiciado.Codigo, franquiciado.Nombres, cef.Codigo, cef.Descripcion, descuento_enc.fec_agr, descuento_det.MontoTotal, r.NoCuota</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="FechaDescuento" DataSetColumn="FechaDescuento" />
+              <Mapping SourceColumn="Nombre" DataSetColumn="Nombre" />
+              <Mapping SourceColumn="Modelo" DataSetColumn="Modelo" />
+              <Mapping SourceColumn="NoChasis" DataSetColumn="NoChasis" />
+              <Mapping SourceColumn="NoPlaca" DataSetColumn="NoPlaca" />
+              <Mapping SourceColumn="Motor" DataSetColumn="Motor" />
+              <Mapping SourceColumn="NumeroTelefono" DataSetColumn="NumeroTelefono" />
+              <Mapping SourceColumn="EmpresaTelco" DataSetColumn="EmpresaTelco" />
+              <Mapping SourceColumn="Monto" DataSetColumn="Monto" />
+              <Mapping SourceColumn="NoCuota" DataSetColumn="NoCuota" />
+              <Mapping SourceColumn="Abonado" DataSetColumn="Abonado" />
+              <Mapping SourceColumn="TipoDescuento" DataSetColumn="TipoDescuento" />
+              <Mapping SourceColumn="Franquiciado" DataSetColumn="Franquiciado" />
+              <Mapping SourceColumn="CEF" DataSetColumn="CEF" />
+              <Mapping SourceColumn="EsVehiculo" DataSetColumn="EsVehiculo" />
+              <Mapping SourceColumn="EsTelefono" DataSetColumn="EsTelefono" />
+              <Mapping SourceColumn="EsServicio" DataSetColumn="EsServicio" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
         </Tables>
         <Sources />
       </DataSource>
@@ -135,7 +179,7 @@ GROUP BY b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b
   <xs:element name="DsetRep" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DsetRep" msprop:Generator_UserDSName="DsetRep">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="DTDescuento" msprop:Generator_TableClassName="DTDescuentoDataTable" msprop:Generator_TableVarName="tableDTDescuento" msprop:Generator_TablePropName="DTDescuento" msprop:Generator_RowDeletingName="DTDescuentoRowDeleting" msprop:Generator_RowChangingName="DTDescuentoRowChanging" msprop:Generator_RowEvHandlerName="DTDescuentoRowChangeEventHandler" msprop:Generator_RowDeletedName="DTDescuentoRowDeleted" msprop:Generator_UserTableName="DTDescuento" msprop:Generator_RowChangedName="DTDescuentoRowChanged" msprop:Generator_RowEvArgName="DTDescuentoRowChangeEvent" msprop:Generator_RowClassName="DTDescuentoRow">
+        <xs:element name="DTDescuento" msprop:Generator_TableClassName="DTDescuentoDataTable" msprop:Generator_TableVarName="tableDTDescuento" msprop:Generator_RowChangedName="DTDescuentoRowChanged" msprop:Generator_TablePropName="DTDescuento" msprop:Generator_RowDeletingName="DTDescuentoRowDeleting" msprop:Generator_RowChangingName="DTDescuentoRowChanging" msprop:Generator_RowEvHandlerName="DTDescuentoRowChangeEventHandler" msprop:Generator_RowDeletedName="DTDescuentoRowDeleted" msprop:Generator_RowClassName="DTDescuentoRow" msprop:Generator_UserTableName="DTDescuento" msprop:Generator_RowEvArgName="DTDescuentoRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" minOccurs="0">
@@ -217,7 +261,7 @@ GROUP BY b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="dtDescuentoDetRepGrid" msprop:Generator_TableClassName="dtDescuentoDetRepGridDataTable" msprop:Generator_TableVarName="tabledtDescuentoDetRepGrid" msprop:Generator_TablePropName="dtDescuentoDetRepGrid" msprop:Generator_RowDeletingName="dtDescuentoDetRepGridRowDeleting" msprop:Generator_RowChangingName="dtDescuentoDetRepGridRowChanging" msprop:Generator_RowEvHandlerName="dtDescuentoDetRepGridRowChangeEventHandler" msprop:Generator_RowDeletedName="dtDescuentoDetRepGridRowDeleted" msprop:Generator_UserTableName="dtDescuentoDetRepGrid" msprop:Generator_RowChangedName="dtDescuentoDetRepGridRowChanged" msprop:Generator_RowEvArgName="dtDescuentoDetRepGridRowChangeEvent" msprop:Generator_RowClassName="dtDescuentoDetRepGridRow">
+        <xs:element name="dtDescuentoDetRepGrid" msprop:Generator_TableClassName="dtDescuentoDetRepGridDataTable" msprop:Generator_TableVarName="tabledtDescuentoDetRepGrid" msprop:Generator_RowChangedName="dtDescuentoDetRepGridRowChanged" msprop:Generator_TablePropName="dtDescuentoDetRepGrid" msprop:Generator_RowDeletingName="dtDescuentoDetRepGridRowDeleting" msprop:Generator_RowChangingName="dtDescuentoDetRepGridRowChanging" msprop:Generator_RowEvHandlerName="dtDescuentoDetRepGridRowChangeEventHandler" msprop:Generator_RowDeletedName="dtDescuentoDetRepGridRowDeleted" msprop:Generator_RowClassName="dtDescuentoDetRepGridRow" msprop:Generator_UserTableName="dtDescuentoDetRepGrid" msprop:Generator_RowEvArgName="dtDescuentoDetRepGridRowChangeEvent">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" minOccurs="0">
@@ -287,7 +331,7 @@ GROUP BY b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="dtDescuentoResRepGrid" msprop:Generator_TableClassName="dtDescuentoResRepGridDataTable" msprop:Generator_TableVarName="tabledtDescuentoResRepGrid" msprop:Generator_RowChangedName="dtDescuentoResRepGridRowChanged" msprop:Generator_TablePropName="dtDescuentoResRepGrid" msprop:Generator_RowDeletingName="dtDescuentoResRepGridRowDeleting" msprop:Generator_RowChangingName="dtDescuentoResRepGridRowChanging" msprop:Generator_RowEvHandlerName="dtDescuentoResRepGridRowChangeEventHandler" msprop:Generator_RowDeletedName="dtDescuentoResRepGridRowDeleted" msprop:Generator_RowClassName="dtDescuentoResRepGridRow" msprop:Generator_UserTableName="dtDescuentoResRepGrid" msprop:Generator_RowEvArgName="dtDescuentoResRepGridRowChangeEvent">
+        <xs:element name="dtDescuentoResRepGrid" msprop:Generator_TableClassName="dtDescuentoResRepGridDataTable" msprop:Generator_TableVarName="tabledtDescuentoResRepGrid" msprop:Generator_TablePropName="dtDescuentoResRepGrid" msprop:Generator_RowDeletingName="dtDescuentoResRepGridRowDeleting" msprop:Generator_RowChangingName="dtDescuentoResRepGridRowChanging" msprop:Generator_RowEvHandlerName="dtDescuentoResRepGridRowChangeEventHandler" msprop:Generator_RowDeletedName="dtDescuentoResRepGridRowDeleted" msprop:Generator_UserTableName="dtDescuentoResRepGrid" msprop:Generator_RowChangedName="dtDescuentoResRepGridRowChanged" msprop:Generator_RowEvArgName="dtDescuentoResRepGridRowChangeEvent" msprop:Generator_RowClassName="dtDescuentoResRepGridRow">
           <xs:complexType>
             <xs:sequence>
               <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" minOccurs="0">
@@ -367,6 +411,89 @@ GROUP BY b.Nombre, b.Modelo, b.NoChasis, b.NoPlaca, b.Motor, b.NumeroTelefono, b
                 </xs:simpleType>
               </xs:element>
               <xs:element name="Monto" msprop:Generator_ColumnVarNameInTable="columnMonto" msprop:Generator_ColumnPropNameInRow="Monto" msprop:Generator_ColumnPropNameInTable="MontoColumn" msprop:Generator_UserColumnName="Monto" type="xs:float" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="dtDetalleDescuentosTipoServ" msprop:Generator_TableClassName="dtDetalleDescuentosTipoServDataTable" msprop:Generator_TableVarName="tabledtDetalleDescuentosTipoServ" msprop:Generator_TablePropName="dtDetalleDescuentosTipoServ" msprop:Generator_RowDeletingName="dtDetalleDescuentosTipoServRowDeleting" msprop:Generator_RowChangingName="dtDetalleDescuentosTipoServRowChanging" msprop:Generator_RowEvHandlerName="dtDetalleDescuentosTipoServRowChangeEventHandler" msprop:Generator_RowDeletedName="dtDetalleDescuentosTipoServRowDeleted" msprop:Generator_UserTableName="dtDetalleDescuentosTipoServ" msprop:Generator_RowChangedName="dtDetalleDescuentosTipoServRowChanged" msprop:Generator_RowEvArgName="dtDetalleDescuentosTipoServRowChangeEvent" msprop:Generator_RowClassName="dtDetalleDescuentosTipoServRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="FechaDescuento" msprop:Generator_ColumnVarNameInTable="columnFechaDescuento" msprop:Generator_ColumnPropNameInRow="FechaDescuento" msprop:Generator_ColumnPropNameInTable="FechaDescuentoColumn" msprop:Generator_UserColumnName="FechaDescuento" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Nombre" msprop:Generator_ColumnVarNameInTable="columnNombre" msprop:Generator_ColumnPropNameInRow="Nombre" msprop:Generator_ColumnPropNameInTable="NombreColumn" msprop:Generator_UserColumnName="Nombre" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Modelo" msprop:Generator_ColumnVarNameInTable="columnModelo" msprop:Generator_ColumnPropNameInRow="Modelo" msprop:Generator_ColumnPropNameInTable="ModeloColumn" msprop:Generator_UserColumnName="Modelo" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NoChasis" msprop:Generator_ColumnVarNameInTable="columnNoChasis" msprop:Generator_ColumnPropNameInRow="NoChasis" msprop:Generator_ColumnPropNameInTable="NoChasisColumn" msprop:Generator_UserColumnName="NoChasis" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NoPlaca" msprop:Generator_ColumnVarNameInTable="columnNoPlaca" msprop:Generator_ColumnPropNameInRow="NoPlaca" msprop:Generator_ColumnPropNameInTable="NoPlacaColumn" msprop:Generator_UserColumnName="NoPlaca" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Motor" msprop:Generator_ColumnVarNameInTable="columnMotor" msprop:Generator_ColumnPropNameInRow="Motor" msprop:Generator_ColumnPropNameInTable="MotorColumn" msprop:Generator_UserColumnName="Motor" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="NumeroTelefono" msprop:Generator_ColumnVarNameInTable="columnNumeroTelefono" msprop:Generator_ColumnPropNameInRow="NumeroTelefono" msprop:Generator_ColumnPropNameInTable="NumeroTelefonoColumn" msprop:Generator_UserColumnName="NumeroTelefono" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="15" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EmpresaTelco" msprop:Generator_ColumnVarNameInTable="columnEmpresaTelco" msprop:Generator_ColumnPropNameInRow="EmpresaTelco" msprop:Generator_ColumnPropNameInTable="EmpresaTelcoColumn" msprop:Generator_UserColumnName="EmpresaTelco" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Monto" msprop:Generator_ColumnVarNameInTable="columnMonto" msprop:Generator_ColumnPropNameInRow="Monto" msprop:Generator_ColumnPropNameInTable="MontoColumn" msprop:Generator_UserColumnName="Monto" type="xs:float" minOccurs="0" />
+              <xs:element name="NoCuota" msprop:Generator_ColumnVarNameInTable="columnNoCuota" msprop:Generator_ColumnPropNameInRow="NoCuota" msprop:Generator_ColumnPropNameInTable="NoCuotaColumn" msprop:Generator_UserColumnName="NoCuota" type="xs:int" minOccurs="0" />
+              <xs:element name="Abonado" msprop:Generator_ColumnVarNameInTable="columnAbonado" msprop:Generator_ColumnPropNameInRow="Abonado" msprop:Generator_ColumnPropNameInTable="AbonadoColumn" msprop:Generator_UserColumnName="Abonado" type="xs:double" minOccurs="0" />
+              <xs:element name="TipoDescuento" msprop:Generator_ColumnVarNameInTable="columnTipoDescuento" msprop:Generator_ColumnPropNameInRow="TipoDescuento" msprop:Generator_ColumnPropNameInTable="TipoDescuentoColumn" msprop:Generator_UserColumnName="TipoDescuento" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="25" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Franquiciado" msprop:Generator_ColumnVarNameInTable="columnFranquiciado" msprop:Generator_ColumnPropNameInRow="Franquiciado" msprop:Generator_ColumnPropNameInTable="FranquiciadoColumn" msprop:Generator_UserColumnName="Franquiciado" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="101" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CEF" msprop:Generator_ColumnVarNameInTable="columnCEF" msprop:Generator_ColumnPropNameInRow="CEF" msprop:Generator_ColumnPropNameInTable="CEFColumn" msprop:Generator_UserColumnName="CEF" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="126" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="EsVehiculo" msprop:Generator_ColumnVarNameInTable="columnEsVehiculo" msprop:Generator_ColumnPropNameInRow="EsVehiculo" msprop:Generator_ColumnPropNameInTable="EsVehiculoColumn" msprop:Generator_UserColumnName="EsVehiculo" type="xs:int" minOccurs="0" />
+              <xs:element name="EsTelefono" msprop:Generator_ColumnVarNameInTable="columnEsTelefono" msprop:Generator_ColumnPropNameInRow="EsTelefono" msprop:Generator_ColumnPropNameInTable="EsTelefonoColumn" msprop:Generator_UserColumnName="EsTelefono" type="xs:int" minOccurs="0" />
+              <xs:element name="EsServicio" msprop:Generator_ColumnVarNameInTable="columnEsServicio" msprop:Generator_ColumnPropNameInRow="EsServicio" msprop:Generator_ColumnPropNameInTable="EsServicioColumn" msprop:Generator_UserColumnName="EsServicio" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

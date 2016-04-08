@@ -1,4 +1,4 @@
-﻿Public Class frmRepEstadoCuentaDef
+﻿Public Class frmRepDescuentoTipoDet
 
     Enum TipoReporte As Integer
 
@@ -126,7 +126,7 @@
                 "		CAST(cef.Codigo AS CHAR(50)), " & _
                 "		' ', " & _
                 "		cef.Descripcion " & _
-                "	) AS CEF " & _
+                "	) AS CEF,tp.EsVehiculo, tp.EsTelefono, tp.EsServicio " & _
                 "FROM " & _
                 "	descuento_ref AS r " & _
                 " INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " & _
