@@ -596,9 +596,9 @@ Public Class frmMenu
 
         Try
 
-            'Dim DescuentosDet As New frmRepEstadoCuentaDef()
-            'DescuentosDet.ShowDialog()
-            'DescuentosDet.Dispose()
+            Dim DescuentosDet As New frmRepEstadoCuentaDef()
+            DescuentosDet.ShowDialog()
+            DescuentosDet.Dispose()
 
         Catch ex As Exception
             MsgBox(ex.Message)
