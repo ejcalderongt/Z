@@ -574,6 +574,9 @@
     <EmbeddedResource Include="Principales\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepEstadoCuentaDef.resx">
+      <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Descuento\frmRepSaldoVehiculos.resx">
       <DependentUpon>frmRepSaldoVehiculos.vb</DependentUpon>
       <SubType>Designer</SubType>
