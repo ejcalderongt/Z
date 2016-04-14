@@ -32,7 +32,7 @@
     <ProductName>ZFRANQUI</ProductName>
     <PublisherName>DSSISA</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>36</ApplicationRevision>
+    <ApplicationRevision>39</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -421,6 +421,12 @@
     <Compile Include="Reportes\Descuento\DsetRep.vb">
       <DependentUpon>DsetRep.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Descuento\frmRepDescuentoTipoDet.Designer.vb">
+      <DependentUpon>frmRepDescuentoTipoDet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepDescuentoTipoDet.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Reportes\Descuento\frmRepEstadoCuentaDef.Designer.vb">
       <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
     </Compile>
@@ -574,8 +580,8 @@
     <EmbeddedResource Include="Principales\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Reportes\Descuento\frmRepEstadoCuentaDef.resx">
-      <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepDescuentoTipoDet.resx">
+      <DependentUpon>frmRepDescuentoTipoDet.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Descuento\frmRepSaldoVehiculos.resx">
       <DependentUpon>frmRepSaldoVehiculos.vb</DependentUpon>
@@ -955,6 +961,26 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Assembly</FileType>
     </PublishFile>
+    <PublishFile Include="DevExpress.XtraGauges.v14.1.Core">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="DevExpress.XtraGauges.v14.1.Win">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
     <PublishFile Include="DevExpress.XtraGrid.v14.1">
       <Visible>False</Visible>
       <Group>
@@ -1195,6 +1221,16 @@
       <IncludeHash>True</IncludeHash>
       <FileType>Satellite</FileType>
     </PublishFile>
+    <PublishFile Include="es\DevExpress.XtraGauges.v14.1.Core.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
     <PublishFile Include="es\DevExpress.XtraGrid.v14.1.resources">
       <Visible>False</Visible>
       <Group>
@@ -1316,6 +1352,16 @@
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="ja\DevExpress.XtraEditors.v14.1.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ja\DevExpress.XtraGauges.v14.1.Core.resources">
       <Visible>False</Visible>
       <Group>
       </Group>
@@ -1506,6 +1552,16 @@
       <FileType>Satellite</FileType>
     </PublishFile>
     <PublishFile Include="ru\DevExpress.XtraEditors.v14.1.resources">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Satellite</FileType>
+    </PublishFile>
+    <PublishFile Include="ru\DevExpress.XtraGauges.v14.1.Core.resources">
       <Visible>False</Visible>
       <Group>
       </Group>
