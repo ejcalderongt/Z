@@ -620,4 +620,49 @@ Public Class frmMenu
 
     End Sub
 
+    Private Sub mnuRepSaldoVehiculos_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuRepSaldoVehiculos.ItemClick
+
+
+        Try
+
+            Dim SaldosVehi As New frmRepSaldoVehiculos()
+            SaldosVehi.ShowDialog()
+            SaldosVehi.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    
+    Private Sub mnuRepFranquiciadosCEF_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuRepFranquiciadosCEF.ItemClick
+
+        Try
+
+            Dim FranquixCef As New frmRepFranquiciadosCEF()
+            FranquixCef.ShowDialog()
+            FranquixCef.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub mnuPagoAuto_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuPagoAuto.ItemClick
+
+        Try
+
+            Dim PagoAuto As New frmPagosAutoZ()
+            PagoAuto.ShowDialog()
+            PagoAuto.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+
+    End Sub
+
 End Class

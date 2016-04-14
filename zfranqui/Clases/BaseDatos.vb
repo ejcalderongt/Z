@@ -9,6 +9,7 @@ Public Class BaseDatos
     Public Property PuertoBD As String = "3401"
 
     Public Property CadenaConexion As String = String.Format("server={0};user id={1}; password={2}; port={3}; database={4}; pooling=false", Server, UsuarioBD, ClaveBD, PuertoBD, NomBD)
+    Public Property CadenaConexionZVentas As String = String.Format("server={0};user id={1}; password={2}; port={3}; database={4}; pooling=false", Server, UsuarioBD, ClaveBD, PuertoBD, "zgas")
 
     ''' <summary>
     ''' Ejecuta una sentencia SQL de tipo DDL, devuelve el número de filas afectadas
@@ -49,6 +50,30 @@ Public Class BaseDatos
 
         Dim conn As New MySqlConnection(CadenaConexion)
 
+        Try
+
+            conn.Open()
+
+            Dim dAdapter As New MySqlDataAdapter(vSql, conn)
+            Dim dSet As New DataSet
+            dAdapter.Fill(dSet, "Query")
+            dT = dSet.Tables("Query")
+
+            dAdapter.Dispose()
+            dSet.Dispose()
+
+        Catch ex As Exception
+            Throw New Exception(ex.Message)
+        Finally
+            conn.Close()
+            conn.Dispose()
+        End Try
+
+    End Sub
+
+    Public Sub OpenDT(ByRef dT As DataTable, ByVal vSql As String, ByVal CadenaConexion As String)
+
+        Dim conn As New MySqlConnection(CadenaConexion)
 
         Try
 

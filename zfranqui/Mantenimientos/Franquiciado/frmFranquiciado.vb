@@ -62,6 +62,7 @@
                     txtdireccion.Text = Franqui.Direccion
                     txtNIT.Text = Franqui.NIT
                     txtIdFranquiciado.Text = Franqui.IdFranquiciado
+                    txtInterlocutor.Text = Franqui.Interlocutor
                     Get_Info_CEF(Franqui.CEFAsignado.IdCEF)
 
                     txtFechaCreacion.Text = Franqui.Fec_agr
@@ -126,6 +127,8 @@
             Franqui.CEFAsignado.Fec_mod = Now
             Franqui.CEFAsignado.Activo = 1
 
+            Franqui.Interlocutor = txtInterlocutor.Text
+
             Guardar = dFranqui.Insertar(Franqui, Franqui.CEFAsignado)
 
         Catch ex As Exception
@@ -153,6 +156,7 @@
                 Franqui.IdFranquiciado = txtIdFranquiciado.Text
                 Franqui.User_mod = gUsuario.IdUsuario
                 Franqui.Fec_mod = Now
+                Franqui.Interlocutor = txtInterlocutor.Text
 
                 Actualizar = dFranqui.Actualizar(Franqui, Franqui.CEFAsignado)
 

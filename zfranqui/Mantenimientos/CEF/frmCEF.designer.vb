@@ -34,6 +34,8 @@ Partial Class frmCEF
         Dim lblTelefono As System.Windows.Forms.Label
         Dim lblEncargado As System.Windows.Forms.Label
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmCEF))
+        Dim lblInterlocutor As System.Windows.Forms.Label
+        Dim lblPuntos As System.Windows.Forms.Label
         Me.RibbonControl = New DevExpress.XtraBars.Ribbon.RibbonControl()
         Me.mnuGuardar = New DevExpress.XtraBars.BarButtonItem()
         Me.mnuActualizar = New DevExpress.XtraBars.BarButtonItem()
@@ -58,6 +60,8 @@ Partial Class frmCEF
         Me.cmbSupervisor = New System.Windows.Forms.ComboBox()
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
         Me.txtObservaciones = New System.Windows.Forms.TextBox()
+        Me.txtInterlocutor = New DevExpress.XtraEditors.TextEdit()
+        Me.txtPuntos = New DevExpress.XtraEditors.SpinEdit()
         lblIdCEF = New System.Windows.Forms.Label()
         lblNombreCEF = New System.Windows.Forms.Label()
         User_agrLabel = New System.Windows.Forms.Label()
@@ -72,6 +76,8 @@ Partial Class frmCEF
         lblCelular = New System.Windows.Forms.Label()
         lblTelefono = New System.Windows.Forms.Label()
         lblEncargado = New System.Windows.Forms.Label()
+        lblInterlocutor = New System.Windows.Forms.Label()
+        lblPuntos = New System.Windows.Forms.Label()
         CType(Me.RibbonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtIdCEF.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtDescripcionCEF.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,6 +97,8 @@ Partial Class frmCEF
         CType(Me.txtCelular.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl1.SuspendLayout()
+        CType(Me.txtInterlocutor.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.txtPuntos.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lblIdCEF
@@ -350,6 +358,10 @@ Partial Class frmCEF
         '
         'PanDatosUsuario
         '
+        Me.PanDatosUsuario.Controls.Add(lblPuntos)
+        Me.PanDatosUsuario.Controls.Add(Me.txtPuntos)
+        Me.PanDatosUsuario.Controls.Add(lblInterlocutor)
+        Me.PanDatosUsuario.Controls.Add(Me.txtInterlocutor)
         Me.PanDatosUsuario.Controls.Add(Me.txtCodigoCEF)
         Me.PanDatosUsuario.Controls.Add(lblEncargado)
         Me.PanDatosUsuario.Controls.Add(Me.txtencargado)
@@ -372,7 +384,7 @@ Partial Class frmCEF
         Me.PanDatosUsuario.Controls.Add(Me.txtDescripcionCEF)
         Me.PanDatosUsuario.Location = New System.Drawing.Point(112, 169)
         Me.PanDatosUsuario.Name = "PanDatosUsuario"
-        Me.PanDatosUsuario.Size = New System.Drawing.Size(407, 330)
+        Me.PanDatosUsuario.Size = New System.Drawing.Size(407, 371)
         Me.PanDatosUsuario.TabIndex = 0
         Me.PanDatosUsuario.Text = "Datos CEF"
         '
@@ -463,6 +475,44 @@ Partial Class frmCEF
         Me.txtObservaciones.Size = New System.Drawing.Size(207, 179)
         Me.txtObservaciones.TabIndex = 0
         '
+        'lblInterlocutor
+        '
+        lblInterlocutor.AutoSize = True
+        lblInterlocutor.Location = New System.Drawing.Point(59, 309)
+        lblInterlocutor.Name = "lblInterlocutor"
+        lblInterlocutor.Size = New System.Drawing.Size(64, 13)
+        lblInterlocutor.TabIndex = 22
+        lblInterlocutor.Text = "Interlocutor"
+        '
+        'txtInterlocutor
+        '
+        Me.txtInterlocutor.Location = New System.Drawing.Point(139, 306)
+        Me.txtInterlocutor.MenuManager = Me.RibbonControl
+        Me.txtInterlocutor.Name = "txtInterlocutor"
+        Me.txtInterlocutor.Properties.MaxLength = 20
+        Me.txtInterlocutor.Size = New System.Drawing.Size(212, 20)
+        Me.txtInterlocutor.TabIndex = 23
+        '
+        'lblPuntos
+        '
+        lblPuntos.AutoSize = True
+        lblPuntos.Location = New System.Drawing.Point(59, 335)
+        lblPuntos.Name = "lblPuntos"
+        lblPuntos.Size = New System.Drawing.Size(40, 13)
+        lblPuntos.TabIndex = 24
+        lblPuntos.Text = "Puntos"
+        '
+        'txtPuntos
+        '
+        Me.txtPuntos.EditValue = New Decimal(New Integer() {0, 0, 0, 0})
+        Me.txtPuntos.Enabled = False
+        Me.txtPuntos.Location = New System.Drawing.Point(139, 332)
+        Me.txtPuntos.MenuManager = Me.RibbonControl
+        Me.txtPuntos.Name = "txtPuntos"
+        Me.txtPuntos.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)})
+        Me.txtPuntos.Size = New System.Drawing.Size(212, 20)
+        Me.txtPuntos.TabIndex = 25
+        '
         'frmCEF
         '
         Me.Appearance.BackColor = System.Drawing.Color.White
@@ -501,6 +551,8 @@ Partial Class frmCEF
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupControl1.ResumeLayout(False)
         Me.GroupControl1.PerformLayout()
+        CType(Me.txtInterlocutor.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.txtPuntos.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -530,6 +582,8 @@ Partial Class frmCEF
     Friend WithEvents txtObservaciones As System.Windows.Forms.TextBox
     Friend WithEvents txtencargado As DevExpress.XtraEditors.TextEdit
     Friend WithEvents txtCodigoCEF As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents txtPuntos As DevExpress.XtraEditors.SpinEdit
+    Friend WithEvents txtInterlocutor As DevExpress.XtraEditors.TextEdit
 
 
 End Class

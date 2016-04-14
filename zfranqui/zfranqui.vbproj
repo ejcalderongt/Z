@@ -32,7 +32,7 @@
     <ProductName>ZFRANQUI</ProductName>
     <PublisherName>DSSISA</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>39</ApplicationRevision>
+    <ApplicationRevision>44</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -291,6 +291,14 @@
     <Compile Include="Mantenimientos\Descuentos\Periodo\frmPeriodo.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Mantenimientos\Pagos Auto\clsBeVentasdet.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\clsLnVentasdet.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\frmPagosAutoZ.Designer.vb">
+      <DependentUpon>frmPagosAutoZ.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenimientos\Pagos Auto\frmPagosAutoZ.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Mantenimientos\Pagos\Det\clsBePago_det.vb" />
     <Compile Include="Mantenimientos\Pagos\Det\clsBePago_det_Partial.vb" />
     <Compile Include="Mantenimientos\Pagos\Det\clsLnPartialPago_Det.vb" />
@@ -421,6 +429,12 @@
     <Compile Include="Reportes\Descuento\DsetRep.vb">
       <DependentUpon>DsetRep.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Reportes\Descuento\frmRepFranquiciadosCEF.Designer.vb">
+      <DependentUpon>frmRepFranquiciadosCEF.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\Descuento\frmRepFranquiciadosCEF.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Reportes\Descuento\frmRepDescuentoTipoDet.Designer.vb">
       <DependentUpon>frmRepDescuentoTipoDet.vb</DependentUpon>
     </Compile>
@@ -520,6 +534,10 @@
     <EmbeddedResource Include="Mantenimientos\Descuentos\Periodo\frmPeriodo.resx">
       <DependentUpon>frmPeriodo.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Mantenimientos\Pagos Auto\frmPagosAutoZ.resx">
+      <DependentUpon>frmPagosAutoZ.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Pagos\frmPago.resx">
       <DependentUpon>frmPago.vb</DependentUpon>
     </EmbeddedResource>
@@ -580,6 +598,13 @@
     <EmbeddedResource Include="Principales\Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepEstadoCuentaDef.resx">
+      <DependentUpon>frmRepEstadoCuentaDef.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\Descuento\frmRepFranquiciadosCEF.resx">
+      <DependentUpon>frmRepFranquiciadosCEF.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reportes\Descuento\frmRepDescuentoTipoDet.resx">
       <DependentUpon>frmRepDescuentoTipoDet.vb</DependentUpon>
     </EmbeddedResource>
@@ -606,7 +631,9 @@
       <DependentUpon>frmRepPagoRealizado.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Conn.ini" />
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

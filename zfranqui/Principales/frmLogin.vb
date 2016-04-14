@@ -40,6 +40,7 @@ Public Class frmLogin
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents cmdIngresar As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
+    Friend WithEvents lblFechaActualizacion As System.Windows.Forms.Label
     Friend WithEvents Label4 As System.Windows.Forms.Label
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
         Me.txtUsuario = New System.Windows.Forms.TextBox()
@@ -50,6 +51,7 @@ Public Class frmLogin
         Me.Label5 = New System.Windows.Forms.Label()
         Me.cmdIngresar = New DevExpress.XtraEditors.SimpleButton()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.lblFechaActualizacion = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -135,17 +137,28 @@ Public Class frmLogin
         'PictureBox1
         '
         Me.PictureBox1.Image = Global.zfranqui.My.Resources.Resources.Logo_Zeta_Nuevo
-        Me.PictureBox1.Location = New System.Drawing.Point(32, 59)
+        Me.PictureBox1.Location = New System.Drawing.Point(33, 59)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(153, 192)
         Me.PictureBox1.TabIndex = 3
         Me.PictureBox1.TabStop = False
+        '
+        'lblFechaActualizacion
+        '
+        Me.lblFechaActualizacion.AutoSize = True
+        Me.lblFechaActualizacion.ForeColor = System.Drawing.Color.CadetBlue
+        Me.lblFechaActualizacion.Location = New System.Drawing.Point(306, 255)
+        Me.lblFechaActualizacion.Name = "lblFechaActualizacion"
+        Me.lblFechaActualizacion.Size = New System.Drawing.Size(55, 13)
+        Me.lblFechaActualizacion.TabIndex = 4
+        Me.lblFechaActualizacion.Text = "14042016"
         '
         'frmLogin
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 13)
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(539, 323)
+        Me.Controls.Add(Me.lblFechaActualizacion)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.cmdIngresar)
         Me.Controls.Add(Me.Label5)
@@ -333,10 +346,10 @@ Public Class frmLogin
             oRead = IO.File.OpenText(CurDir() & "\Conn.ini")
 
             BD.CadenaConexion = oRead.ReadLine
-
+            BD.CadenaConexionZVentas = oRead.ReadLine
             oRead.Close()
 
-
+            If BD.CadenaConexionZVentas = "" Then Throw New Exception("No está definida la cadena de conexión para la bd de ventas")
 
         Catch ex As Exception
             MsgBox("Error al leer archivo de conexión a BD Conn.ini: " & ex.Message & _

@@ -35,7 +35,7 @@ Public Class frmRepPagoRealizado
                 GridView1.Columns("No. Cuota").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridView1.Columns("Monto Cuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridView1.Columns("Monto Cuota").SummaryItem.DisplayFormat = "{0:n7}"
+                GridView1.Columns("Monto Cuota").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridView1.Columns("Monto Abono").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
                 GridView1.Columns("Monto Abono").SummaryItem.DisplayFormat = "{0:n2}"

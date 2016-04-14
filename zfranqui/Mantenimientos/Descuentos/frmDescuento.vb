@@ -475,7 +475,7 @@ Public Class frmDescuento
                 GridViewCuota.Columns("No_Cuota").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
                 GridViewCuota.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"

@@ -142,6 +142,9 @@ Public Class clsBeFranquiciado
 		End Set
     End Property
 
+    Public Property Interlocutor As String = ""
+
+
     Sub New()
     End Sub
 

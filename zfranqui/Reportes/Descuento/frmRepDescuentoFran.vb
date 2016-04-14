@@ -151,7 +151,8 @@
             End If
 
             If chkActivo.Checked Then
-                vSQL += "AND (descuento_det.Activo =1)"
+                vSQL += "AND (descuento_det.Activo =1) "
+                vSQL += "AND (r.Anulada =0) "
             End If
 
 
@@ -184,11 +185,13 @@
 
             Application.DoEvents()
 
+            If GridView1.Columns.Count = 0 Then Exit Sub
+
             GridView1.Columns("CEF").GroupIndex = 0
             GridView1.Columns("Franquiciado").GroupIndex = 1
 
             GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
             GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
             GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"

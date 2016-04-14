@@ -152,6 +152,9 @@ Public Class clsBeCef
 		End Set
 	End Property
 
+    Public Property Interlocutor As String = ""
+    Public Property Puntos As Double = 0
+
 	Sub New()
 	End Sub
 

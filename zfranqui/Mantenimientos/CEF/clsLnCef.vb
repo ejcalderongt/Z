@@ -4,6 +4,7 @@ Imports System.Data
 
 Public Class clsLnCef
 
+
 	Public Sub Cargar(ByRef oBeCef As clsBeCef, ByRef dr As DataRow)
 
         Try
@@ -12,9 +13,13 @@ Public Class clsLnCef
 
                 .IdCef = IIf(IsDBNull(dr.Item("IdCef")), 0, dr.Item("IdCef"))
 
+                .Interlocutor = IIf(IsDBNull(dr.Item("Interlocutor")), 0, dr.Item("Interlocutor"))
+                .Puntos = IIf(IsDBNull(dr.Item("Puntos")), 0, dr.Item("Puntos"))
+
                 .Municipo.IdMunicipio = IIf(IsDBNull(dr.Item("IdMunicipio")), 0, dr.Item("IdMunicipio"))
                 .Municipo.IdDepartamento = IIf(IsDBNull(dr.Item("IdDepartamento")), 0, dr.Item("IdDepartamento"))
                 .dMuni.Obtener(.Municipo)
+
 
                 .Depto.IdDepartamento = IIf(IsDBNull(dr.Item("IdDepartamento")), 0, dr.Item("IdDepartamento"))
                 .dDepto.Obtener(.Depto)
@@ -67,6 +72,9 @@ Public Class clsLnCef
             Ins.Add("fec_mod", "@fec_mod", "F")
             Ins.Add("user_agr", "@user_agr", "F")
             Ins.Add("user_mod", "@user_mod", "F")
+            Ins.Add("interlocutor", "@interlocutor", "F")
+            Ins.Add("puntos", "@puntos", "F")
+
 
             Dim sp As String = Ins.SQL()
 
@@ -100,6 +108,8 @@ Public Class clsLnCef
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_MOD", oBeCef.Fec_mod))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBeCef.User_agr))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_MOD", oBeCef.User_mod))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@INTERLOCUTOR", oBeCef.Interlocutor))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@PUNTOS", oBeCef.Puntos))
 
             Dim rowsAffected As Integer = 0
             rowsAffected = cmd.ExecuteNonQuery()
@@ -139,6 +149,8 @@ Public Class clsLnCef
             Upd.Add("fec_mod", "@fec_mod", "F")
             Upd.Add("user_agr", "@user_agr", "F")
             Upd.Add("user_mod", "@user_mod", "F")
+            Ins.Add("interlocutor", "@interlocutor", "F")
+            Ins.Add("puntos", "@puntos", "F")
             Upd.Where("IdCef = @IdCef")
 
             Dim sp As String = Upd.SQL()
@@ -171,6 +183,8 @@ Public Class clsLnCef
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_MOD", oBeCef.Fec_mod))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBeCef.User_agr))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_MOD", oBeCef.User_mod))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@INTERLOCUTOR", oBeCef.Interlocutor))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@PUNTOS", oBeCef.Puntos))
 
             Dim rowsAffected As Integer = 0
             rowsAffected = cmd.ExecuteNonQuery()
@@ -236,7 +250,7 @@ Public Class clsLnCef
 
         Try
 
-            Dim sp As String = " SELECT cef.IdCef, cefsupervisor.Nombre AS Supervisor, cefregion.Nombre AS Region, municipio.Nombre AS Municipio, " & _
+            Dim sp As String = " SELECT cef.IdCef, cef.Interlocutor, cef.Puntos, cefsupervisor.Nombre AS Supervisor, cefregion.Nombre AS Region, municipio.Nombre AS Municipio, " & _
                     " departamento.Nombre AS Departamento, cef.Encargado, cef.Codigo, cef.Descripcion, cef.Celular, cef.Telefono, cef.fec_agr, " & _
                     " cef.fec_mod, cef.user_agr, cef.user_mod " & _
                     " FROM  cef INNER JOIN " & _
@@ -279,7 +293,7 @@ Public Class clsLnCef
     Public Function Listar() As DataTable
 
         Try
-            Dim sp As String = "SELECT * FROM Cef"
+            Dim sp As String = "SELECT * FROM Cef "
 
             Dim cnn As New MySqlConnection(BD.CadenaConexion)
             Dim cmd As New MySqlCommand(sp, cnn)

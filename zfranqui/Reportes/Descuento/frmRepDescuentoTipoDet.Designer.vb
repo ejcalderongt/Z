@@ -176,6 +176,8 @@ Partial Class frmRepDescuentoTipoDet
         '
         'chkActivo
         '
+        Me.chkActivo.Checked = True
+        Me.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkActivo.Location = New System.Drawing.Point(610, 75)
         Me.chkActivo.Name = "chkActivo"
         Me.chkActivo.Size = New System.Drawing.Size(179, 52)
@@ -198,7 +200,7 @@ Partial Class frmRepDescuentoTipoDet
         '
         'GridView1
         '
-        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colNoCuota, Me.colAbonado, Me.colTipoDescuento, Me.colFranquiciado, Me.colCEF, Me.colEsVehiculo, Me.colEsTelefono, Me.colEsServicio})
+        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colNoCuota, Me.colMonto, Me.colAbonado, Me.colTipoDescuento, Me.colFranquiciado, Me.colCEF, Me.colEsVehiculo, Me.colEsTelefono, Me.colEsServicio})
         Me.GridView1.GridControl = Me.Dgrid
         Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}")})
         Me.GridView1.Name = "GridView1"
@@ -272,7 +274,7 @@ Partial Class frmRepDescuentoTipoDet
         Me.colNoCuota.FieldName = "NoCuota"
         Me.colNoCuota.Name = "colNoCuota"
         Me.colNoCuota.Visible = True
-        Me.colNoCuota.VisibleIndex = 9
+        Me.colNoCuota.VisibleIndex = 8
         '
         'colAbonado
         '

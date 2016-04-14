@@ -6,10 +6,6 @@
 
     End Enum
 
-    Private Property TipoRep As TipoReporte = -1
-
-    Public Property DescuentoEnc As New clsBeDescuento_enc
-
     Public Sub New()
 
         MyBase.New()
@@ -75,26 +71,13 @@
 
     Private Sub PrintableComponentLink1_CreateReportHeaderArea(ByVal sender As System.Object, ByVal e As DevExpress.XtraPrinting.CreateAreaEventArgs)
 
+        Dim reportHeader As String = vbNewLine & "Reporte Saldo de vehículos "
 
-        Select Case TipoRep
+        e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
+        e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
 
-            Case TipoReporte.CuotasDetalleDescuento
-
-                Dim reportHeader As String = vbNewLine & "Detalle de descuentos " & vbNewLine & _
-                "Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
-
-                e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
-                e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
-
-                Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
-                e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
-
-
-            Case Else
-
-
-        End Select
-
+        Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
+        e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
 
 
     End Sub
@@ -117,6 +100,7 @@
                    "	tp.EsServicio, " & _
                    "	descuento_det.MontoTotal AS Monto, " & _
                    "	SUM(r.Abonado) AS Abonado, " & _
+                   "    descuento_det.MontoTotal - SUM(r.Abonado) as Saldo, " & _
                    "	tipodescuento.Nombre AS TipoDescuento, " & _
                    "	CONCAT( " & _
                    "		franquiciado.Codigo, " & _
@@ -141,7 +125,7 @@
                    "   AND r.IdBeneficio = descuento_det.IdBeneficio " & _
                    "   WHERE cast(descuento_enc.fec_agr AS DATE) BETWEEN " & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
                    "   AND " & FormatoFechas.fFecha(dtpFechaHasta.Value) & _
-                   "   AND tipobeneficio.EsVehiculo = 1 "
+                   "   AND tp.EsVehiculo = 1 "
 
             If txtFiltro.Text.Trim <> "" Then
                 vSQL += "AND (franquiciado.Codigo LIKE '%" & txtFiltro.Text.Trim & "%'" & _
@@ -152,9 +136,9 @@
             End If
 
             If chkActivo.Checked Then
-                vSQL += "AND (descuento_det.Activo =1)"
+                vSQL += "AND (descuento_det.Activo =1) " & _
+                    " AND (r.Anulada=0)"
             End If
-
 
             vSQL += "GROUP BY " & _
                     "	b.Nombre, " & _
@@ -175,8 +159,6 @@
                     "	descuento_enc.fec_agr, " & _
                     "	descuento_det.MontoTotal "
 
-            vSQL += ""
-
             Dim DT As New DataTable
             BD.OpenDT(DT, vSQL)
             Dgrid.DataSource = DT
@@ -184,11 +166,13 @@
 
             Application.DoEvents()
 
+            If GridView1.Columns.Count = 0 Then Exit Sub
+
             GridView1.Columns("CEF").GroupIndex = 0
             GridView1.Columns("Franquiciado").GroupIndex = 1
 
             GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
             GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
             GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
@@ -198,6 +182,11 @@
 
             GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
             GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+
+            GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+            GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
 
             GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
 

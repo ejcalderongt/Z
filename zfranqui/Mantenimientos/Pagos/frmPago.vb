@@ -243,7 +243,7 @@ Public Class frmPago
                 GridViewDescuento.Columns("Cuotas").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewDescuento.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n2}"
             End If
 
         Catch ex As Exception
@@ -282,13 +282,13 @@ Public Class frmPago
                 GridViewCuota.Columns("No. Cuota").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
                 GridViewCuota.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewCuota.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewCuota.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n2}"
 
             End If
 

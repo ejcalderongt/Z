@@ -24,6 +24,7 @@ Public Class clsLnFranquiciado
                 .User_agr = IIf(IsDBNull(dr.Item("user_agr")), 0, dr.Item("user_agr"))
                 .User_mod = IIf(IsDBNull(dr.Item("user_mod")), 0, dr.Item("user_mod"))
                 .Activo = IIf(IsDBNull(dr.Item("Activo")), 0, dr.Item("Activo"))
+                .Interlocutor = IIf(IsDBNull(dr.Item("Interlocutor")), 0, dr.Item("Interlocutor"))
 
                 .CEFAsignado.IdAsignacionFranquiciado = IIf(IsDBNull(dr.Item("IdAsignacionFranquiciado")), 0, dr.Item("IdAsignacionFranquiciado"))
 
@@ -61,6 +62,7 @@ Public Class clsLnFranquiciado
             Ins.Add("fec_mod", "@fec_mod", "F")
             Ins.Add("user_agr", "@user_agr", "F")
             Ins.Add("user_mod", "@user_mod", "F")
+            Ins.Add("interlocutor", "@interlocutor", "F")
             Ins.Add("activo", "@activo", "F")
 
             Dim sp As String = Ins.SQL()
@@ -94,6 +96,7 @@ Public Class clsLnFranquiciado
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBeFranquiciado.User_agr))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_MOD", oBeFranquiciado.User_mod))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@ACTIVO", oBeFranquiciado.Activo))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@INTERLOCUTOR", oBeFranquiciado.Interlocutor))
 
             Dim rowsAffected As Integer = 0
             rowsAffected = cmd.ExecuteNonQuery()
@@ -168,6 +171,7 @@ Public Class clsLnFranquiciado
             Upd.Add("user_agr", "@user_agr", "F")
             Upd.Add("user_mod", "@user_mod", "F")
             Upd.Add("activo", "@activo", "F")
+            Upd.Add("interlocutor", "@interlocutor", "F")
             Upd.Where("IdFranquiciado = @IdFranquiciado")
 
             Dim sp As String = Upd.SQL()
@@ -199,6 +203,7 @@ Public Class clsLnFranquiciado
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBeFranquiciado.User_agr))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_MOD", oBeFranquiciado.User_mod))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@ACTIVO", oBeFranquiciado.Activo))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@INTERLOCUTOR", oBeFranquiciado.Interlocutor))
 
             Dim rowsAffected As Integer = 0
             rowsAffected = cmd.ExecuteNonQuery()
