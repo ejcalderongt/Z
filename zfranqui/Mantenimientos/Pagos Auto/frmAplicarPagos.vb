@@ -129,34 +129,34 @@ Public Class frmAplicarPagos
 
             Dim DT As New DataTable
             BD.OpenDT(DT, vSQL)
-            dgridDescuentos.DataSource = DT
-            GridView1.OptionsBehavior.Editable = False
+            dgridVentas.DataSource = DT
+            viewVentas.OptionsBehavior.Editable = False
 
             Application.DoEvents()
 
-            If GridView1.Columns.Count = 0 Then Exit Sub
+            If viewVentas.Columns.Count = 0 Then Exit Sub
 
-            GridView1.Columns("Franquiciado").GroupIndex = 0
+            viewVentas.Columns("Franquiciado").GroupIndex = 0
 
-            GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+            viewVentas.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            viewVentas.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+            viewVentas.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            viewVentas.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+            viewVentas.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            viewVentas.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
+            viewVentas.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            viewVentas.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.Columns("Pagado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Pagado").SummaryItem.DisplayFormat = "{0:n2}"
+            viewVentas.Columns("Pagado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            viewVentas.Columns("Pagado").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+            viewVentas.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            viewVentas.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.ExpandAllGroups()
+            viewVentas.ExpandAllGroups()
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -169,7 +169,8 @@ Public Class frmAplicarPagos
 
         Try
 
-            clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(dtpFechaDesdeDescuentos.Value, dtpFechaHastaDescuentos.Value)
+            dgridDescuentos.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(dtpFechaDesdeDescuentos.Value, dtpFechaHastaDescuentos.Value)
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -182,7 +183,7 @@ Public Class frmAplicarPagos
         Try
 
             If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
-            GridView1.SaveLayoutToXml(CurDir() & "\" & Nom_Rep & ".xml")
+            viewDescuentos.SaveLayoutToXml(CurDir() & "\" & Nom_Rep & ".xml")
 
         Catch ex As Exception
         End Try
