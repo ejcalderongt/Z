@@ -247,7 +247,7 @@ ByVal e As DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs) Handles GridView1.R
         If (e.RowHandle >= 0) Then
             Dim category As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
             If category = "0.00" Then
-                'e.Appearance.BackColor = Color.Salmon
+                e.Appearance.BackColor = Color.Salmon
                 e.Appearance.BackColor2 = Color.SeaShell
             End If
         End If
