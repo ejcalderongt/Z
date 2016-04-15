@@ -262,16 +262,8 @@ Public Class frmPago
                 GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(CInt(txtCodCEF.Tag), pObjBeEnc.Franquiciado.IdFranquiciado)
             End If
 
-            'For Each r As DataRow In DT.Rows
-            '    Dim Obj As clsBeDescuento_ref = clsLnDescuento_ref.GetSingle(CInt(r("IdDescuentoEnc")), _
-            '                                                                 CInt(r("IdDescuentoDet")), _
-            '                                                                 CInt(r("IdDescuentoRef")))
-            '    If Obj IsNot Nothing Then
-
-            '    End If
-            'Next
-
             If GridViewCuota.RowCount > 0 Then
+
                 GridViewCuota.Columns("IdDescuentoEnc").Visible = False
                 GridViewCuota.Columns("IdDescuentoDet").Visible = False
                 GridViewCuota.Columns("IdDescuentoRef").Visible = False

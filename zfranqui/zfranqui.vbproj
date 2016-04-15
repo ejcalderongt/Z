@@ -32,7 +32,7 @@
     <ProductName>ZFRANQUI</ProductName>
     <PublisherName>DSSISA</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>44</ApplicationRevision>
+    <ApplicationRevision>45</ApplicationRevision>
     <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -293,6 +293,12 @@
     </Compile>
     <Compile Include="Mantenimientos\Pagos Auto\clsBeVentasdet.vb" />
     <Compile Include="Mantenimientos\Pagos Auto\clsLnVentasdet.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\frmAplicarPagos.Designer.vb">
+      <DependentUpon>frmAplicarPagos.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenimientos\Pagos Auto\frmAplicarPagos.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Mantenimientos\Pagos Auto\frmPagosAutoZ.Designer.vb">
       <DependentUpon>frmPagosAutoZ.vb</DependentUpon>
     </Compile>
@@ -533,6 +539,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Descuentos\Periodo\frmPeriodo.resx">
       <DependentUpon>frmPeriodo.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Mantenimientos\Pagos Auto\frmAplicarPagos.resx">
+      <DependentUpon>frmAplicarPagos.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Pagos Auto\frmPagosAutoZ.resx">
       <DependentUpon>frmPagosAutoZ.vb</DependentUpon>

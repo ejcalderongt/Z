@@ -114,15 +114,21 @@ Public Class frmGeneraPago
             End If
 
             If pListObjDet IsNot Nothing Then
+
                 Dim lIndex As Integer = -1
+
                 lIndex = pListObjDet.FindIndex(Function(b) b.IdDescuentoEnc = pObj.IdDescuentoEnc _
                                                    And b.IdDescuentoDet = pObj.IdDescuentoDet _
                                                    And b.IdDescuentoRef = CInt(txtCuota.Tag))
+
                 If lIndex >= 0 Then
+
                     pListObjDet(lIndex).MontoAbono = txtAbono.Value + txtAbono.Tag
                     pListObjRef(lIndex).Abonado = pListObjDet(lIndex).MontoAbono
                     setAbono(pListObjDet(lIndex).IdDescuentoRef, pListObjDet(lIndex).MontoAbono)
+
                 Else
+
                     Dim Obj As New clsBePago_det
                     Obj.IdDescuentoEnc = pObj.IdDescuentoEnc
                     Obj.IdDescuentoDet = pObj.IdDescuentoDet
@@ -154,6 +160,7 @@ Public Class frmGeneraPago
                     setAbono(Obj.IdDescuentoRef, ObjR.Abonado)
 
                 End If
+
             End If
 
             Limpiar()

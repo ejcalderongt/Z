@@ -1,6 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 
-Public Class frmPagosAutoZ
+Public Class frmAplicarPagos
 
     Enum TipoReporte As Integer
 
@@ -32,7 +32,7 @@ Public Class frmPagosAutoZ
     End Property
 
     Private Sub cmdActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdActualizar.ItemClick
-        Llenar_Grid()
+        Llenar_Ventas()
     End Sub
 
     Private Sub Imprimir_Vista()
@@ -63,7 +63,7 @@ Public Class frmPagosAutoZ
             phf.Header.LineAlignment = DevExpress.XtraPrinting.BrickAlignment.Far
 
             printingSystem1.PageSettings.Landscape = True
-            printLink.Component = dgrid
+            printLink.Component = dgridDescuentos
             printLink.Landscape = True
             printLink.CreateDocument(printingSystem1)
             printingSystem1.PreviewFormEx.ShowDialog()
@@ -97,38 +97,39 @@ Public Class frmPagosAutoZ
 
     End Sub
 
-    Private Sub Llenar_Grid()
+    Private Sub Llenar_Ventas()
 
         Try
 
-            vSQL = " SELECT " & _
-                    "	e.crmrdi, " & _
-                    "	c.`despes`, " & _
-                    "	SUM(a.cant) cilindros, " & _
-                    "	d.`cantidad` 'retencion x cil', " & _
-                    "	SUM(a.cant) * d.`cantidad` Total " & _
-                    " FROM " & _
-                    "	facdet a " & _
-                    " INNER JOIN facenc b ON a.`codpla` = b.`codpla` " & _
-                    " AND a.`serie` = b.`serie` " & _
-                    " AND a.`numero` = b.`numero` " & _
-                    " INNER JOIN pesmae c ON a.`codpes` = c.`codpes` " & _
-                    " INNER JOIN retencionmae d ON a.`codpes` = d.`codpes` " & _
-                    " INNER JOIN rdimae e ON a.codcli = e.codrdi " & _
-                    " WHERE  b.`status`='ACTIVA' " & _
-                    " AND b.`fecha`>=" & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
-                    " AND b.`fecha`<=" & FormatoFechas.fFecha(dtpFechaHasta.Value)
+            vSQL = "SELECT " & _
+                    "ventasdet.IdVenta," & _
+                    "cef.Codigo AS CEF, " & _
+                    "franquiciado.Codigo AS Franquiciado, " & _
+                    "ventasdet.IdFranquiciado, " & _
+                    "SUM(ventasdet.Monto) AS Monto, " & _
+                    "ventasdet.Fecha, " & _
+                    "ventasdet.Saldo, " & _
+                    "ventasdet.Pagado " & _
+                    "FROM " & _
+                    "	franquiciadocef " & _
+                    "INNER JOIN cef ON franquiciadocef.IdCEF = cef.IdCef " & _
+                    "INNER JOIN ventasdet ON franquiciadocef.IdFranquiciado = ventasdet.IdFranquiciado " & _
+                    "INNER JOIN franquiciado ON franquiciadocef.IdFranquiciado = franquiciado.IdFranquiciado " & _
+                    " AND ventasdet.fecha>=" & FormatoFechas.fFecha(dtpFechaDesdeVentas.Value) & _
+                   " AND ventasdet.fecha<=" & FormatoFechas.fFecha(dtpFechaHastaVentas.Value)
 
-            If txtFiltro.Text.Trim <> "" Then
-                vSQL += "AND (a.codcli LIKE '%" & txtFiltro.Text.Trim & "%')"
-            End If
-
-            vSQL += " GROUP BY e.`crmrdi`,a.`codpes` " & _
-            " ORDER BY crmrdi; "
+            vSQL += "GROUP BY " & _
+                    "ventasdet.IdVenta, " & _
+                    "cef.Codigo, " & _
+                    "franquiciado.Codigo, " & _
+                    "ventasdet.IdFranquiciado, " & _
+                    "ventasdet.Fecha, " & _
+                    "ventasdet.Saldo, " & _
+                    "ventasdet.Pagado "
 
             Dim DT As New DataTable
-            BD.OpenDT(DT, vSQL, BD.CadenaConexionZVentas)
-            dgrid.DataSource = DT
+            BD.OpenDT(DT, vSQL)
+            dgridDescuentos.DataSource = DT
             GridView1.OptionsBehavior.Editable = False
 
             Application.DoEvents()
@@ -140,16 +141,8 @@ Public Class frmPagosAutoZ
             GridView1.Columns("Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
             GridView1.Columns("Total").SummaryItem.DisplayFormat = "{0:n2}"
 
-            'GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            'GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
-
-            'GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            'GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
-
             GridView1.Columns("Total").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
             GridView1.Columns("Total").DisplayFormat.FormatString = "{0:n2}"
-
-            'GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
 
             GridView1.ExpandAllGroups()
 
@@ -157,6 +150,18 @@ Public Class frmPagosAutoZ
             MsgBox(ex.Message)
         End Try
 
+
+    End Sub
+
+    Private Sub Llenar_DescuentosREF()
+
+        Try
+
+            clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(dtpFechaDesdeDescuentos.Value, dtpFechaHastaDescuentos.Value)
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
 
     End Sub
 
@@ -176,11 +181,9 @@ Public Class frmPagosAutoZ
 
         Try
 
-            'Llenar_Grid()
+            'If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
 
-            If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
-
-            If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then GridView1.RestoreLayoutFromXml(CurDir() & "\" & Nom_Rep & ".xml")
+            'If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then GridView1.RestoreLayoutFromXml(CurDir() & "\" & Nom_Rep & ".xml")
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -194,20 +197,20 @@ Public Class frmPagosAutoZ
     End Sub
 
 
-    Private Sub dtpFechaDesde_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaDesde.ValueChanged
-        Llenar_Grid()
+    Private Sub dtpFechaDesde_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaDesdeVentas.ValueChanged
+        Llenar_Ventas()
     End Sub
 
-    Private Sub dtpFechaHasta_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaHasta.ValueChanged
-        Llenar_Grid()
+    Private Sub dtpFechaHasta_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaHastaVentas.ValueChanged
+        Llenar_Ventas()
     End Sub
 
     Private Sub chkActivo_CheckedChanged(sender As Object, e As EventArgs)
-        Llenar_Grid()
+        Llenar_Ventas()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
-        Llenar_Grid()
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
+        Llenar_Ventas()
     End Sub
 
     Private Sub mnuProcesar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuProcesar.ItemClick
@@ -246,8 +249,8 @@ Public Class frmPagosAutoZ
                 " INNER JOIN retencionmae d ON a.codpes = d.codpes " & _
                 " INNER JOIN rdimae e ON a.codcli = e.codrdi " & _
                 " WHERE  b.status='ACTIVA' " & _
-                " AND b.fecha>=" & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
-                " AND b.fecha<=" & FormatoFechas.fFecha(dtpFechaHasta.Value) & _
+                " AND b.fecha>=" & FormatoFechas.fFecha(dtpFechaDesdeVentas.Value) & _
+                " AND b.fecha<=" & FormatoFechas.fFecha(dtpFechaHastaVentas.Value) & _
                 " GROUP BY " & _
                 " 	e.crmrdi, " & _
                 " 	a.codpes, " & _
@@ -376,8 +379,8 @@ Public Class frmPagosAutoZ
 
             Else
                 MsgBox("No se encontraron registros para insertar", MsgBoxStyle.Exclamation, Me.Text)
-            End If              
-          
+            End If
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -392,18 +395,11 @@ Public Class frmPagosAutoZ
         txt.Visible = False
     End Sub
 
-    Private Sub mnuAplicarPagos_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuAplicarPagos.ItemClick
-
-        Try
-
-            Dim pv As New frmAplicarPagos
-            pv.ShowDialog()
-            pv.Dispose()
-
-        Catch ex As Exception
-            MsgBox(ex.Message)
-        End Try
-
+    Private Sub dtpFechaDesdeDescuentos_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaDesdeDescuentos.ValueChanged
+        Llenar_DescuentosREF()
+    End Sub
+    Private Sub dtpFechaHastaDescuentos_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaHastaDescuentos.ValueChanged
+        Llenar_DescuentosREF()
     End Sub
 
 End Class

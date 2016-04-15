@@ -30,7 +30,7 @@ Partial Public Class clsLnFranquiciadocef
 
             Return GetIdFranquiciado
         Catch ex As Exception
-            Throw ex
+            MsgBox("Error GetIdFranquiciado: " & ex.Message)
         End Try
 
     End Function
