@@ -331,7 +331,7 @@ Partial Class frmRepEstadoCuentaDef
         Me.Controls.Add(Me.barDockControlTop)
         Me.Name = "frmRepEstadoCuentaDef"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Reporte descuentos por franquiciado"
+        Me.Text = "Estados de Cuenta - Descuentos"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)

@@ -408,15 +408,25 @@ Public Class frmDescuento
 
             Dgrid.DataSource = DT
 
-            GridViewDescuento.Columns("IdDescuentoDet").Visible = False
-            GridViewDescuento.Columns("IdBeneficio").Visible = False
-            GridViewDescuento.Columns("Estado").Visible = False
+            If GridViewDescuento.RowCount > 0 Then
 
-            GridViewDescuento.Columns("Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridViewDescuento.Columns("Total").SummaryItem.DisplayFormat = "{0:n2}"
+                If TipoDescuento = pTipoDescuento.Indefinido Then
+                    GridViewDescuento.Columns("Cuotas").Visible = False
+                Else
+                    GridViewDescuento.Columns("Cuotas").Visible = True
+                End If
 
-            GridViewDescuento.Columns("Total").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridViewDescuento.Columns("Total").DisplayFormat.FormatString = "{0:n2}"
+                GridViewDescuento.Columns("IdDescuentoDet").Visible = False
+                GridViewDescuento.Columns("IdBeneficio").Visible = False
+                GridViewDescuento.Columns("Estado").Visible = False
+                GridViewDescuento.Columns("Activo").Visible = False
+
+                GridViewDescuento.Columns("Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridViewDescuento.Columns("Total").SummaryItem.DisplayFormat = "{0:n2}"
+
+                GridViewDescuento.Columns("Total").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                GridViewDescuento.Columns("Total").DisplayFormat.FormatString = "{0:n2}"
+            End If
 
             CargarCuota()
 
@@ -772,4 +782,5 @@ Public Class frmDescuento
 
     End Sub
 
+ 
 End Class

@@ -679,4 +679,17 @@ Public Class frmMenu
 
     End Sub
 
+    Private Sub cmdReciboPagoPendiente_ItemClick(sender As Object, e As ItemClickEventArgs) Handles cmdReciboPagoPendiente.ItemClick
+
+        Try
+
+            Dim Recibo As New frmRepReciboPendientePago()
+            Recibo.ShowDialog()
+            Recibo.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
 End Class

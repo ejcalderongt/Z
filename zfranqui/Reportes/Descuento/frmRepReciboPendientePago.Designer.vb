@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmRepSaldoVehiculos
+Partial Class frmRepReciboPendientePago
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -39,7 +39,22 @@ Partial Class frmRepSaldoVehiculos
         Me.chkActivo = New System.Windows.Forms.CheckBox()
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.colCEF = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colFranquiciado1 = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colFechaDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colNombre = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colModelo = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colNoChasis = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colNoPlaca = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colMotor = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colNumeroTelefono = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colEmpresaTelco = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colMonto = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
+        Me.colNoCuota = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colSaldo = New DevExpress.XtraGrid.Columns.GridColumn()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -152,7 +167,7 @@ Partial Class frmRepSaldoVehiculos
         Me.GroupBox1.Controls.Add(Me.dtpFechaDesde)
         Me.GroupBox1.Location = New System.Drawing.Point(263, 51)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(320, 99)
+        Me.GroupBox1.Size = New System.Drawing.Size(320, 111)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Fecha en la que se generó el descuento"
@@ -183,9 +198,114 @@ Partial Class frmRepSaldoVehiculos
         '
         'GridView1
         '
+        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colCEF, Me.colFranquiciado1, Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colAbonado, Me.colTipoDescuento, Me.colNoCuota, Me.colSaldo})
         Me.GridView1.GridControl = Me.Dgrid
+        Me.GridView1.GroupCount = 2
+        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}")})
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsView.ShowFooter = True
+        Me.GridView1.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colCEF, DevExpress.Data.ColumnSortOrder.Ascending), New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colFranquiciado1, DevExpress.Data.ColumnSortOrder.Ascending)})
+        '
+        'colCEF
+        '
+        Me.colCEF.FieldName = "CEF"
+        Me.colCEF.Name = "colCEF"
+        Me.colCEF.Visible = True
+        Me.colCEF.VisibleIndex = 0
+        '
+        'colFranquiciado1
+        '
+        Me.colFranquiciado1.FieldName = "Franquiciado"
+        Me.colFranquiciado1.Name = "colFranquiciado1"
+        Me.colFranquiciado1.Visible = True
+        Me.colFranquiciado1.VisibleIndex = 1
+        '
+        'colFechaDescuento
+        '
+        Me.colFechaDescuento.FieldName = "FechaDescuento"
+        Me.colFechaDescuento.Name = "colFechaDescuento"
+        Me.colFechaDescuento.Visible = True
+        Me.colFechaDescuento.VisibleIndex = 0
+        '
+        'colNombre
+        '
+        Me.colNombre.FieldName = "Nombre"
+        Me.colNombre.Name = "colNombre"
+        Me.colNombre.Visible = True
+        Me.colNombre.VisibleIndex = 1
+        '
+        'colModelo
+        '
+        Me.colModelo.FieldName = "Modelo"
+        Me.colModelo.Name = "colModelo"
+        Me.colModelo.Visible = True
+        Me.colModelo.VisibleIndex = 2
+        '
+        'colNoChasis
+        '
+        Me.colNoChasis.FieldName = "NoChasis"
+        Me.colNoChasis.Name = "colNoChasis"
+        Me.colNoChasis.Visible = True
+        Me.colNoChasis.VisibleIndex = 3
+        '
+        'colNoPlaca
+        '
+        Me.colNoPlaca.FieldName = "NoPlaca"
+        Me.colNoPlaca.Name = "colNoPlaca"
+        Me.colNoPlaca.Visible = True
+        Me.colNoPlaca.VisibleIndex = 4
+        '
+        'colMotor
+        '
+        Me.colMotor.FieldName = "Motor"
+        Me.colMotor.Name = "colMotor"
+        Me.colMotor.Visible = True
+        Me.colMotor.VisibleIndex = 5
+        '
+        'colNumeroTelefono
+        '
+        Me.colNumeroTelefono.FieldName = "NumeroTelefono"
+        Me.colNumeroTelefono.Name = "colNumeroTelefono"
+        Me.colNumeroTelefono.Visible = True
+        Me.colNumeroTelefono.VisibleIndex = 6
+        '
+        'colEmpresaTelco
+        '
+        Me.colEmpresaTelco.FieldName = "EmpresaTelco"
+        Me.colEmpresaTelco.Name = "colEmpresaTelco"
+        Me.colEmpresaTelco.Visible = True
+        Me.colEmpresaTelco.VisibleIndex = 7
+        '
+        'colMonto
+        '
+        Me.colMonto.DisplayFormat.FormatString = "{0:n2}"
+        Me.colMonto.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colMonto.FieldName = "Monto"
+        Me.colMonto.GroupFormat.FormatString = "{0:n2}"
+        Me.colMonto.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colMonto.Name = "colMonto"
+        Me.colMonto.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", "{0:n2}")})
+        Me.colMonto.Visible = True
+        Me.colMonto.VisibleIndex = 9
+        '
+        'colAbonado
+        '
+        Me.colAbonado.DisplayFormat.FormatString = "{0:n2}"
+        Me.colAbonado.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colAbonado.FieldName = "Abonado"
+        Me.colAbonado.GroupFormat.FormatString = "{0:n2}"
+        Me.colAbonado.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colAbonado.Name = "colAbonado"
+        Me.colAbonado.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", "{0:n2}")})
+        Me.colAbonado.Visible = True
+        Me.colAbonado.VisibleIndex = 10
+        '
+        'colTipoDescuento
+        '
+        Me.colTipoDescuento.FieldName = "TipoDescuento"
+        Me.colTipoDescuento.Name = "colTipoDescuento"
+        Me.colTipoDescuento.Visible = True
+        Me.colTipoDescuento.VisibleIndex = 12
         '
         'txtFiltro
         '
@@ -198,7 +318,23 @@ Partial Class frmRepSaldoVehiculos
         Me.txtFiltro.TabIndex = 18
         Me.txtFiltro.Tag = "Buscar..."
         '
-        'frmRepSaldoVehiculos
+        'colNoCuota
+        '
+        Me.colNoCuota.Caption = "No. Cuota"
+        Me.colNoCuota.FieldName = "No. Cuota"
+        Me.colNoCuota.Name = "colNoCuota"
+        Me.colNoCuota.Visible = True
+        Me.colNoCuota.VisibleIndex = 8
+        '
+        'colSaldo
+        '
+        Me.colSaldo.Caption = "Saldo"
+        Me.colSaldo.FieldName = "Saldo"
+        Me.colSaldo.Name = "colSaldo"
+        Me.colSaldo.Visible = True
+        Me.colSaldo.VisibleIndex = 11
+        '
+        'frmRepReciboPendientePago
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -211,9 +347,9 @@ Partial Class frmRepSaldoVehiculos
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
-        Me.Name = "frmRepSaldoVehiculos"
+        Me.Name = "frmRepReciboPendientePago"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Reporte Saldo de Vehículos"
+        Me.Text = "Reporte Recibos Pendientes de Pago"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
@@ -241,4 +377,19 @@ Partial Class frmRepSaldoVehiculos
     Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
     Friend WithEvents Dgrid As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents colNombre As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colModelo As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colNoChasis As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colNoPlaca As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colMotor As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colNumeroTelefono As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colEmpresaTelco As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colAbonado As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colTipoDescuento As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colCEF As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colFechaDescuento As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colFranquiciado1 As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colMonto As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colNoCuota As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colSaldo As DevExpress.XtraGrid.Columns.GridColumn
 End Class
