@@ -454,7 +454,7 @@ Public Class frmMenu
 
             With descuentopd
                 .Modo = frmDescuentoList.pModo.Lista
-                .TipoDescuento = frmDescuentoList.pTipoDescuento.definido
+                .TipoDescuento = frmDescuentoList.pTipoDescuento.Definido
                 .MdiParent = Me
                 .Show()
                 .Focus()
@@ -478,7 +478,7 @@ Public Class frmMenu
 
             With descuentopi
                 .Modo = frmDescuentoList.pModo.Lista
-                .TipoDescuento = frmDescuentoList.pTipoDescuento.indefinido
+                .TipoDescuento = frmDescuentoList.pTipoDescuento.Indefinido
                 .MdiParent = Me
                 .Show()
                 .Focus()

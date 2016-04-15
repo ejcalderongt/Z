@@ -422,4 +422,36 @@
         txtNomDepartamento.Text = ""
     End Sub
 
+    Public Enum pTipoDescuento
+        Definido = 1
+        Indefinido = 2
+        Unico = 3
+    End Enum
+
+    Private Sub Nuevo_Dto(ByVal TipoDescuento As pTipoDescuento)
+        Dim Dto As New frmDescuento(frmDescuento.TipoTrans.Nuevo)
+        Dto.TipoDescuento = TipoDescuento
+        Dto.pObjEnc.IsNew = True
+        Dto.txtCodigoFranquiciado.Text = txtCodigo.Text
+        Dto.txtNombres.Text = txtNombres.Text
+        Dto.txtCodigoFranquiciado.Tag = txtIdFranquiciado.Text
+        Dto.txtCodCEF.Text = txtCodCEF.Text
+        Dto.txtCodCEF.Tag = Franqui.CEFAsignado.IdCEF
+        Dto.txtNomCEF.Text = txtNomCEF.Text
+        Dto.ShowDialog()
+        Dto.Dispose()
+    End Sub
+
+    Private Sub mnuIndefinido_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuIndefinido.ItemClick
+        Nuevo_Dto(pTipoDescuento.Indefinido)
+    End Sub
+
+    Private Sub mnuDefinidio_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuDefinidio.ItemClick
+        Nuevo_Dto(pTipoDescuento.Definido)
+    End Sub
+
+    Private Sub mnuUnico_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuUnico.ItemClick
+        Nuevo_Dto(pTipoDescuento.Unico)
+    End Sub
+
 End Class

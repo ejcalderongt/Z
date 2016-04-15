@@ -127,7 +127,6 @@
 
             Application.DoEvents()
 
-
             Select Case TipoRep
 
                 Case TipoReporte.CuotasDetalleDescuento
