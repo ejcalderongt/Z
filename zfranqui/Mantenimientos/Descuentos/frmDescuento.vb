@@ -10,17 +10,17 @@ Public Class frmDescuento
     Private ObjLnF As New clsLnFranquiciado
     Private ObjLnC As New clsLnCef
 
-    'Private ListObjDD As New List(Of clsBeDescuento_det)
-    'Private ListObjDR As New List(Of clsBeDescuento_ref)
     Public Enum TipoTrans
         Nuevo = 1
         Editar = 2
     End Enum
-    Enum pTipoDescuento
+
+    Public Enum pTipoDescuento
         Definido = 1
         Indefinido = 2
         Unico = 3
     End Enum
+
     Public Property TipoDescuento As pTipoDescuento
 
     Private Property Modo As TipoTrans

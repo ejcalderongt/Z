@@ -4,11 +4,12 @@
 
     Public Property Modo As pModo
 
-    Enum pTipoDescuento
-        definido = 1
-        indefinido = 2
-        unico = 3
+    Public Enum pTipoDescuento
+        Definido = 1
+        Indefinido = 2
+        Unico = 3
     End Enum
+
     Public Property TipoDescuento As pTipoDescuento
 
     Enum pModo
