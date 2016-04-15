@@ -41,12 +41,24 @@ Public Class frmPeriodo
                     txtCuota.Value = 0.0
                 End If
                 SetValue()
+                lblNoCuota.Visible = True
+                lblNoCuota.Location = New Point(12, 89)
+                txtCuota.Visible = True
+                txtCuota.Location = New Point(139, 87)
             ElseIf pTipoDescuento = 2 Then
                 Me.Text = "Período Indefinido"
                 SetValue()
+                lblNoCuota.Visible = False
+                lblNoCuota.Location = New Point(327, 89)
+                txtCuota.Visible = False
+                txtCuota.Location = New Point(445, 87)
             Else
                 Me.Text = "Período Ünico"
                 SetValue()
+                lblNoCuota.Visible = True
+                lblNoCuota.Location = New Point(12, 89)
+                txtCuota.Visible = True
+                txtCuota.Location = New Point(139, 87)
             End If
 
         Catch ex As Exception
@@ -68,6 +80,24 @@ Public Class frmPeriodo
             Else
                 dtmFecha.Value = Now.Date
             End If
+
+        Catch ex As Exception
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Sub
+
+    Private Sub ResizeCampos()
+
+        Try
+
+            ' Original location 12, 89
+            lblNoCuota.Visible = False
+            lblNoCuota.Location = New Point(327, 89)
+
+            ' Original location 139, 87
+            txtCuota.Visible = False
+            txtCuota.Location = New Point(445, 87)
 
         Catch ex As Exception
             XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)

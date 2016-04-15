@@ -1,0 +1,15 @@
+
+validar que el checkbox funcione bien en reporte descuentos por franquiciado
+agregar la ultimas 2 columnas del cef en este reporte
+
+CEF: G023 SANTA ELIZA, PETAPA - Inter: 90202 Pts: 200
+
+agregar reporte , supervisor que sera la copia del primer reporte descuentos por franquiciados
+(Resumen)
+
+Colocar boton nuevo en combobox beneficio en frmPeriodo este boton llamara a la forma 
+frmBeneficio mandar como parametro el tipo de beneficio de una vez al combobox de frmbeneficio
+validar que guarde y que del lado de frmPeriodo se pueda seleccionar ese beneficio.
+
+en la forma frmFranquiciado existe una opcion llamada, Reportes, todos los reportes ya estan hechos
+excepto el de ventas, llamar a los que estan hechos desde ahi.

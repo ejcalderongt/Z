@@ -28,7 +28,6 @@ Partial Class frmPeriodo
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
         Me.txtRedondear = New System.Windows.Forms.NumericUpDown()
         Me.Label5 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.dtmFecha = New System.Windows.Forms.DateTimePicker()
         Me.lblPeriodo = New System.Windows.Forms.Label()
@@ -40,7 +39,9 @@ Partial Class frmPeriodo
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.GroupControl3 = New DevExpress.XtraEditors.GroupControl()
+        Me.cmdNuevoBeneficio = New System.Windows.Forms.Button()
         Me.cmbTipoBeneficio = New System.Windows.Forms.ComboBox()
+        Me.lblNoCuota = New System.Windows.Forms.Label()
         Label2 = New System.Windows.Forms.Label()
         Label1 = New System.Windows.Forms.Label()
         IdEmpresaLabel = New System.Windows.Forms.Label()
@@ -87,9 +88,9 @@ Partial Class frmPeriodo
         '
         'GroupControl1
         '
+        Me.GroupControl1.Controls.Add(Me.lblNoCuota)
         Me.GroupControl1.Controls.Add(Me.txtRedondear)
         Me.GroupControl1.Controls.Add(Me.Label5)
-        Me.GroupControl1.Controls.Add(Me.Label4)
         Me.GroupControl1.Controls.Add(Me.Label3)
         Me.GroupControl1.Controls.Add(Me.dtmFecha)
         Me.GroupControl1.Controls.Add(Me.lblPeriodo)
@@ -124,16 +125,6 @@ Partial Class frmPeriodo
         Me.Label5.Size = New System.Drawing.Size(121, 13)
         Me.Label5.TabIndex = 10
         Me.Label5.Text = "Redondear (Decimales):"
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(12, 89)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(63, 13)
-        Me.Label4.TabIndex = 9
-        Me.Label4.Text = "No. Cuotas:"
         '
         'Label3
         '
@@ -180,7 +171,7 @@ Partial Class frmPeriodo
         '
         'txtCuota
         '
-        Me.txtCuota.Location = New System.Drawing.Point(139, 87)
+        Me.txtCuota.Location = New System.Drawing.Point(445, 87)
         Me.txtCuota.Maximum = New Decimal(New Integer() {1215752191, 23, 0, 0})
         Me.txtCuota.Minimum = New Decimal(New Integer() {1316134911, 2328, 0, -2147483648})
         Me.txtCuota.Name = "txtCuota"
@@ -236,6 +227,7 @@ Partial Class frmPeriodo
         '
         'GroupControl3
         '
+        Me.GroupControl3.Controls.Add(Me.cmdNuevoBeneficio)
         Me.GroupControl3.Controls.Add(Me.cmbTipoBeneficio)
         Me.GroupControl3.Controls.Add(Me.txtFiltro)
         Me.GroupControl3.Controls.Add(IdEmpresaLabel)
@@ -244,6 +236,15 @@ Partial Class frmPeriodo
         Me.GroupControl3.Size = New System.Drawing.Size(718, 90)
         Me.GroupControl3.TabIndex = 2
         Me.GroupControl3.Text = "Filtro"
+        '
+        'cmdNuevoBeneficio
+        '
+        Me.cmdNuevoBeneficio.Location = New System.Drawing.Point(304, 27)
+        Me.cmdNuevoBeneficio.Name = "cmdNuevoBeneficio"
+        Me.cmdNuevoBeneficio.Size = New System.Drawing.Size(75, 21)
+        Me.cmdNuevoBeneficio.TabIndex = 3
+        Me.cmdNuevoBeneficio.Text = "Nuevo"
+        Me.cmdNuevoBeneficio.UseVisualStyleBackColor = True
         '
         'cmbTipoBeneficio
         '
@@ -255,11 +256,21 @@ Partial Class frmPeriodo
         Me.cmbTipoBeneficio.Size = New System.Drawing.Size(159, 21)
         Me.cmbTipoBeneficio.TabIndex = 0
         '
+        'lblNoCuota
+        '
+        Me.lblNoCuota.AutoSize = True
+        Me.lblNoCuota.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblNoCuota.Location = New System.Drawing.Point(12, 89)
+        Me.lblNoCuota.Name = "lblNoCuota"
+        Me.lblNoCuota.Size = New System.Drawing.Size(63, 13)
+        Me.lblNoCuota.TabIndex = 11
+        Me.lblNoCuota.Text = "No. Cuotas:"
+        '
         'frmPeriodo
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(708, 526)
+        Me.ClientSize = New System.Drawing.Size(708, 521)
         Me.Controls.Add(Me.GroupControl3)
         Me.Controls.Add(Me.GroupControl2)
         Me.Controls.Add(Me.GroupControl1)
@@ -299,7 +310,8 @@ Partial Class frmPeriodo
     Friend WithEvents lblPeriodo As System.Windows.Forms.Label
     Friend WithEvents dtmFecha As System.Windows.Forms.DateTimePicker
     Friend WithEvents Label3 As System.Windows.Forms.Label
-    Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents txtRedondear As System.Windows.Forms.NumericUpDown
     Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents cmdNuevoBeneficio As System.Windows.Forms.Button
+    Friend WithEvents lblNoCuota As System.Windows.Forms.Label
 End Class
