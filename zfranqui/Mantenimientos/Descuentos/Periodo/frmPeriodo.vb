@@ -482,4 +482,34 @@ Public Class frmPeriodo
         End If
     End Sub
 
+    Private Sub cmdNuevo_Click(sender As Object, e As EventArgs) Handles cmdNuevo.Click
+
+        Try
+
+            If XtraMessageBox.Show("¿Desea crear Beneficio?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
+
+                If cmbTipoBeneficio.SelectedIndex = -1 Then
+                    Throw New Exception("Seleccione Tipo Beneficio.")
+                End If
+
+                Dim Obj As New clsBeTipobeneficio()
+                Obj.IdTipoBeneficio = cmbTipoBeneficio.SelectedValue
+
+                Dim o As New clsLnTipobeneficio
+                o.Obtener(Obj)
+
+                Dim Bene As New frmBeneficio(frmBeneficio.TipoTrans.Nuevo)
+                'Bene.pIdTipoBeneficioDefault = CInt(cmbTipoBeneficio.SelectedValue)
+                Bene.Bene.TipoBeneficio = Obj
+                Bene.ShowDialog()
+                Bene.Dispose()
+                CargaBeneficios()
+
+            End If
+
+        Catch ex As Exception
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Sub
 End Class

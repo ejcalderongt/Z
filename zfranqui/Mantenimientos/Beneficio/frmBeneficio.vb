@@ -1,7 +1,10 @@
-﻿Public Class frmBeneficio
+﻿Imports DevExpress.XtraEditors
+
+Public Class frmBeneficio
 
     Private dBene As New clsLnBeneficio
     Public Bene As New clsBeBeneficio
+    Public pIdTipoBeneficioDefault As Integer
 
     Public Enum TipoTrans
         Nuevo = 1
@@ -26,7 +29,7 @@
             ElseIf PanTelefono.Visible = Bene.TipoBeneficio.EsTelefono Then
                 txtNoTelefono.Focus()
             Else
-                txtNombre.Focus()                
+                txtNombre.Focus()
             End If
 
         Catch ex As Exception
@@ -74,6 +77,10 @@
                     mnuGuardar.Enabled = True
                     mnuActualizar.Enabled = False
                     mnuEliminar.Enabled = False
+
+                    'If pIdTipoBeneficioDefault <> 0 Then
+                    '    cmbTipo.SelectedValue = pIdTipoBeneficioDefault
+                    'End If
 
                 Case TipoTrans.Editar
 
@@ -201,10 +208,9 @@
 
     End Function
 
-
     Private Sub mnuGuardar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuGuardar.ItemClick
         If Datos_Correctos() Then
-            If MsgBox("¿Guardar Beneficio?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+            If XtraMessageBox.Show("¿Guardar Beneficio?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
                 If Guardar() Then MsgBox("Se guardó el registro", MsgBoxStyle.Information, Me.Text)
                 Me.Close()
             End If
