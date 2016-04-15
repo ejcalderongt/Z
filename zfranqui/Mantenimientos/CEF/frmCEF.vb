@@ -41,6 +41,8 @@
                 CEF.Fec_agr = Now
                 CEF.User_mod = gUsuario.IdUsuario.ToString
                 CEF.Fec_mod = Now
+                CEF.Interlocutor = txtInterlocutor.Text
+                CEF.Puntos = txtPuntos.Value
 
                 Guardar = dCEF.Insertar(CEF) > 0
 
@@ -74,6 +76,9 @@
                 CEF.Observaciones = txtObservaciones.Text
                 CEF.User_mod = gUsuario.IdUsuario.ToString
                 CEF.Fec_mod = Now
+                CEF.Interlocutor = txtInterlocutor.Text
+                CEF.Puntos = txtPuntos.Value
+
                 Actualizar = dCEF.Actualizar(CEF) > 0
 
             End If

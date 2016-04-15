@@ -35,6 +35,37 @@ Partial Public Class clsLnFranquiciado
 
     End Function
 
+    Public Function Get_IdFranquiciado(ByVal Codigo As String) As Integer
+
+        Get_IdFranquiciado = 0
+
+        Try
+
+            vSQL$ = "SELECT IdFranquiciado FROM Franquiciado WHERE Codigo ='" & Codigo & "'"
+
+            Dim sp As String = vSQL
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand(sp, cnn)
+            cmd.CommandType = CommandType.Text
+
+            Dim dad As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable
+            dad.Fill(dt)
+
+            If dt.Rows.Count > 0 Then
+                Get_IdFranquiciado = dt.Rows(0).Item("IdFranquiciado")
+            End If
+
+            cnn.Dispose()
+            cmd.Dispose()
+            dad.Dispose()
+            dt.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
 
     Public Function Existe_Codigo(ByVal Codigo As String, ByVal IdFranquiciado As Integer) As Boolean
 

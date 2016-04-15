@@ -1,4 +1,4 @@
-﻿Public Class frmRepDescuentoFran
+﻿Public Class frmRepDescuentoTipoDet
 
     Enum TipoReporte As Integer
 
@@ -80,7 +80,7 @@
 
             Case TipoReporte.CuotasDetalleDescuento
 
-                Dim reportHeader As String = vbNewLine & "Detalle de descuentos " & vbNewLine & _
+                Dim reportHeader As String = vbNewLine & "Estado de cuenta (Descuentos Definidos)" & vbNewLine & _
                 "Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
 
                 e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
@@ -96,51 +96,47 @@
         End Select
 
 
-
     End Sub
 
     Private Sub Llenar_Grid()
 
         Try
 
-            vSQL = "    SELECT " & _
-                   "	descuento_enc.fec_agr AS FechaDescuento, " & _
-                   "	b.Nombre, " & _
-                   "	b.Modelo, " & _
-                   "	b.NoChasis, " & _
-                   "	b.NoPlaca, " & _
-                   "	b.Motor, " & _
-                   "	b.NumeroTelefono, " & _
-                   "	b.EmpresaTelco, " & _
-                   "	tp.EsVehiculo, " & _
-                   "	tp.EsTelefono, " & _
-                   "	tp.EsServicio, " & _
-                   "	descuento_det.MontoTotal AS Monto, " & _
-                   "	SUM(r.Abonado) AS Abonado, " & _
-                   "	tipodescuento.Nombre AS TipoDescuento, " & _
-                   "	CONCAT( " & _
-                   "		franquiciado.Codigo, " & _
-                   "		' ', " & _
-                   "		franquiciado.Nombres " & _
-                   "	) AS Franquiciado, " & _
-                   "	CONCAT( " & _
-                   "		cef.Codigo, " & _
-                   "		' ', " & _
-                   "		cef.Descripcion " & _
-                   "	) AS CEF " & _
-                   "   FROM " & _
-                   "	descuento_ref AS r " & _
-                   "   INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " & _
-                   "   INNER JOIN tipobeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " & _
-                   "   INNER JOIN descuento_enc ON r.IdDescuentoEnc = descuento_enc.IdDescuentoEnc " & _
-                   "   INNER JOIN tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " & _
-                   "   INNER JOIN franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
-                   "   INNER JOIN cef ON descuento_enc.IdCEF = cef.IdCef " & _
-                   "   INNER JOIN descuento_det ON r.IdDescuentoEnc = descuento_det.IdDescuentoEnc " & _
-                   "   AND r.IdDescuentoDet = descuento_det.IdDescuentoDet " & _
-                   "   AND r.IdBeneficio = descuento_det.IdBeneficio " & _
-                   "   WHERE cast(descuento_enc.fec_agr AS DATE) BETWEEN " & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
-                   "   AND " & FormatoFechas.fFecha(dtpFechaHasta.Value)
+            vSQL = " SELECT " & _
+                "	cast(descuento_enc.fec_agr AS DATE) AS FechaDescuento, " & _
+                "	b.Nombre, " & _
+                "	b.Modelo, " & _
+                "	b.NoChasis, " & _
+                "	b.NoPlaca, " & _
+                "	b.Motor, " & _
+                "	b.NumeroTelefono, " & _
+                "	b.EmpresaTelco,	 " & _
+                "	r.NoCuota, " & _
+                "	r.Monto AS Monto, " & _
+                "	r.Abonado AS Abonado, " & _
+                "	tipodescuento.Nombre AS TipoDescuento, " & _
+                "	CONCAT( " & _
+                "		CAST( " & _
+                "			franquiciado.Codigo AS CHAR (50) " & _
+                "		), " & _
+                "		' - ', " & _
+                "		franquiciado.Nombres " & _
+                "	) AS Franquiciado, " & _
+                "	CONCAT( " & _
+                "		CAST(cef.Codigo AS CHAR(50)), " & _
+                "		' ', " & _
+                "		cef.Descripcion " & _
+                "	) AS CEF,tp.EsVehiculo, tp.EsTelefono, tp.EsServicio " & _
+                "FROM " & _
+                "	descuento_ref AS r " & _
+                " INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " & _
+                " INNER JOIN tipobeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " & _
+                " INNER JOIN descuento_enc ON r.IdDescuentoEnc = descuento_enc.IdDescuentoEnc " & _
+                " INNER JOIN tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " & _
+                " INNER JOIN franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
+                " INNER JOIN cef ON descuento_enc.IdCEF = cef.IdCef " & _
+                "   WHERE cast(descuento_enc.fec_agr AS DATE) BETWEEN " & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
+                "   AND " & FormatoFechas.fFecha(dtpFechaHasta.Value)
 
             If txtFiltro.Text.Trim <> "" Then
                 vSQL += "AND (franquiciado.Codigo LIKE '%" & txtFiltro.Text.Trim & "%'" & _
@@ -151,32 +147,10 @@
             End If
 
             If chkActivo.Checked Then
-                vSQL += "AND (descuento_det.Activo =1) "
-                vSQL += "AND (r.Anulada =0) "
+                vSQL += "AND  descuento_enc.IdDescuentoEnc in " & _
+                    " (select iddescuentoenc from descuento_det where activo =1) " & _
+                    " AND (r.Anulada=0)"
             End If
-
-
-            vSQL += "GROUP BY " & _
-                    "	b.Nombre, " & _
-                    "	b.Modelo, " & _
-                    "	b.NoChasis, " & _
-                    "	b.NoPlaca, " & _
-                    "	b.Motor, " & _
-                    "	b.NumeroTelefono, " & _
-                    "	b.EmpresaTelco, " & _
-                    "	tp.EsVehiculo, " & _
-                    "	tp.EsTelefono, " & _
-                    "	tp.EsServicio, " & _
-                    "	tipodescuento.Nombre, " & _
-                    "	franquiciado.Codigo, " & _
-                    "	franquiciado.Nombres, " & _
-                    "	cef.Codigo, " & _
-                    "	cef.Descripcion, " & _
-                    "	descuento_enc.fec_agr, " & _
-                    "	descuento_det.MontoTotal "
-
-            'Se hace a traves del campo activo cuando un descuento se pagó en su totalidad se actualiza la bandera activo = false
-            'vSQL += " HAVING descuento_det.MontoTotal > SUM(r.Abonado) "
 
             Dim DT As New DataTable
             BD.OpenDT(DT, vSQL)

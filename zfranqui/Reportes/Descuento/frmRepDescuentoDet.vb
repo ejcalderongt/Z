@@ -140,7 +140,7 @@
                     GridView1.Columns("NoCuota").SummaryItem.DisplayFormat = "{0:n2}"
 
                     GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                    GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+                    GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
                     GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
                     GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"

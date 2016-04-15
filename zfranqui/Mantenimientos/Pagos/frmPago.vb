@@ -83,7 +83,7 @@ Public Class frmPago
                 If GuardarDatos() Then
                     MsgBox("Se guardó el registro", MsgBoxStyle.Information, Me.Text)
                     If MessageBox.Show("¿Desea Imprimir el Reporte?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = DialogResult.Yes Then
-                        'ImprimirReporte()
+                        ImprimirReporte()
                     End If
                     Me.Close()
                 End If
@@ -224,7 +224,11 @@ Public Class frmPago
 
         Try
 
-            GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            If pObjBeEnc.CEF.IdCef <> 0 Then
+                GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            ElseIf String.IsNullOrEmpty(txtCodCEF.Tag) = False AndAlso IsNumeric(txtCodCEF.Tag) AndAlso txtCodCEF.Tag <> 0 Then
+                GridDescuento.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoResumen(CInt(txtCodCEF.Tag), pObjBeEnc.Franquiciado.IdFranquiciado)
+            End If
 
             If GridViewDescuento.RowCount > 0 Then
                 GridViewDescuento.Columns("IdDescuentoEnc").Visible = False
@@ -239,7 +243,7 @@ Public Class frmPago
                 GridViewDescuento.Columns("Cuotas").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewDescuento.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n2}"
             End If
 
         Catch ex As Exception
@@ -252,7 +256,20 @@ Public Class frmPago
 
         Try
 
-            GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            If pObjBeEnc.CEF.IdCef <> 0 Then
+                GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(pObjBeEnc.CEF.IdCef, pObjBeEnc.Franquiciado.IdFranquiciado)
+            ElseIf String.IsNullOrEmpty(txtCodCEF.Tag) = False AndAlso IsNumeric(txtCodCEF.Tag) AndAlso txtCodCEF.Tag <> 0 Then
+                GridCuota.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(CInt(txtCodCEF.Tag), pObjBeEnc.Franquiciado.IdFranquiciado)
+            End If
+
+            'For Each r As DataRow In DT.Rows
+            '    Dim Obj As clsBeDescuento_ref = clsLnDescuento_ref.GetSingle(CInt(r("IdDescuentoEnc")), _
+            '                                                                 CInt(r("IdDescuentoDet")), _
+            '                                                                 CInt(r("IdDescuentoRef")))
+            '    If Obj IsNot Nothing Then
+
+            '    End If
+            'Next
 
             If GridViewCuota.RowCount > 0 Then
                 GridViewCuota.Columns("IdDescuentoEnc").Visible = False
@@ -265,13 +282,13 @@ Public Class frmPago
                 GridViewCuota.Columns("No. Cuota").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewCuota.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
                 GridViewCuota.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridViewCuota.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                GridViewCuota.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n7}"
+                GridViewCuota.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n2}"
 
             End If
 
@@ -335,10 +352,20 @@ Public Class frmPago
                     Obj.IdDescuentoEnc = CInt(Dr.Item("IdDescuentoEnc"))
                     Obj.IdDescuentoDet = CInt(Dr.Item("IdDescuentoDet"))
                     Obj.Beneficio.IdBeneficio = CInt(Dr.Item("IdBeneficio"))
+
+                    Dim lBeneficio As String = String.Format("{0} {1} {2} {3} {4} {5}", Dr.Item("Nombre"), _
+                                                             Dr.Item("Modelo"), Dr.Item("No. Placa"), _
+                                                             Dr.Item("No. Chasis"), Dr.Item("No. Telefono"), Dr.Item("Empresa")).ToString.Trim()
+
+                    Dim lTipoPeriodo As String = Dr.Item("Periodo").ToString.Trim
+
                     Dim Pago As New frmGeneraPago
                     'Pago.pListObjDet = clsLnPago_det.GetAllByPagoEnc(Obj.IdDescuentoEnc, Obj.IdDescuentoDet)
                     Pago.pObj = Obj
                     Pago.pListObjDet = ListObjPago
+                    Pago.pListObjRef = ListObjRef
+                    Pago.lblInformacionBeneficio.Text = lBeneficio
+                    Pago.lblTipoPeriodo.Text = lTipoPeriodo
                     'Pago.Cargar = New frmGeneraPago.Operar(AddressOf CargaResumenDescuento)
                     Pago.ShowDialog()
                     Pago.Dispose()
@@ -589,12 +616,21 @@ Public Class frmPago
         Try
 
             If GridViewDescuento.RowCount > 0 Then
-                'ImprimirReporte()
+                ImprimirReporte()
             End If
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
         End Try
+
+    End Sub
+
+    Private Sub ImprimirReporte()
+
+        Dim Reporte As New frmRepPagoRealizado
+        Reporte.pObjPagoEnc = pObjBeEnc
+        Reporte.ShowDialog()
+        Reporte.Dispose()
 
     End Sub
 

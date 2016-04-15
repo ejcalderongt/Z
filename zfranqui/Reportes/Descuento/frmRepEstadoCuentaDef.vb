@@ -119,9 +119,9 @@
                 "		CAST( " & _
                 "			franquiciado.Codigo AS CHAR (50) " & _
                 "		), " & _
-                "		' ', " & _
+                "		' - ', " & _
                 "		franquiciado.Nombres " & _
-                "	) AS Franqui, " & _
+                "	) AS Franquiciado, " & _
                 "	CONCAT( " & _
                 "		CAST(cef.Codigo AS CHAR(50)), " & _
                 "		' ', " & _
@@ -147,7 +147,9 @@
             End If
 
             If chkActivo.Checked Then
-                vSQL += "AND (descuento_det.Activo =1)"
+                vSQL += "AND  descuento_enc.IdDescuentoEnc in " & _
+                    " (select iddescuentoenc from descuento_det where activo =1) " & _
+                    " AND (r.Anulada=0)"
             End If
 
             Dim DT As New DataTable
@@ -157,11 +159,13 @@
 
             Application.DoEvents()
 
+            If GridView1.Columns.Count = 0 Then Exit Sub
+
             GridView1.Columns("CEF").GroupIndex = 0
             GridView1.Columns("Franquiciado").GroupIndex = 1
 
             GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n7}"
+            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
             GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
             GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"

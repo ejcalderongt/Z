@@ -22,7 +22,8 @@ Partial Class frmRepEstadoCuentaDef
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
+        Me.components = New System.ComponentModel.Container()
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdActualizar = New DevExpress.XtraBars.BarButtonItem()
@@ -171,6 +172,8 @@ Partial Class frmRepEstadoCuentaDef
         '
         'chkActivo
         '
+        Me.chkActivo.Checked = True
+        Me.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked
         Me.chkActivo.Location = New System.Drawing.Point(610, 75)
         Me.chkActivo.Name = "chkActivo"
         Me.chkActivo.Size = New System.Drawing.Size(179, 52)

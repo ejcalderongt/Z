@@ -3,35 +3,36 @@ Imports MySql.Data
 
 Partial Public Class clsLnFranquiciadocef
 
-    'Public Function Obtener(ByRef oBeFranquiciadocef As clsBeFranquiciadocef) As Boolean
+    Public Function GetIdFranquiciado(ByVal IdCEF) As Integer
 
-    '    Try
+        GetIdFranquiciado = 0
 
-    '        Dim sp As String = "SELECT * FROM Franquiciadocef" & _
-    '        " Where (IdAsignacionFranquiciado = @IdAsignacionFranquiciado)"
+        Try
 
-    '        Dim cnn As New MySqlConnection(BD.CadenaConexion)
-    '        Dim cmd As New MySqlCommand(sp, cnn)
-    '        cmd.CommandType = CommandType.Text
+            Dim sp As String = "SELECT IdFranquiciado FROM Franquiciadocef " & _
+            " Where (IdCEF = @IdCEF)"
 
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand(sp, cnn)
+            cmd.CommandType = CommandType.Text
 
-    '        Dim dad As New MySqlDataAdapter(cmd)
-    '        dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDASIGNACIONFRANQUICIADO", oBeFranquiciadocef.IdAsignacionFranquiciado))
+            Dim dad As New MySqlDataAdapter(cmd)
+            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDCEF", IdCEF))
 
-    '        Dim dt As New DataTable
-    '        dad.Fill(dt)
+            Dim dt As New DataTable
+            dad.Fill(dt)
 
-    '        If dt.Rows.Count = 1 Then
-    '            Cargar(oBeFranquiciadocef, dt.Rows(0))
-    '        Else
-    '            Throw New Exception("No se pudo obtener el registro")
-    '        End If
+            If dt.Rows.Count = 1 Then
+                GetIdFranquiciado = dt.Rows(0).Item("IdFranquiciado")
+            ElseIf dt.Rows.Count > 1 Then
+                Throw New Exception("No se pudo obtener el IdFranquiciado para el CEF:" & IdCEF & " porque se encontró más de un franquiciado asignado al CEF")
+            End If
 
-    '        Return True
-    '    Catch ex As Exception
-    '        Throw ex
-    '    End Try
+            Return GetIdFranquiciado
+        Catch ex As Exception
+            Throw ex
+        End Try
 
-    'End Function
+    End Function
 
 End Class

@@ -44,6 +44,7 @@ Partial Class frmFranquiciado
         Dim lblFechaCreacion As System.Windows.Forms.Label
         Dim lblFechaAsignacion As System.Windows.Forms.Label
         Dim lblTiempoTranscurrido As System.Windows.Forms.Label
+        Dim lblInterlocutor As System.Windows.Forms.Label
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFranquiciado))
         Me.RibbonControl = New DevExpress.XtraBars.Ribbon.RibbonControl()
         Me.mnuGuardar = New DevExpress.XtraBars.BarButtonItem()
@@ -59,6 +60,7 @@ Partial Class frmFranquiciado
         Me.Fec_modDateEdit = New DevExpress.XtraEditors.DateEdit()
         Me.PanBitacora = New DevExpress.XtraEditors.GroupControl()
         Me.PanDatosUsuario = New DevExpress.XtraEditors.GroupControl()
+        Me.txtInterlocutor = New DevExpress.XtraEditors.TextEdit()
         Me.txtFechaCreacion = New DevExpress.XtraEditors.DateEdit()
         Me.txtDPI = New DevExpress.XtraEditors.TextEdit()
         Me.txtCodigo = New DevExpress.XtraEditors.TextEdit()
@@ -112,6 +114,7 @@ Partial Class frmFranquiciado
         lblFechaCreacion = New System.Windows.Forms.Label()
         lblFechaAsignacion = New System.Windows.Forms.Label()
         lblTiempoTranscurrido = New System.Windows.Forms.Label()
+        lblInterlocutor = New System.Windows.Forms.Label()
         CType(Me.RibbonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtIdFranquiciado.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtNombres.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -125,6 +128,7 @@ Partial Class frmFranquiciado
         Me.PanBitacora.SuspendLayout()
         CType(Me.PanDatosUsuario, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.PanDatosUsuario.SuspendLayout()
+        CType(Me.txtInterlocutor.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtFechaCreacion.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtFechaCreacion.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtDPI.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -390,6 +394,16 @@ Partial Class frmFranquiciado
         lblTiempoTranscurrido.Text = "Transcurrido (Días):"
         lblTiempoTranscurrido.Visible = False
         '
+        'lblInterlocutor
+        '
+        lblInterlocutor.AutoSize = True
+        lblInterlocutor.Location = New System.Drawing.Point(21, 402)
+        lblInterlocutor.Name = "lblInterlocutor"
+        lblInterlocutor.Size = New System.Drawing.Size(64, 13)
+        lblInterlocutor.TabIndex = 20
+        lblInterlocutor.Text = "Interlocutor"
+        lblInterlocutor.Visible = False
+        '
         'RibbonControl
         '
         Me.RibbonControl.ExpandCollapseItem.Id = 0
@@ -522,6 +536,8 @@ Partial Class frmFranquiciado
         '
         'PanDatosUsuario
         '
+        Me.PanDatosUsuario.Controls.Add(lblInterlocutor)
+        Me.PanDatosUsuario.Controls.Add(Me.txtInterlocutor)
         Me.PanDatosUsuario.Controls.Add(Me.txtFechaCreacion)
         Me.PanDatosUsuario.Controls.Add(lblFechaCreacion)
         Me.PanDatosUsuario.Controls.Add(Me.txtDPI)
@@ -544,9 +560,19 @@ Partial Class frmFranquiciado
         Me.PanDatosUsuario.Controls.Add(Me.txtNombres)
         Me.PanDatosUsuario.Location = New System.Drawing.Point(71, 155)
         Me.PanDatosUsuario.Name = "PanDatosUsuario"
-        Me.PanDatosUsuario.Size = New System.Drawing.Size(335, 432)
+        Me.PanDatosUsuario.Size = New System.Drawing.Size(335, 464)
         Me.PanDatosUsuario.TabIndex = 0
         Me.PanDatosUsuario.Text = "Datos Franquiciado"
+        '
+        'txtInterlocutor
+        '
+        Me.txtInterlocutor.Location = New System.Drawing.Point(90, 399)
+        Me.txtInterlocutor.MenuManager = Me.RibbonControl
+        Me.txtInterlocutor.Name = "txtInterlocutor"
+        Me.txtInterlocutor.Properties.MaxLength = 20
+        Me.txtInterlocutor.Size = New System.Drawing.Size(212, 20)
+        Me.txtInterlocutor.TabIndex = 21
+        Me.txtInterlocutor.Visible = False
         '
         'txtFechaCreacion
         '
@@ -655,7 +681,7 @@ Partial Class frmFranquiciado
         Me.GroupControl1.Controls.Add(Me.GroupControl2)
         Me.GroupControl1.Location = New System.Drawing.Point(412, 155)
         Me.GroupControl1.Name = "GroupControl1"
-        Me.GroupControl1.Size = New System.Drawing.Size(398, 432)
+        Me.GroupControl1.Size = New System.Drawing.Size(398, 464)
         Me.GroupControl1.TabIndex = 4
         Me.GroupControl1.Text = "Asignación de CEF"
         '
@@ -828,7 +854,7 @@ Partial Class frmFranquiciado
         Me.GroupControl2.Controls.Add(Label6)
         Me.GroupControl2.Controls.Add(Me.txtFechaModificoAsignacion)
         Me.GroupControl2.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.GroupControl2.Location = New System.Drawing.Point(2, 273)
+        Me.GroupControl2.Location = New System.Drawing.Point(2, 305)
         Me.GroupControl2.Name = "GroupControl2"
         Me.GroupControl2.Size = New System.Drawing.Size(394, 157)
         Me.GroupControl2.TabIndex = 2
@@ -911,6 +937,7 @@ Partial Class frmFranquiciado
         CType(Me.PanDatosUsuario, System.ComponentModel.ISupportInitialize).EndInit()
         Me.PanDatosUsuario.ResumeLayout(False)
         Me.PanDatosUsuario.PerformLayout()
+        CType(Me.txtInterlocutor.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtFechaCreacion.Properties.CalendarTimeProperties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtFechaCreacion.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtDPI.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -991,6 +1018,7 @@ Partial Class frmFranquiciado
     Friend WithEvents txtFechaCreacion As DevExpress.XtraEditors.DateEdit
     Friend WithEvents txtTiempoTranscurrido As DevExpress.XtraEditors.TextEdit
     Friend WithEvents txtFechaAsignacion As DevExpress.XtraEditors.DateEdit
+    Friend WithEvents txtInterlocutor As DevExpress.XtraEditors.TextEdit
 
 
 End Class

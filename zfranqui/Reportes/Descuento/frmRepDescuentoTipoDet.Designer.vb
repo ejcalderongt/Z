@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmRepDescuentoFran
+Partial Class frmRepDescuentoTipoDet
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -39,8 +39,6 @@ Partial Class frmRepDescuentoFran
         Me.chkActivo = New System.Windows.Forms.CheckBox()
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.colCEF = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colFranquiciado1 = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colFechaDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colNombre = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colModelo = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -50,8 +48,14 @@ Partial Class frmRepDescuentoFran
         Me.colNumeroTelefono = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colEmpresaTelco = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colMonto = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colNoCuota = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colFranquiciado = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colCEF = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colEsVehiculo = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colEsTelefono = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colEsServicio = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
@@ -165,7 +169,7 @@ Partial Class frmRepDescuentoFran
         Me.GroupBox1.Controls.Add(Me.dtpFechaDesde)
         Me.GroupBox1.Location = New System.Drawing.Point(263, 51)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(320, 87)
+        Me.GroupBox1.Size = New System.Drawing.Size(320, 111)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Fecha en la que se generó el descuento"
@@ -174,7 +178,7 @@ Partial Class frmRepDescuentoFran
         '
         Me.chkActivo.Checked = True
         Me.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkActivo.Location = New System.Drawing.Point(609, 78)
+        Me.chkActivo.Location = New System.Drawing.Point(610, 75)
         Me.chkActivo.Name = "chkActivo"
         Me.chkActivo.Size = New System.Drawing.Size(179, 52)
         Me.chkActivo.TabIndex = 10
@@ -196,27 +200,11 @@ Partial Class frmRepDescuentoFran
         '
         'GridView1
         '
-        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colCEF, Me.colFranquiciado1, Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colAbonado, Me.colTipoDescuento})
+        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colNoCuota, Me.colMonto, Me.colAbonado, Me.colTipoDescuento, Me.colFranquiciado, Me.colCEF, Me.colEsVehiculo, Me.colEsTelefono, Me.colEsServicio})
         Me.GridView1.GridControl = Me.Dgrid
-        Me.GridView1.GroupCount = 2
         Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}")})
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsView.ShowFooter = True
-        Me.GridView1.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colCEF, DevExpress.Data.ColumnSortOrder.Ascending), New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colFranquiciado1, DevExpress.Data.ColumnSortOrder.Ascending)})
-        '
-        'colCEF
-        '
-        Me.colCEF.FieldName = "CEF"
-        Me.colCEF.Name = "colCEF"
-        Me.colCEF.Visible = True
-        Me.colCEF.VisibleIndex = 0
-        '
-        'colFranquiciado1
-        '
-        Me.colFranquiciado1.FieldName = "Franquiciado"
-        Me.colFranquiciado1.Name = "colFranquiciado1"
-        Me.colFranquiciado1.Visible = True
-        Me.colFranquiciado1.VisibleIndex = 1
         '
         'colFechaDescuento
         '
@@ -276,34 +264,66 @@ Partial Class frmRepDescuentoFran
         '
         'colMonto
         '
-        Me.colMonto.DisplayFormat.FormatString = "{0:n2}"
-        Me.colMonto.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.colMonto.FieldName = "Monto"
-        Me.colMonto.GroupFormat.FormatString = "{0:n2}"
-        Me.colMonto.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.colMonto.Name = "colMonto"
-        Me.colMonto.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", "{0:n2}")})
         Me.colMonto.Visible = True
         Me.colMonto.VisibleIndex = 8
         '
+        'colNoCuota
+        '
+        Me.colNoCuota.FieldName = "NoCuota"
+        Me.colNoCuota.Name = "colNoCuota"
+        Me.colNoCuota.Visible = True
+        Me.colNoCuota.VisibleIndex = 8
+        '
         'colAbonado
         '
-        Me.colAbonado.DisplayFormat.FormatString = "{0:n2}"
-        Me.colAbonado.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.colAbonado.FieldName = "Abonado"
-        Me.colAbonado.GroupFormat.FormatString = "{0:n2}"
-        Me.colAbonado.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
         Me.colAbonado.Name = "colAbonado"
-        Me.colAbonado.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", "{0:n2}")})
         Me.colAbonado.Visible = True
-        Me.colAbonado.VisibleIndex = 9
+        Me.colAbonado.VisibleIndex = 10
         '
         'colTipoDescuento
         '
         Me.colTipoDescuento.FieldName = "TipoDescuento"
         Me.colTipoDescuento.Name = "colTipoDescuento"
         Me.colTipoDescuento.Visible = True
-        Me.colTipoDescuento.VisibleIndex = 10
+        Me.colTipoDescuento.VisibleIndex = 11
+        '
+        'colFranquiciado
+        '
+        Me.colFranquiciado.FieldName = "Franquiciado"
+        Me.colFranquiciado.Name = "colFranquiciado"
+        Me.colFranquiciado.Visible = True
+        Me.colFranquiciado.VisibleIndex = 12
+        '
+        'colCEF
+        '
+        Me.colCEF.FieldName = "CEF"
+        Me.colCEF.Name = "colCEF"
+        Me.colCEF.Visible = True
+        Me.colCEF.VisibleIndex = 13
+        '
+        'colEsVehiculo
+        '
+        Me.colEsVehiculo.FieldName = "EsVehiculo"
+        Me.colEsVehiculo.Name = "colEsVehiculo"
+        Me.colEsVehiculo.Visible = True
+        Me.colEsVehiculo.VisibleIndex = 14
+        '
+        'colEsTelefono
+        '
+        Me.colEsTelefono.FieldName = "EsTelefono"
+        Me.colEsTelefono.Name = "colEsTelefono"
+        Me.colEsTelefono.Visible = True
+        Me.colEsTelefono.VisibleIndex = 15
+        '
+        'colEsServicio
+        '
+        Me.colEsServicio.FieldName = "EsServicio"
+        Me.colEsServicio.Name = "colEsServicio"
+        Me.colEsServicio.Visible = True
+        Me.colEsServicio.VisibleIndex = 16
         '
         'txtFiltro
         '
@@ -316,7 +336,7 @@ Partial Class frmRepDescuentoFran
         Me.txtFiltro.TabIndex = 18
         Me.txtFiltro.Tag = "Buscar..."
         '
-        'frmRepDescuentoFran
+        'frmRepDescuentoTipoDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -329,9 +349,9 @@ Partial Class frmRepDescuentoFran
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
-        Me.Name = "frmRepDescuentoFran"
+        Me.Name = "frmRepDescuentoTipoDet"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Reporte: Resumen de  descuentos por franquiciado"
+        Me.Text = "Reporte: Detalle de descuentos por tipo"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
@@ -359,6 +379,7 @@ Partial Class frmRepDescuentoFran
     Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
     Friend WithEvents Dgrid As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents colFechaDescuento As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colNombre As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colModelo As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colNoChasis As DevExpress.XtraGrid.Columns.GridColumn
@@ -366,10 +387,13 @@ Partial Class frmRepDescuentoFran
     Friend WithEvents colMotor As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colNumeroTelefono As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colEmpresaTelco As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colMonto As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colNoCuota As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colAbonado As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colTipoDescuento As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colFranquiciado As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colCEF As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colFechaDescuento As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colFranquiciado1 As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colMonto As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colEsVehiculo As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colEsTelefono As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents colEsServicio As DevExpress.XtraGrid.Columns.GridColumn
 End Class

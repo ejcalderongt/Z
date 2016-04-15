@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmRepDescuentoFran
+Partial Class frmPagosAutoZ
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -27,6 +27,7 @@ Partial Class frmRepDescuentoFran
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdActualizar = New DevExpress.XtraBars.BarButtonItem()
+        Me.mnuProcesar = New DevExpress.XtraBars.BarButtonItem()
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
@@ -36,26 +37,14 @@ Partial Class frmRepDescuentoFran
         Me.lbldesde = New System.Windows.Forms.Label()
         Me.lblHasta = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
-        Me.chkActivo = New System.Windows.Forms.CheckBox()
-        Me.Dgrid = New DevExpress.XtraGrid.GridControl()
+        Me.dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.colCEF = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colFranquiciado1 = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colFechaDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colNombre = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colModelo = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colNoChasis = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colNoPlaca = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colMotor = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colNumeroTelefono = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colEmpresaTelco = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colMonto = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
+        Me.prg = New System.Windows.Forms.ProgressBar()
+        Me.txt = New System.Windows.Forms.RichTextBox()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
-        CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtFiltro.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -68,9 +57,9 @@ Partial Class frmRepDescuentoFran
         Me.BarManager1.DockControls.Add(Me.barDockControlLeft)
         Me.BarManager1.DockControls.Add(Me.barDockControlRight)
         Me.BarManager1.Form = Me
-        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.cmdImprimir, Me.cmdActualizar})
+        Me.BarManager1.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.cmdImprimir, Me.cmdActualizar, Me.mnuProcesar})
         Me.BarManager1.MainMenu = Me.Bar2
-        Me.BarManager1.MaxItemId = 2
+        Me.BarManager1.MaxItemId = 3
         '
         'Bar2
         '
@@ -78,7 +67,7 @@ Partial Class frmRepDescuentoFran
         Me.Bar2.DockCol = 0
         Me.Bar2.DockRow = 0
         Me.Bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top
-        Me.Bar2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.cmdImprimir), New DevExpress.XtraBars.LinkPersistInfo(Me.cmdActualizar)})
+        Me.Bar2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.cmdImprimir), New DevExpress.XtraBars.LinkPersistInfo(Me.cmdActualizar), New DevExpress.XtraBars.LinkPersistInfo(Me.mnuProcesar)})
         Me.Bar2.OptionsBar.MultiLine = True
         Me.Bar2.OptionsBar.UseWholeRow = True
         Me.Bar2.Text = "Menú principal"
@@ -94,6 +83,12 @@ Partial Class frmRepDescuentoFran
         Me.cmdActualizar.Caption = "Actualizar"
         Me.cmdActualizar.Id = 1
         Me.cmdActualizar.Name = "cmdActualizar"
+        '
+        'mnuProcesar
+        '
+        Me.mnuProcesar.Caption = "Procesar"
+        Me.mnuProcesar.Id = 2
+        Me.mnuProcesar.Name = "mnuProcesar"
         '
         'barDockControlTop
         '
@@ -163,180 +158,84 @@ Partial Class frmRepDescuentoFran
         Me.GroupBox1.Controls.Add(Me.lbldesde)
         Me.GroupBox1.Controls.Add(Me.dtpFechaHasta)
         Me.GroupBox1.Controls.Add(Me.dtpFechaDesde)
-        Me.GroupBox1.Location = New System.Drawing.Point(263, 51)
+        Me.GroupBox1.Location = New System.Drawing.Point(265, 40)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(320, 87)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
-        Me.GroupBox1.Text = "Fecha en la que se generó el descuento"
+        Me.GroupBox1.Text = "Rango de fecha"
         '
-        'chkActivo
+        'dgrid
         '
-        Me.chkActivo.Checked = True
-        Me.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkActivo.Location = New System.Drawing.Point(609, 78)
-        Me.chkActivo.Name = "chkActivo"
-        Me.chkActivo.Size = New System.Drawing.Size(179, 52)
-        Me.chkActivo.TabIndex = 10
-        Me.chkActivo.Text = "Mostrar solo descuentos activos (Excluye los que ya fueron pagados en su totalida" & _
-    "d)"
-        Me.chkActivo.UseVisualStyleBackColor = True
-        '
-        'Dgrid
-        '
-        Me.Dgrid.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Dgrid.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Dgrid.Location = New System.Drawing.Point(0, 221)
-        Me.Dgrid.MainView = Me.GridView1
-        Me.Dgrid.MenuManager = Me.BarManager1
-        Me.Dgrid.Name = "Dgrid"
-        Me.Dgrid.Size = New System.Drawing.Size(1052, 431)
-        Me.Dgrid.TabIndex = 17
-        Me.Dgrid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
+        Me.dgrid.Cursor = System.Windows.Forms.Cursors.Default
+        Me.dgrid.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.dgrid.Location = New System.Drawing.Point(0, 273)
+        Me.dgrid.MainView = Me.GridView1
+        Me.dgrid.MenuManager = Me.BarManager1
+        Me.dgrid.Name = "dgrid"
+        Me.dgrid.Size = New System.Drawing.Size(1052, 379)
+        Me.dgrid.TabIndex = 17
+        Me.dgrid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
         'GridView1
         '
-        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colCEF, Me.colFranquiciado1, Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colAbonado, Me.colTipoDescuento})
-        Me.GridView1.GridControl = Me.Dgrid
-        Me.GridView1.GroupCount = 2
-        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}")})
+        Me.GridView1.GridControl = Me.dgrid
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsView.ShowFooter = True
-        Me.GridView1.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colCEF, DevExpress.Data.ColumnSortOrder.Ascending), New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colFranquiciado1, DevExpress.Data.ColumnSortOrder.Ascending)})
-        '
-        'colCEF
-        '
-        Me.colCEF.FieldName = "CEF"
-        Me.colCEF.Name = "colCEF"
-        Me.colCEF.Visible = True
-        Me.colCEF.VisibleIndex = 0
-        '
-        'colFranquiciado1
-        '
-        Me.colFranquiciado1.FieldName = "Franquiciado"
-        Me.colFranquiciado1.Name = "colFranquiciado1"
-        Me.colFranquiciado1.Visible = True
-        Me.colFranquiciado1.VisibleIndex = 1
-        '
-        'colFechaDescuento
-        '
-        Me.colFechaDescuento.FieldName = "FechaDescuento"
-        Me.colFechaDescuento.Name = "colFechaDescuento"
-        Me.colFechaDescuento.Visible = True
-        Me.colFechaDescuento.VisibleIndex = 0
-        '
-        'colNombre
-        '
-        Me.colNombre.FieldName = "Nombre"
-        Me.colNombre.Name = "colNombre"
-        Me.colNombre.Visible = True
-        Me.colNombre.VisibleIndex = 1
-        '
-        'colModelo
-        '
-        Me.colModelo.FieldName = "Modelo"
-        Me.colModelo.Name = "colModelo"
-        Me.colModelo.Visible = True
-        Me.colModelo.VisibleIndex = 2
-        '
-        'colNoChasis
-        '
-        Me.colNoChasis.FieldName = "NoChasis"
-        Me.colNoChasis.Name = "colNoChasis"
-        Me.colNoChasis.Visible = True
-        Me.colNoChasis.VisibleIndex = 3
-        '
-        'colNoPlaca
-        '
-        Me.colNoPlaca.FieldName = "NoPlaca"
-        Me.colNoPlaca.Name = "colNoPlaca"
-        Me.colNoPlaca.Visible = True
-        Me.colNoPlaca.VisibleIndex = 4
-        '
-        'colMotor
-        '
-        Me.colMotor.FieldName = "Motor"
-        Me.colMotor.Name = "colMotor"
-        Me.colMotor.Visible = True
-        Me.colMotor.VisibleIndex = 5
-        '
-        'colNumeroTelefono
-        '
-        Me.colNumeroTelefono.FieldName = "NumeroTelefono"
-        Me.colNumeroTelefono.Name = "colNumeroTelefono"
-        Me.colNumeroTelefono.Visible = True
-        Me.colNumeroTelefono.VisibleIndex = 6
-        '
-        'colEmpresaTelco
-        '
-        Me.colEmpresaTelco.FieldName = "EmpresaTelco"
-        Me.colEmpresaTelco.Name = "colEmpresaTelco"
-        Me.colEmpresaTelco.Visible = True
-        Me.colEmpresaTelco.VisibleIndex = 7
-        '
-        'colMonto
-        '
-        Me.colMonto.DisplayFormat.FormatString = "{0:n2}"
-        Me.colMonto.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.colMonto.FieldName = "Monto"
-        Me.colMonto.GroupFormat.FormatString = "{0:n2}"
-        Me.colMonto.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.colMonto.Name = "colMonto"
-        Me.colMonto.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", "{0:n2}")})
-        Me.colMonto.Visible = True
-        Me.colMonto.VisibleIndex = 8
-        '
-        'colAbonado
-        '
-        Me.colAbonado.DisplayFormat.FormatString = "{0:n2}"
-        Me.colAbonado.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.colAbonado.FieldName = "Abonado"
-        Me.colAbonado.GroupFormat.FormatString = "{0:n2}"
-        Me.colAbonado.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-        Me.colAbonado.Name = "colAbonado"
-        Me.colAbonado.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", "{0:n2}")})
-        Me.colAbonado.Visible = True
-        Me.colAbonado.VisibleIndex = 9
-        '
-        'colTipoDescuento
-        '
-        Me.colTipoDescuento.FieldName = "TipoDescuento"
-        Me.colTipoDescuento.Name = "colTipoDescuento"
-        Me.colTipoDescuento.Visible = True
-        Me.colTipoDescuento.VisibleIndex = 10
         '
         'txtFiltro
         '
         Me.txtFiltro.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txtFiltro.EditValue = ""
-        Me.txtFiltro.Location = New System.Drawing.Point(0, 199)
+        Me.txtFiltro.Location = New System.Drawing.Point(0, 251)
         Me.txtFiltro.Name = "txtFiltro"
         Me.txtFiltro.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat
         Me.txtFiltro.Size = New System.Drawing.Size(1052, 22)
         Me.txtFiltro.TabIndex = 18
         Me.txtFiltro.Tag = "Buscar..."
         '
-        'frmRepDescuentoFran
+        'prg
+        '
+        Me.prg.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.prg.Location = New System.Drawing.Point(0, 228)
+        Me.prg.Name = "prg"
+        Me.prg.Size = New System.Drawing.Size(1052, 23)
+        Me.prg.TabIndex = 23
+        '
+        'txt
+        '
+        Me.txt.BackColor = System.Drawing.Color.White
+        Me.txt.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.txt.ForeColor = System.Drawing.Color.SteelBlue
+        Me.txt.Location = New System.Drawing.Point(0, 133)
+        Me.txt.Name = "txt"
+        Me.txt.Size = New System.Drawing.Size(1052, 95)
+        Me.txt.TabIndex = 34
+        Me.txt.Text = ""
+        Me.txt.Visible = False
+        '
+        'frmPagosAutoZ
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1052, 652)
+        Me.Controls.Add(Me.txt)
+        Me.Controls.Add(Me.prg)
         Me.Controls.Add(Me.txtFiltro)
-        Me.Controls.Add(Me.Dgrid)
-        Me.Controls.Add(Me.chkActivo)
+        Me.Controls.Add(Me.dgrid)
         Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.barDockControlLeft)
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
-        Me.Name = "frmRepDescuentoFran"
+        Me.Name = "frmPagosAutoZ"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Reporte: Resumen de  descuentos por franquiciado"
+        Me.Text = "Pagos por franquiciado"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
-        CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.dgrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtFiltro.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
@@ -355,21 +254,10 @@ Partial Class frmRepDescuentoFran
     Friend WithEvents dtpFechaHasta As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtpFechaDesde As System.Windows.Forms.DateTimePicker
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
-    Friend WithEvents chkActivo As System.Windows.Forms.CheckBox
     Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
-    Friend WithEvents Dgrid As DevExpress.XtraGrid.GridControl
+    Friend WithEvents dgrid As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents colNombre As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colModelo As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colNoChasis As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colNoPlaca As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colMotor As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colNumeroTelefono As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colEmpresaTelco As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colAbonado As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colTipoDescuento As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colCEF As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colFechaDescuento As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colFranquiciado1 As DevExpress.XtraGrid.Columns.GridColumn
-    Friend WithEvents colMonto As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents mnuProcesar As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents prg As System.Windows.Forms.ProgressBar
+    Friend WithEvents txt As System.Windows.Forms.RichTextBox
 End Class
