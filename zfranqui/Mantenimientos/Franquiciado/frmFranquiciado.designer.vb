@@ -89,6 +89,8 @@ Partial Class frmFranquiciado
         Me.txtFechaAgrAsignacion = New DevExpress.XtraEditors.DateEdit()
         Me.txtIdUsuarioModAsignacion = New DevExpress.XtraEditors.TextEdit()
         Me.txtFechaModificoAsignacion = New DevExpress.XtraEditors.DateEdit()
+        Me.RibbonPageGroup2 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
         lblIdFranquiciado = New System.Windows.Forms.Label()
         NombresLabel = New System.Windows.Forms.Label()
         User_agrLabel = New System.Windows.Forms.Label()
@@ -407,9 +409,9 @@ Partial Class frmFranquiciado
         'RibbonControl
         '
         Me.RibbonControl.ExpandCollapseItem.Id = 0
-        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuGuardar, Me.mnuActualizar, Me.mnuEliminar})
+        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuGuardar, Me.mnuActualizar, Me.mnuEliminar, Me.BarSubItem1})
         Me.RibbonControl.Location = New System.Drawing.Point(0, 0)
-        Me.RibbonControl.MaxItemId = 6
+        Me.RibbonControl.MaxItemId = 8
         Me.RibbonControl.Name = "RibbonControl"
         Me.RibbonControl.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.RibbonPage1})
         Me.RibbonControl.Size = New System.Drawing.Size(840, 144)
@@ -440,7 +442,7 @@ Partial Class frmFranquiciado
         '
         'RibbonPage1
         '
-        Me.RibbonPage1.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.RibbonPageGroup1})
+        Me.RibbonPage1.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.RibbonPageGroup1, Me.RibbonPageGroup2})
         Me.RibbonPage1.Name = "RibbonPage1"
         Me.RibbonPage1.Text = "Menú"
         '
@@ -906,6 +908,20 @@ Partial Class frmFranquiciado
         Me.txtFechaModificoAsignacion.Size = New System.Drawing.Size(114, 20)
         Me.txtFechaModificoAsignacion.TabIndex = 5
         '
+        'RibbonPageGroup2
+        '
+        Me.RibbonPageGroup2.ItemLinks.Add(Me.BarSubItem1)
+        Me.RibbonPageGroup2.Name = "RibbonPageGroup2"
+        Me.RibbonPageGroup2.Text = "Consultas"
+        '
+        'BarSubItem1
+        '
+        Me.BarSubItem1.Caption = "Reportes"
+        Me.BarSubItem1.Glyph = CType(resources.GetObject("BarSubItem1.Glyph"), System.Drawing.Image)
+        Me.BarSubItem1.Id = 7
+        Me.BarSubItem1.LargeGlyph = CType(resources.GetObject("BarSubItem1.LargeGlyph"), System.Drawing.Image)
+        Me.BarSubItem1.Name = "BarSubItem1"
+        '
         'frmFranquiciado
         '
         Me.Appearance.BackColor = System.Drawing.Color.White
@@ -1019,6 +1035,8 @@ Partial Class frmFranquiciado
     Friend WithEvents txtTiempoTranscurrido As DevExpress.XtraEditors.TextEdit
     Friend WithEvents txtFechaAsignacion As DevExpress.XtraEditors.DateEdit
     Friend WithEvents txtInterlocutor As DevExpress.XtraEditors.TextEdit
+    Friend WithEvents BarSubItem1 As DevExpress.XtraBars.BarSubItem
+    Friend WithEvents RibbonPageGroup2 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
 
 
 End Class

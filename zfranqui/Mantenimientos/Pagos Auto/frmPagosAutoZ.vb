@@ -120,7 +120,7 @@ Public Class frmPagosAutoZ
                     " AND b.`fecha`<=" & FormatoFechas.fFecha(dtpFechaHasta.Value)
 
             If txtFiltro.Text.Trim <> "" Then
-                vSQL += "AND (a.codcli LIKE '%" & txtFiltro.Text.Trim & "%')"
+                vSQL += "AND (e.crmrdi LIKE '%" & txtFiltro.Text.Trim & "%')"
             End If
 
             vSQL += " GROUP BY e.`crmrdi`,a.`codpes` " & _
@@ -247,8 +247,13 @@ Public Class frmPagosAutoZ
                 " INNER JOIN rdimae e ON a.codcli = e.codrdi " & _
                 " WHERE  b.status='ACTIVA' " & _
                 " AND b.fecha>=" & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
-                " AND b.fecha<=" & FormatoFechas.fFecha(dtpFechaHasta.Value) & _
-                " GROUP BY " & _
+                " AND b.fecha<=" & FormatoFechas.fFecha(dtpFechaHasta.Value)
+
+            If txtFiltro.Text.Trim <> "" Then
+                vSQL += "AND (e.crmrdi LIKE '%" & txtFiltro.Text.Trim & "%')"
+            End If
+
+            vSQL += " GROUP BY " & _
                 " 	e.crmrdi, " & _
                 " 	a.codpes, " & _
                 " 	b.fecha " & _
