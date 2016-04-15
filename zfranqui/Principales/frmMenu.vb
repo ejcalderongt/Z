@@ -665,4 +665,17 @@ Public Class frmMenu
 
     End Sub
 
+    Private Sub cmdSupervisor_ItemClick(sender As Object, e As ItemClickEventArgs) Handles cmdSupervisor.ItemClick
+
+        Try
+
+            Dim Supervisor As New frmRepDescuentoFranSupervisor()
+            Supervisor.ShowDialog()
+            Supervisor.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
 End Class
