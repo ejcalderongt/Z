@@ -71,7 +71,8 @@
 
     Private Sub PrintableComponentLink1_CreateReportHeaderArea(ByVal sender As System.Object, ByVal e As DevExpress.XtraPrinting.CreateAreaEventArgs)
 
-        Dim reportHeader As String = vbNewLine & "Reporte Saldo de vehículos "
+        Dim reportHeader As String = vbNewLine & "Reporte Saldo de vehículos " & _
+        "Desde: " & dtpFechaDesde.Value.Date & " Hasta: " & dtpFechaHasta.Value.Date
 
         e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
         e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
