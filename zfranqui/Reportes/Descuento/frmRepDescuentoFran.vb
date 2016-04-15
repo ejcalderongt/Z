@@ -1,4 +1,8 @@
-﻿Public Class frmRepDescuentoFran
+﻿Imports DevExpress.XtraGrid.Views.Grid
+
+Public Class frmRepDescuentoFran
+
+    Public pIdFranquiciado As Integer
 
     Enum TipoReporte As Integer
 
@@ -155,6 +159,9 @@
                 vSQL += "AND (r.Anulada =0) "
             End If
 
+            If pIdFranquiciado <> 0 Then
+                vSQL += " AND franquiciado.IdFranquiciado=" & pIdFranquiciado & " "
+            End If
 
             vSQL += "GROUP BY " & _
                     "	b.Nombre, " & _
@@ -264,5 +271,18 @@
         Llenar_Grid()
     End Sub
 
+    Private Sub GridView1_RowStyle(ByVal sender As Object, _
+ByVal e As DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs) Handles GridView1.RowStyle
+
+        Dim View As GridView = sender
+        If (e.RowHandle >= 0) Then
+            Dim category As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
+            If category = "0.00" Then
+                'e.Appearance.BackColor = Color.Salmon
+                e.Appearance.BackColor2 = Color.SeaShell
+            End If
+        End If
+
+    End Sub
 
 End Class

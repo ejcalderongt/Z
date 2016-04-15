@@ -50,8 +50,19 @@ Partial Class frmFranquiciado
         Me.mnuGuardar = New DevExpress.XtraBars.BarButtonItem()
         Me.mnuActualizar = New DevExpress.XtraBars.BarButtonItem()
         Me.mnuEliminar = New DevExpress.XtraBars.BarButtonItem()
+        Me.mnuReportesList = New DevExpress.XtraBars.BarSubItem()
+        Me.cmdEstadoCuenta = New DevExpress.XtraBars.BarButtonItem()
+        Me.cmdDetalleDescuento = New DevExpress.XtraBars.BarButtonItem()
+        Me.cmdDetallePago = New DevExpress.XtraBars.BarButtonItem()
+        Me.cmdDetalleVenta = New DevExpress.XtraBars.BarButtonItem()
+        Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
+        Me.mnuIndefinido = New DevExpress.XtraBars.BarButtonItem()
+        Me.mnuDefinidio = New DevExpress.XtraBars.BarButtonItem()
+        Me.mnuUnico = New DevExpress.XtraBars.BarButtonItem()
         Me.RibbonPage1 = New DevExpress.XtraBars.Ribbon.RibbonPage()
         Me.RibbonPageGroup1 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.RibbonPageGroup2 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.RibbonPageGroup3 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.txtIdFranquiciado = New DevExpress.XtraEditors.SpinEdit()
         Me.txtNombres = New DevExpress.XtraEditors.TextEdit()
         Me.User_agrTextEdit = New DevExpress.XtraEditors.TextEdit()
@@ -89,19 +100,8 @@ Partial Class frmFranquiciado
         Me.txtFechaAgrAsignacion = New DevExpress.XtraEditors.DateEdit()
         Me.txtIdUsuarioModAsignacion = New DevExpress.XtraEditors.TextEdit()
         Me.txtFechaModificoAsignacion = New DevExpress.XtraEditors.DateEdit()
-        Me.RibbonPageGroup2 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.mnuReportesList = New DevExpress.XtraBars.BarSubItem()
-        Me.RibbonPageGroup3 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem2 = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem3 = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarButtonItem4 = New DevExpress.XtraBars.BarButtonItem()
-        Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
-        Me.mnuIndefinido = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdIndefinido = New DevExpress.XtraBars.BarButtonItem()
         Me.mnuPeriodoDefinido = New DevExpress.XtraBars.BarButtonItem()
-        Me.mnuDefinidio = New DevExpress.XtraBars.BarButtonItem()
-        Me.mnuUnico = New DevExpress.XtraBars.BarButtonItem()
         lblIdFranquiciado = New System.Windows.Forms.Label()
         NombresLabel = New System.Windows.Forms.Label()
         User_agrLabel = New System.Windows.Forms.Label()
@@ -420,7 +420,7 @@ Partial Class frmFranquiciado
         'RibbonControl
         '
         Me.RibbonControl.ExpandCollapseItem.Id = 0
-        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuGuardar, Me.mnuActualizar, Me.mnuEliminar, Me.mnuReportesList, Me.BarButtonItem1, Me.BarButtonItem2, Me.BarButtonItem3, Me.BarButtonItem4, Me.BarSubItem1, Me.mnuIndefinido, Me.mnuDefinidio, Me.mnuUnico})
+        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuGuardar, Me.mnuActualizar, Me.mnuEliminar, Me.mnuReportesList, Me.cmdEstadoCuenta, Me.cmdDetalleDescuento, Me.cmdDetallePago, Me.cmdDetalleVenta, Me.BarSubItem1, Me.mnuIndefinido, Me.mnuDefinidio, Me.mnuUnico})
         Me.RibbonControl.Location = New System.Drawing.Point(0, 0)
         Me.RibbonControl.MaxItemId = 17
         Me.RibbonControl.Name = "RibbonControl"
@@ -451,6 +451,65 @@ Partial Class frmFranquiciado
         Me.mnuEliminar.LargeGlyph = CType(resources.GetObject("mnuEliminar.LargeGlyph"), System.Drawing.Image)
         Me.mnuEliminar.Name = "mnuEliminar"
         '
+        'mnuReportesList
+        '
+        Me.mnuReportesList.Caption = "Reportes"
+        Me.mnuReportesList.Glyph = CType(resources.GetObject("mnuReportesList.Glyph"), System.Drawing.Image)
+        Me.mnuReportesList.Id = 7
+        Me.mnuReportesList.LargeGlyph = CType(resources.GetObject("mnuReportesList.LargeGlyph"), System.Drawing.Image)
+        Me.mnuReportesList.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.cmdEstadoCuenta), New DevExpress.XtraBars.LinkPersistInfo(Me.cmdDetalleDescuento), New DevExpress.XtraBars.LinkPersistInfo(Me.cmdDetallePago), New DevExpress.XtraBars.LinkPersistInfo(Me.cmdDetalleVenta)})
+        Me.mnuReportesList.Name = "mnuReportesList"
+        '
+        'cmdEstadoCuenta
+        '
+        Me.cmdEstadoCuenta.Caption = "Estado de Cuenta"
+        Me.cmdEstadoCuenta.Id = 9
+        Me.cmdEstadoCuenta.Name = "cmdEstadoCuenta"
+        '
+        'cmdDetalleDescuento
+        '
+        Me.cmdDetalleDescuento.Caption = "Detalle de Descuentos"
+        Me.cmdDetalleDescuento.Id = 10
+        Me.cmdDetalleDescuento.Name = "cmdDetalleDescuento"
+        '
+        'cmdDetallePago
+        '
+        Me.cmdDetallePago.Caption = "Detalle de Pagos"
+        Me.cmdDetallePago.Id = 11
+        Me.cmdDetallePago.Name = "cmdDetallePago"
+        '
+        'cmdDetalleVenta
+        '
+        Me.cmdDetalleVenta.Caption = "Detalle de Ventas"
+        Me.cmdDetalleVenta.Id = 12
+        Me.cmdDetalleVenta.Name = "cmdDetalleVenta"
+        '
+        'BarSubItem1
+        '
+        Me.BarSubItem1.Caption = "Agregar descuento"
+        Me.BarSubItem1.Id = 13
+        Me.BarSubItem1.LargeGlyph = Global.zfranqui.My.Resources.Resources.emblem_money
+        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.mnuIndefinido), New DevExpress.XtraBars.LinkPersistInfo(Me.mnuDefinidio), New DevExpress.XtraBars.LinkPersistInfo(Me.mnuUnico)})
+        Me.BarSubItem1.Name = "BarSubItem1"
+        '
+        'mnuIndefinido
+        '
+        Me.mnuIndefinido.Caption = "Indefinido"
+        Me.mnuIndefinido.Id = 14
+        Me.mnuIndefinido.Name = "mnuIndefinido"
+        '
+        'mnuDefinidio
+        '
+        Me.mnuDefinidio.Caption = "Definido"
+        Me.mnuDefinidio.Id = 15
+        Me.mnuDefinidio.Name = "mnuDefinidio"
+        '
+        'mnuUnico
+        '
+        Me.mnuUnico.Caption = "Único"
+        Me.mnuUnico.Id = 16
+        Me.mnuUnico.Name = "mnuUnico"
+        '
         'RibbonPage1
         '
         Me.RibbonPage1.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.RibbonPageGroup1, Me.RibbonPageGroup2, Me.RibbonPageGroup3})
@@ -463,6 +522,18 @@ Partial Class frmFranquiciado
         Me.RibbonPageGroup1.ItemLinks.Add(Me.mnuActualizar)
         Me.RibbonPageGroup1.ItemLinks.Add(Me.mnuEliminar)
         Me.RibbonPageGroup1.Name = "RibbonPageGroup1"
+        '
+        'RibbonPageGroup2
+        '
+        Me.RibbonPageGroup2.ItemLinks.Add(Me.mnuReportesList)
+        Me.RibbonPageGroup2.Name = "RibbonPageGroup2"
+        Me.RibbonPageGroup2.Text = "Consultas"
+        '
+        'RibbonPageGroup3
+        '
+        Me.RibbonPageGroup3.ItemLinks.Add(Me.BarSubItem1)
+        Me.RibbonPageGroup3.Name = "RibbonPageGroup3"
+        Me.RibbonPageGroup3.Text = "Transacciones"
         '
         'txtIdFranquiciado
         '
@@ -919,65 +990,6 @@ Partial Class frmFranquiciado
         Me.txtFechaModificoAsignacion.Size = New System.Drawing.Size(114, 20)
         Me.txtFechaModificoAsignacion.TabIndex = 5
         '
-        'RibbonPageGroup2
-        '
-        Me.RibbonPageGroup2.ItemLinks.Add(Me.mnuReportesList)
-        Me.RibbonPageGroup2.Name = "RibbonPageGroup2"
-        Me.RibbonPageGroup2.Text = "Consultas"
-        '
-        'mnuReportesList
-        '
-        Me.mnuReportesList.Caption = "Reportes"
-        Me.mnuReportesList.Glyph = CType(resources.GetObject("mnuReportesList.Glyph"), System.Drawing.Image)
-        Me.mnuReportesList.Id = 7
-        Me.mnuReportesList.LargeGlyph = CType(resources.GetObject("mnuReportesList.LargeGlyph"), System.Drawing.Image)
-        Me.mnuReportesList.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem1), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem2), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem3), New DevExpress.XtraBars.LinkPersistInfo(Me.BarButtonItem4)})
-        Me.mnuReportesList.Name = "mnuReportesList"
-        '
-        'RibbonPageGroup3
-        '
-        Me.RibbonPageGroup3.ItemLinks.Add(Me.BarSubItem1)
-        Me.RibbonPageGroup3.Name = "RibbonPageGroup3"
-        Me.RibbonPageGroup3.Text = "Transacciones"
-        '
-        'BarButtonItem1
-        '
-        Me.BarButtonItem1.Caption = "Estado de cuenta"
-        Me.BarButtonItem1.Id = 9
-        Me.BarButtonItem1.Name = "BarButtonItem1"
-        '
-        'BarButtonItem2
-        '
-        Me.BarButtonItem2.Caption = "Detalle de descuentos"
-        Me.BarButtonItem2.Id = 10
-        Me.BarButtonItem2.Name = "BarButtonItem2"
-        '
-        'BarButtonItem3
-        '
-        Me.BarButtonItem3.Caption = "Detalle de pagos"
-        Me.BarButtonItem3.Id = 11
-        Me.BarButtonItem3.Name = "BarButtonItem3"
-        '
-        'BarButtonItem4
-        '
-        Me.BarButtonItem4.Caption = "Detalle de ventas"
-        Me.BarButtonItem4.Id = 12
-        Me.BarButtonItem4.Name = "BarButtonItem4"
-        '
-        'BarSubItem1
-        '
-        Me.BarSubItem1.Caption = "Agregar descuento"
-        Me.BarSubItem1.Id = 13
-        Me.BarSubItem1.LargeGlyph = Global.zfranqui.My.Resources.Resources.emblem_money
-        Me.BarSubItem1.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.mnuIndefinido), New DevExpress.XtraBars.LinkPersistInfo(Me.mnuDefinidio), New DevExpress.XtraBars.LinkPersistInfo(Me.mnuUnico)})
-        Me.BarSubItem1.Name = "BarSubItem1"
-        '
-        'mnuIndefinido
-        '
-        Me.mnuIndefinido.Caption = "Indefinido"
-        Me.mnuIndefinido.Id = 14
-        Me.mnuIndefinido.Name = "mnuIndefinido"
-        '
         'cmdIndefinido
         '
         Me.cmdIndefinido.Caption = "Período indefinido"
@@ -989,18 +1001,6 @@ Partial Class frmFranquiciado
         Me.mnuPeriodoDefinido.Caption = "Período definido"
         Me.mnuPeriodoDefinido.Id = 25
         Me.mnuPeriodoDefinido.Name = "mnuPeriodoDefinido"
-        '
-        'mnuDefinidio
-        '
-        Me.mnuDefinidio.Caption = "Definido"
-        Me.mnuDefinidio.Id = 15
-        Me.mnuDefinidio.Name = "mnuDefinidio"
-        '
-        'mnuUnico
-        '
-        Me.mnuUnico.Caption = "Único"
-        Me.mnuUnico.Id = 16
-        Me.mnuUnico.Name = "mnuUnico"
         '
         'frmFranquiciado
         '
@@ -1118,10 +1118,10 @@ Partial Class frmFranquiciado
     Friend WithEvents mnuReportesList As DevExpress.XtraBars.BarSubItem
     Friend WithEvents RibbonPageGroup2 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
     Friend WithEvents RibbonPageGroup3 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
-    Friend WithEvents BarButtonItem1 As DevExpress.XtraBars.BarButtonItem
-    Friend WithEvents BarButtonItem2 As DevExpress.XtraBars.BarButtonItem
-    Friend WithEvents BarButtonItem3 As DevExpress.XtraBars.BarButtonItem
-    Friend WithEvents BarButtonItem4 As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents cmdEstadoCuenta As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents cmdDetalleDescuento As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents cmdDetallePago As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents cmdDetalleVenta As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents BarSubItem1 As DevExpress.XtraBars.BarSubItem
     Friend WithEvents mnuIndefinido As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents mnuDefinidio As DevExpress.XtraBars.BarButtonItem

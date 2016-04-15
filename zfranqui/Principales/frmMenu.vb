@@ -692,4 +692,5 @@ Public Class frmMenu
         End Try
 
     End Sub
+
 End Class

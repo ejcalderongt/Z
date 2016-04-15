@@ -186,7 +186,12 @@ Partial Class frmRepDescuentoFran
         '
         Me.Dgrid.Cursor = System.Windows.Forms.Cursors.Default
         Me.Dgrid.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.Dgrid.EmbeddedNavigator.Appearance.BackColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Dgrid.EmbeddedNavigator.Appearance.BorderColor = System.Drawing.SystemColors.ActiveCaption
+        Me.Dgrid.EmbeddedNavigator.Appearance.Options.UseBackColor = True
+        Me.Dgrid.EmbeddedNavigator.Appearance.Options.UseBorderColor = True
         Me.Dgrid.Location = New System.Drawing.Point(0, 221)
+        Me.Dgrid.LookAndFeel.SkinName = "DevExpress Dark Style"
         Me.Dgrid.MainView = Me.GridView1
         Me.Dgrid.MenuManager = Me.BarManager1
         Me.Dgrid.Name = "Dgrid"
@@ -262,6 +267,7 @@ Partial Class frmRepDescuentoFran
         '
         'colNumeroTelefono
         '
+        Me.colNumeroTelefono.AppearanceHeader.Options.UseBorderColor = True
         Me.colNumeroTelefono.FieldName = "NumeroTelefono"
         Me.colNumeroTelefono.Name = "colNumeroTelefono"
         Me.colNumeroTelefono.Visible = True

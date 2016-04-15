@@ -1,5 +1,7 @@
 ﻿Public Class frmRepReciboPendientePago
 
+    Public pIdFranquiciado As Integer
+
     Enum TipoReporte As Integer
 
         CuotasDetalleDescuento = 1
@@ -150,6 +152,10 @@
                 vSQL += "AND  descuento_enc.IdDescuentoEnc in " & _
                     " (select iddescuentoenc from descuento_det where activo =1) " & _
                     " AND (r.Anulada=0)"
+            End If
+
+            If pIdFranquiciado <> 0 Then
+                vSQL += " AND franquiciado.IdFranquiciado=" & pIdFranquiciado
             End If
 
             vSQL += " and r.Monto <> r.Abonado"

@@ -1,4 +1,6 @@
-﻿Public Class frmFranquiciado
+﻿Imports DevExpress.XtraEditors
+
+Public Class frmFranquiciado
 
     Private dFranqui As New clsLnFranquiciado
     Public Franqui As New clsBeFranquiciado
@@ -175,7 +177,7 @@
                 If Guardar() Then
                     MsgBox("Se guardó el registro", MsgBoxStyle.Information, Me.Text)
                     Me.Close()
-                End If                
+                End If
             End If
         End If
     End Sub
@@ -366,7 +368,7 @@
                 Catch ex As Exception
 
                 End Try
-                
+
             End If
 
 
@@ -454,4 +456,48 @@
         Nuevo_Dto(pTipoDescuento.Unico)
     End Sub
 
+    Private Sub cmdEstadoCuenta_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles cmdEstadoCuenta.ItemClick
+
+        Try
+
+            Dim DescuentosDet As New frmRepEstadoCuentaDef()
+            DescuentosDet.pIdFranquiciado = CInt(txtIdFranquiciado.Text.Trim)
+            DescuentosDet.ShowDialog()
+            DescuentosDet.Dispose()
+
+        Catch ex As Exception
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Sub
+
+    Private Sub cmdDetalleDescuento_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles cmdDetalleDescuento.ItemClick
+
+        Try
+
+            Dim DescuentosRes As New frmRepDescuentoFran()
+            DescuentosRes.pIdFranquiciado = CInt(txtIdFranquiciado.Text.Trim)
+            DescuentosRes.ShowDialog()
+            DescuentosRes.Dispose()
+
+        Catch ex As Exception
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Sub
+
+    Private Sub cmdDetallePago_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles cmdDetallePago.ItemClick
+
+        Try
+
+            Dim Recibo As New frmRepReciboPendientePago()
+            Recibo.pIdFranquiciado = CInt(txtIdFranquiciado.Text.Trim)
+            Recibo.ShowDialog()
+            Recibo.Dispose()
+
+        Catch ex As Exception
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Sub
 End Class
