@@ -146,32 +146,35 @@
 
                 Case TipoReporte.CuotasDetalleDescuento
 
-                    GridView1.OptionsView.ShowFooter = True
+                    If GridView1.RowCount > 0 Then
 
-                    GridView1.Columns("Nombre").GroupIndex = 1
+                        GridView1.OptionsView.ShowFooter = True
 
-                    GridView1.Columns("NoCuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
-                    GridView1.Columns("NoCuota").SummaryItem.DisplayFormat = "{0:n2}"
+                        GridView1.Columns("Nombre").GroupIndex = 1
 
-                    GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                    GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+                        GridView1.Columns("NoCuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Count
+                        GridView1.Columns("NoCuota").SummaryItem.DisplayFormat = "{0:n2}"
 
-                    GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-                    GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+                        GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                        GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
-                    GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-                    GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+                        GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                        GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
 
-                    GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-                    GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+                        GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                        GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
 
-                    GridView1.Columns("FechaCobro").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-                    GridView1.Columns("FechaCobro").DisplayFormat.FormatString = "dd/MM/yyyy"
+                        GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                        GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
 
-                    GridView1.ExpandAllGroups()
+                        GridView1.Columns("FechaCobro").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+                        GridView1.Columns("FechaCobro").DisplayFormat.FormatString = "dd/MM/yyyy"
+
+                        GridView1.ExpandAllGroups()
+
+                    End If
 
                 Case Else
-
 
             End Select
 
