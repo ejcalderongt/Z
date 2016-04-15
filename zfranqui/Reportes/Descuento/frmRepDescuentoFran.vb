@@ -123,11 +123,8 @@
                    "		' ', " & _
                    "		franquiciado.Nombres " & _
                    "	) AS Franquiciado, " & _
-                   "	CONCAT( " & _
-                   "		cef.Codigo, " & _
-                   "		' ', " & _
-                   "		cef.Descripcion " & _
-                   "	) AS CEF " & _
+                   "	CONCAT( 		cef.Codigo, 		' ', 		cef.Descripcion, 		 ' - Inter: ', " & _
+                   "   cast(if(cef.Interlocutor is null,'',cef.Interlocutor) as unsigned), ' Pts: ', cast(if(cef.Puntos is null,'',cef.Puntos) as unsigned)) AS CEF  " & _
                    "   FROM " & _
                    "	descuento_ref AS r " & _
                    "   INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " & _
