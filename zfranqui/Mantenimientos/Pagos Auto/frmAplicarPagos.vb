@@ -136,13 +136,25 @@ Public Class frmAplicarPagos
 
             If GridView1.Columns.Count = 0 Then Exit Sub
 
-            GridView1.Columns("crmrdi").GroupIndex = 0
+            GridView1.Columns("Franquiciado").GroupIndex = 0
 
-            GridView1.Columns("Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Total").SummaryItem.DisplayFormat = "{0:n2}"
+            GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Total").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Total").DisplayFormat.FormatString = "{0:n2}"
+            GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+
+            GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+
+            GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
+
+            GridView1.Columns("Pagado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("Pagado").SummaryItem.DisplayFormat = "{0:n2}"
+
+            GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
 
             GridView1.ExpandAllGroups()
 

@@ -186,6 +186,7 @@
             GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
 
             GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+            GridView1.Columns("FechaDescuento").DisplayFormat.FormatString = "dd/MM/yyyy"
 
             GridView1.ExpandAllGroups()
 

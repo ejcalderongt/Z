@@ -152,6 +152,7 @@
                     GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
 
                     GridView1.Columns("FechaCobro").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+                    GridView1.Columns("FechaCobro").DisplayFormat.FormatString = "dd/MM/yyyy"
 
                     GridView1.ExpandAllGroups()
 
