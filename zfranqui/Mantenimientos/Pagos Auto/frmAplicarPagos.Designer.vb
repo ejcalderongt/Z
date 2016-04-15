@@ -22,8 +22,7 @@ Partial Class frmAplicarPagos
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdActualizar = New DevExpress.XtraBars.BarButtonItem()
@@ -38,25 +37,25 @@ Partial Class frmAplicarPagos
         Me.lblHasta = New System.Windows.Forms.Label()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
         Me.dgridDescuentos = New DevExpress.XtraGrid.GridControl()
-        Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.viewDescuentos = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.prg = New System.Windows.Forms.ProgressBar()
         Me.txt = New System.Windows.Forms.RichTextBox()
         Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel()
+        Me.dgridVentas = New DevExpress.XtraGrid.GridControl()
+        Me.viewVentas = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.dtpFechaHastaDescuentos = New System.Windows.Forms.DateTimePicker()
         Me.dtpFechaDesdeDescuentos = New System.Windows.Forms.DateTimePicker()
-        Me.dgridVentas = New DevExpress.XtraGrid.GridControl()
-        Me.GridView2 = New DevExpress.XtraGrid.Views.Grid.GridView()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgridDescuentos, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.viewDescuentos, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.TableLayoutPanel1.SuspendLayout()
-        Me.GroupBox2.SuspendLayout()
         CType(Me.dgridVentas, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.viewVentas, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
         '
         'BarManager1
@@ -180,22 +179,23 @@ Partial Class frmAplicarPagos
         Me.dgridDescuentos.Cursor = System.Windows.Forms.Cursors.Default
         Me.dgridDescuentos.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dgridDescuentos.Location = New System.Drawing.Point(474, 3)
-        Me.dgridDescuentos.MainView = Me.GridView1
+        Me.dgridDescuentos.MainView = Me.viewDescuentos
         Me.dgridDescuentos.MenuManager = Me.BarManager1
         Me.dgridDescuentos.Name = "dgridDescuentos"
         Me.dgridDescuentos.Size = New System.Drawing.Size(575, 334)
         Me.dgridDescuentos.TabIndex = 17
-        Me.dgridDescuentos.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
+        Me.dgridDescuentos.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.viewDescuentos})
         '
-        'GridView1
+        'viewDescuentos
         '
-        Me.GridView1.GridControl = Me.dgridDescuentos
-        Me.GridView1.Name = "GridView1"
-        Me.GridView1.OptionsView.ShowFooter = True
+        Me.viewDescuentos.GridControl = Me.dgridDescuentos
+        Me.viewDescuentos.Name = "viewDescuentos"
+        Me.viewDescuentos.OptionsView.ShowFooter = True
         '
         'prg
         '
-        Me.prg.Location = New System.Drawing.Point(0, 228)
+        Me.prg.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.prg.Location = New System.Drawing.Point(0, 629)
         Me.prg.Name = "prg"
         Me.prg.Size = New System.Drawing.Size(1052, 23)
         Me.prg.TabIndex = 23
@@ -203,8 +203,9 @@ Partial Class frmAplicarPagos
         'txt
         '
         Me.txt.BackColor = System.Drawing.Color.White
+        Me.txt.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txt.ForeColor = System.Drawing.Color.SteelBlue
-        Me.txt.Location = New System.Drawing.Point(0, 133)
+        Me.txt.Location = New System.Drawing.Point(0, 534)
         Me.txt.Name = "txt"
         Me.txt.Size = New System.Drawing.Size(1052, 95)
         Me.txt.TabIndex = 34
@@ -219,12 +220,30 @@ Partial Class frmAplicarPagos
         Me.TableLayoutPanel1.Controls.Add(Me.dgridVentas, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.dgridDescuentos, 1, 0)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 312)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 194)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.TableLayoutPanel1.Size = New System.Drawing.Size(1052, 340)
         Me.TableLayoutPanel1.TabIndex = 39
+        '
+        'dgridVentas
+        '
+        Me.dgridVentas.Cursor = System.Windows.Forms.Cursors.Default
+        Me.dgridVentas.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dgridVentas.Location = New System.Drawing.Point(3, 3)
+        Me.dgridVentas.MainView = Me.viewVentas
+        Me.dgridVentas.MenuManager = Me.BarManager1
+        Me.dgridVentas.Name = "dgridVentas"
+        Me.dgridVentas.Size = New System.Drawing.Size(465, 334)
+        Me.dgridVentas.TabIndex = 18
+        Me.dgridVentas.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.viewVentas})
+        '
+        'viewVentas
+        '
+        Me.viewVentas.GridControl = Me.dgridVentas
+        Me.viewVentas.Name = "viewVentas"
+        Me.viewVentas.OptionsView.ShowFooter = True
         '
         'GroupBox2
         '
@@ -273,24 +292,6 @@ Partial Class frmAplicarPagos
         Me.dtpFechaDesdeDescuentos.Size = New System.Drawing.Size(106, 20)
         Me.dtpFechaDesdeDescuentos.TabIndex = 5
         '
-        'dgridVentas
-        '
-        Me.dgridVentas.Cursor = System.Windows.Forms.Cursors.Default
-        Me.dgridVentas.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dgridVentas.Location = New System.Drawing.Point(3, 3)
-        Me.dgridVentas.MainView = Me.GridView2
-        Me.dgridVentas.MenuManager = Me.BarManager1
-        Me.dgridVentas.Name = "dgridVentas"
-        Me.dgridVentas.Size = New System.Drawing.Size(465, 334)
-        Me.dgridVentas.TabIndex = 18
-        Me.dgridVentas.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView2})
-        '
-        'GridView2
-        '
-        Me.GridView2.GridControl = Me.dgridVentas
-        Me.GridView2.Name = "GridView2"
-        Me.GridView2.OptionsView.ShowFooter = True
-        '
         'frmAplicarPagos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -313,12 +314,12 @@ Partial Class frmAplicarPagos
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         CType(Me.dgridDescuentos, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.viewDescuentos, System.ComponentModel.ISupportInitialize).EndInit()
         Me.TableLayoutPanel1.ResumeLayout(False)
+        CType(Me.dgridVentas, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.viewVentas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
-        CType(Me.dgridVentas, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -336,7 +337,7 @@ Partial Class frmAplicarPagos
     Friend WithEvents dtpFechaDesdeVentas As System.Windows.Forms.DateTimePicker
     Friend WithEvents GroupBox1 As System.Windows.Forms.GroupBox
     Friend WithEvents dgridDescuentos As DevExpress.XtraGrid.GridControl
-    Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents viewDescuentos As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents mnuProcesar As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents prg As System.Windows.Forms.ProgressBar
     Friend WithEvents txt As System.Windows.Forms.RichTextBox
@@ -347,5 +348,5 @@ Partial Class frmAplicarPagos
     Friend WithEvents dtpFechaDesdeDescuentos As System.Windows.Forms.DateTimePicker
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents dgridVentas As DevExpress.XtraGrid.GridControl
-    Friend WithEvents GridView2 As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents viewVentas As DevExpress.XtraGrid.Views.Grid.GridView
 End Class
