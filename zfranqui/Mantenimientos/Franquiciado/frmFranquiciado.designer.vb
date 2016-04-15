@@ -90,7 +90,9 @@ Partial Class frmFranquiciado
         Me.txtIdUsuarioModAsignacion = New DevExpress.XtraEditors.TextEdit()
         Me.txtFechaModificoAsignacion = New DevExpress.XtraEditors.DateEdit()
         Me.RibbonPageGroup2 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.BarSubItem1 = New DevExpress.XtraBars.BarSubItem()
+        Me.mnuReportesList = New DevExpress.XtraBars.BarSubItem()
+        Me.RibbonPageGroup3 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
+        Me.mnuAgregarDescuento = New DevExpress.XtraBars.BarButtonItem()
         lblIdFranquiciado = New System.Windows.Forms.Label()
         NombresLabel = New System.Windows.Forms.Label()
         User_agrLabel = New System.Windows.Forms.Label()
@@ -409,9 +411,9 @@ Partial Class frmFranquiciado
         'RibbonControl
         '
         Me.RibbonControl.ExpandCollapseItem.Id = 0
-        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuGuardar, Me.mnuActualizar, Me.mnuEliminar, Me.BarSubItem1})
+        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuGuardar, Me.mnuActualizar, Me.mnuEliminar, Me.mnuReportesList, Me.mnuAgregarDescuento})
         Me.RibbonControl.Location = New System.Drawing.Point(0, 0)
-        Me.RibbonControl.MaxItemId = 8
+        Me.RibbonControl.MaxItemId = 9
         Me.RibbonControl.Name = "RibbonControl"
         Me.RibbonControl.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.RibbonPage1})
         Me.RibbonControl.Size = New System.Drawing.Size(840, 144)
@@ -442,7 +444,7 @@ Partial Class frmFranquiciado
         '
         'RibbonPage1
         '
-        Me.RibbonPage1.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.RibbonPageGroup1, Me.RibbonPageGroup2})
+        Me.RibbonPage1.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.RibbonPageGroup1, Me.RibbonPageGroup2, Me.RibbonPageGroup3})
         Me.RibbonPage1.Name = "RibbonPage1"
         Me.RibbonPage1.Text = "Menú"
         '
@@ -910,17 +912,31 @@ Partial Class frmFranquiciado
         '
         'RibbonPageGroup2
         '
-        Me.RibbonPageGroup2.ItemLinks.Add(Me.BarSubItem1)
+        Me.RibbonPageGroup2.ItemLinks.Add(Me.mnuReportesList)
         Me.RibbonPageGroup2.Name = "RibbonPageGroup2"
         Me.RibbonPageGroup2.Text = "Consultas"
         '
-        'BarSubItem1
+        'mnuReportesList
         '
-        Me.BarSubItem1.Caption = "Reportes"
-        Me.BarSubItem1.Glyph = CType(resources.GetObject("BarSubItem1.Glyph"), System.Drawing.Image)
-        Me.BarSubItem1.Id = 7
-        Me.BarSubItem1.LargeGlyph = CType(resources.GetObject("BarSubItem1.LargeGlyph"), System.Drawing.Image)
-        Me.BarSubItem1.Name = "BarSubItem1"
+        Me.mnuReportesList.Caption = "Reportes"
+        Me.mnuReportesList.Glyph = CType(resources.GetObject("mnuReportesList.Glyph"), System.Drawing.Image)
+        Me.mnuReportesList.Id = 7
+        Me.mnuReportesList.LargeGlyph = CType(resources.GetObject("mnuReportesList.LargeGlyph"), System.Drawing.Image)
+        Me.mnuReportesList.Name = "mnuReportesList"
+        '
+        'RibbonPageGroup3
+        '
+        Me.RibbonPageGroup3.ItemLinks.Add(Me.mnuAgregarDescuento)
+        Me.RibbonPageGroup3.Name = "RibbonPageGroup3"
+        Me.RibbonPageGroup3.Text = "Transacciones"
+        '
+        'mnuAgregarDescuento
+        '
+        Me.mnuAgregarDescuento.Caption = "Agregar descuento"
+        Me.mnuAgregarDescuento.Glyph = CType(resources.GetObject("mnuAgregarDescuento.Glyph"), System.Drawing.Image)
+        Me.mnuAgregarDescuento.Id = 8
+        Me.mnuAgregarDescuento.LargeGlyph = CType(resources.GetObject("mnuAgregarDescuento.LargeGlyph"), System.Drawing.Image)
+        Me.mnuAgregarDescuento.Name = "mnuAgregarDescuento"
         '
         'frmFranquiciado
         '
@@ -1035,8 +1051,10 @@ Partial Class frmFranquiciado
     Friend WithEvents txtTiempoTranscurrido As DevExpress.XtraEditors.TextEdit
     Friend WithEvents txtFechaAsignacion As DevExpress.XtraEditors.DateEdit
     Friend WithEvents txtInterlocutor As DevExpress.XtraEditors.TextEdit
-    Friend WithEvents BarSubItem1 As DevExpress.XtraBars.BarSubItem
+    Friend WithEvents mnuReportesList As DevExpress.XtraBars.BarSubItem
     Friend WithEvents RibbonPageGroup2 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
+    Friend WithEvents mnuAgregarDescuento As DevExpress.XtraBars.BarButtonItem
+    Friend WithEvents RibbonPageGroup3 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
 
 
 End Class
