@@ -120,8 +120,23 @@
                                                      & "INNER JOIN tipodescuento ON enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " _
                                                      & "WHERE r.IdDescuentoEnc={0}", DescuentoEnc.IdDescuentoEnc)
 
-            Dim DT As New DataTable
+            Dim DT As New DataTable("Resultante1")
             BD.OpenDT(DT, lSQL)
+
+            If DT.Rows.Count > 0 = False Then
+                DT = New DataTable("Resultante2")
+                lSQL = String.Format("SELECT b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
+                     & "b.EmpresaTelco,tp.EsVehiculo, tp.EsTelefono, tp.EsServicio,det.FechaAPartirDe AS FechaCobro," _
+                     & "det.MontoTotal AS Monto,tpd.Nombre AS TipoDescuento " _
+                     & "FROM descuento_enc AS enc " _
+                     & "INNER JOIN descuento_det AS det ON enc.IdDescuentoEnc = det.IdDescuentoEnc " _
+                     & "INNER JOIN beneficio AS b ON det.IdBeneficio = b.IdBeneficio " _
+                     & "INNER JOIN TipoBeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " _
+                     & "INNER JOIN tipodescuento AS tpd ON enc.IdTipoDescuento = tpd.IdTipoDescuento " _
+                     & "WHERE enc.IdDescuentoEnc={0}", DescuentoEnc.IdDescuentoEnc)
+                BD.OpenDT(DT, lSQL)
+            End If
+
             dgrid.DataSource = DT
             GridView1.OptionsBehavior.Editable = False
 

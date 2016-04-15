@@ -13,3 +13,6 @@ validar que guarde y que del lado de frmPeriodo se pueda seleccionar ese benefic
 
 en la forma frmFranquiciado existe una opcion llamada, Reportes, todos los reportes ya estan hechos
 excepto el de ventas, llamar a los que estan hechos desde ahi.
+
+hacer un query que consulte el detalle de que descuento se le genero a la persona y el monto que debe de pagar
+a patir de tal fecha en el periodo indefinido.

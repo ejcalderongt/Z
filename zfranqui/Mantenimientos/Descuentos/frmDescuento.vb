@@ -150,7 +150,7 @@ Public Class frmDescuento
         If GuardarDatos() Then
             MsgBox("Se actualizó el registro", MsgBoxStyle.Information, Me.Text)
             If XtraMessageBox.Show("¿Desea Imprimir el Reporte?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
-                ImprimirReporte()
+                ImprimirReporteGrid()
             End If
             Me.Close()
         End If
@@ -592,7 +592,7 @@ Public Class frmDescuento
 
         Try
 
-            Dim DT1 As New DataTable
+            'Dim DT1 As New DataTable
             'Dim rpv As New frmRepView
             'Dim rtpDetCuotas As New rptDtoDetREF
 

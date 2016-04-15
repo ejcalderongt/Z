@@ -192,7 +192,7 @@ Partial Class frmRepDescuentoDet
         '
         Me.colpagada.ColumnEdit = Me.RepositoryItemCheckEdit1
         Me.colpagada.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom
-        Me.colpagada.FieldName = "pagada"
+        Me.colpagada.FieldName = "Pagada"
         Me.colpagada.Name = "colpagada"
         Me.colpagada.Visible = True
         Me.colpagada.VisibleIndex = 13
