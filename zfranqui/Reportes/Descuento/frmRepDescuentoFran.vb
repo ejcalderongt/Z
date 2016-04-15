@@ -76,24 +76,27 @@
     Private Sub PrintableComponentLink1_CreateReportHeaderArea(ByVal sender As System.Object, ByVal e As DevExpress.XtraPrinting.CreateAreaEventArgs)
 
 
-        Select Case TipoRep
+        'Select Case TipoRep
 
-            Case TipoReporte.CuotasDetalleDescuento
+        'Case TipoReporte.CuotasDetalleDescuento
 
-                Dim reportHeader As String = vbNewLine & "Detalle de descuentos " & vbNewLine & _
-                "Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
+        'Dim reportHeader As String = vbNewLine & "Detalle de descuentos " & vbNewLine & _
+        '"Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
 
-                e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
-                e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
+        Dim reportHeader As String = vbNewLine & "Reporte Descuentos por Franquiciados " & _
+       "Desde: " & dtpFechaDesde.Value.Date & " Hasta: " & dtpFechaHasta.Value.Date
 
-                Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
-                e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
+        e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
+        e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
+
+        Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
+        e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
 
 
-            Case Else
+        'Case Else
 
 
-        End Select
+        'End Select
 
 
 

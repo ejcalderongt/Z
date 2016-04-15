@@ -21,12 +21,12 @@ Partial Class frmMenu
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMenu))
-        Dim SuperToolTip3 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem3 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem3 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip4 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem4 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem4 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip5 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem5 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem5 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip6 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem6 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem6 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
         Me.RibbonStatusBar = New DevExpress.XtraBars.Ribbon.RibbonStatusBar()
         Me.lblNomPCCliente = New DevExpress.XtraBars.BarStaticItem()
         Me.lblUser = New DevExpress.XtraBars.BarStaticItem()
@@ -442,25 +442,25 @@ Partial Class frmMenu
         Me.rpg1.ItemLinks.Add(Me.mnuCEFP)
         Me.rpg1.ItemLinks.Add(Me.mnuFranquiciadoP)
         Me.rpg1.Name = "rpg1"
-        ToolTipTitleItem3.Text = "Configuración de franquicias"
-        ToolTipItem3.LeftIndent = 6
-        ToolTipItem3.Text = "Permite configurar las franquicias y sus franquiciados"
-        SuperToolTip3.Items.Add(ToolTipTitleItem3)
-        SuperToolTip3.Items.Add(ToolTipItem3)
-        Me.rpg1.SuperTip = SuperToolTip3
+        ToolTipTitleItem5.Text = "Configuración de franquicias"
+        ToolTipItem5.LeftIndent = 6
+        ToolTipItem5.Text = "Permite configurar las franquicias y sus franquiciados"
+        SuperToolTip5.Items.Add(ToolTipTitleItem5)
+        SuperToolTip5.Items.Add(ToolTipItem5)
+        Me.rpg1.SuperTip = SuperToolTip5
         Me.rpg1.Text = "Franquicias"
         '
         'rpg2
         '
         Me.rpg2.ItemLinks.Add(Me.mnuBeneficioP)
         Me.rpg2.Name = "rpg2"
-        ToolTipTitleItem4.Text = "Beneficios"
-        ToolTipItem4.LeftIndent = 6
-        ToolTipItem4.Text = "Permite configurar los distintos activos para los franquiciados, como changanes, " & _
+        ToolTipTitleItem6.Text = "Beneficios"
+        ToolTipItem6.LeftIndent = 6
+        ToolTipItem6.Text = "Permite configurar los distintos activos para los franquiciados, como changanes, " & _
     "motos y celulares."
-        SuperToolTip4.Items.Add(ToolTipTitleItem4)
-        SuperToolTip4.Items.Add(ToolTipItem4)
-        Me.rpg2.SuperTip = SuperToolTip4
+        SuperToolTip6.Items.Add(ToolTipTitleItem6)
+        SuperToolTip6.Items.Add(ToolTipItem6)
+        Me.rpg2.SuperTip = SuperToolTip6
         Me.rpg2.Text = "Activos"
         '
         'rpg3
