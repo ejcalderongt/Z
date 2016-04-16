@@ -52,8 +52,8 @@ Partial Class frmRepDescuentoFranSupervisor
         Me.colMonto = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
-        Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
         Me.colSupervisor = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -306,6 +306,13 @@ Partial Class frmRepDescuentoFranSupervisor
         Me.colTipoDescuento.Visible = True
         Me.colTipoDescuento.VisibleIndex = 10
         '
+        'colSupervisor
+        '
+        Me.colSupervisor.FieldName = "Supervisor"
+        Me.colSupervisor.Name = "colSupervisor"
+        Me.colSupervisor.Visible = True
+        Me.colSupervisor.VisibleIndex = 11
+        '
         'txtFiltro
         '
         Me.txtFiltro.Dock = System.Windows.Forms.DockStyle.Bottom
@@ -316,13 +323,6 @@ Partial Class frmRepDescuentoFranSupervisor
         Me.txtFiltro.Size = New System.Drawing.Size(1052, 22)
         Me.txtFiltro.TabIndex = 18
         Me.txtFiltro.Tag = "Buscar..."
-        '
-        'colSupervisor
-        '
-        Me.colSupervisor.FieldName = "Supervisor"
-        Me.colSupervisor.Name = "colSupervisor"
-        Me.colSupervisor.Visible = True
-        Me.colSupervisor.VisibleIndex = 11
         '
         'frmRepDescuentoFranSupervisor
         '
