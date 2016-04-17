@@ -212,9 +212,9 @@ Public Class frmCargaExcel
                 ObjA.TipoBeneficio.IdTipoBeneficio =
                 ObjA.Nombre = CStr(pDT(i)(1))
                 ObjA.Activo = True
-                ObjA.User_agr = AP.UsuarioAp.IdUsuario
+                ObjA.User_agr = gUsuario.IdUsuario
                 ObjA.Fec_agr = Now
-                ObjA.User_mod = AP.UsuarioAp.IdUsuario
+                ObjA.User_mod = gUsuario.IdUsuario
                 ObjA.Fec_mod = Now
 
                 lista.Add(ObjA)
