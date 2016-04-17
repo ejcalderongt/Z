@@ -693,4 +693,9 @@ Public Class frmMenu
 
     End Sub
 
+    Private Sub cmdCargaExcel_ItemClick(sender As Object, e As ItemClickEventArgs) Handles cmdCargaExcel.ItemClick
+        Dim Carga As New frmCargaExcel()
+        Carga.ShowDialog()
+        Carga.Dispose()
+    End Sub
 End Class

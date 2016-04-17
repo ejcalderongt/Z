@@ -121,6 +121,9 @@
     <Reference Include="DevExpress.XtraGauges.v14.1.Win, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraGrid.v14.1, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
     <Reference Include="DevExpress.XtraPrinting.v14.1, Version=14.1.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Documents\Z\zfranqui_ultver_rg\zfranqui_ultver_rg\zfranqui\zfranqui\bin\Debug\MySql.Data.dll</HintPath>
@@ -186,6 +189,18 @@
     </Compile>
     <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsBeTipobeneficio.vb" />
     <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsLnTipobeneficio.vb" />
+    <Compile Include="Mantenimientos\Carga_Excel\clsExcel.vb" />
+    <Compile Include="Mantenimientos\Carga_Excel\DsExcel.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DsExcel.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenimientos\Carga_Excel\frmCargaExcel.Designer.vb">
+      <DependentUpon>frmCargaExcel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Mantenimientos\Carga_Excel\frmCargaExcel.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Mantenimientos\CEF\clsBeCef.vb" />
     <Compile Include="Mantenimientos\CEF\clsLnCef.vb" />
     <Compile Include="Mantenimientos\CEF\clsPartialBECEF.vb" />
@@ -513,6 +528,9 @@
     <EmbeddedResource Include="Mantenimientos\Beneficio\frmBeneficioList.resx">
       <DependentUpon>frmBeneficioList.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Mantenimientos\Carga_Excel\frmCargaExcel.resx">
+      <DependentUpon>frmCargaExcel.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\CEF\frmCEF.resx">
       <DependentUpon>frmCEF.vb</DependentUpon>
     </EmbeddedResource>
@@ -664,6 +682,17 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Conn.ini" />
+    <None Include="Mantenimientos\Carga_Excel\DsExcel.xsc">
+      <DependentUpon>DsExcel.xsd</DependentUpon>
+    </None>
+    <None Include="Mantenimientos\Carga_Excel\DsExcel.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DsExcel.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="Mantenimientos\Carga_Excel\DsExcel.xss">
+      <DependentUpon>DsExcel.xsd</DependentUpon>
+    </None>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
