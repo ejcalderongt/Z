@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmPagosAutoZ
+Partial Class frmVentasZ
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -28,6 +28,7 @@ Partial Class frmPagosAutoZ
         Me.cmdImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdActualizar = New DevExpress.XtraBars.BarButtonItem()
         Me.mnuProcesar = New DevExpress.XtraBars.BarButtonItem()
+        Me.mnuAplicarPagos = New DevExpress.XtraBars.BarButtonItem()
         Me.barDockControlTop = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlBottom = New DevExpress.XtraBars.BarDockControl()
         Me.barDockControlLeft = New DevExpress.XtraBars.BarDockControl()
@@ -42,7 +43,6 @@ Partial Class frmPagosAutoZ
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
         Me.prg = New System.Windows.Forms.ProgressBar()
         Me.txt = New System.Windows.Forms.RichTextBox()
-        Me.mnuAplicarPagos = New DevExpress.XtraBars.BarButtonItem()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,9 +87,15 @@ Partial Class frmPagosAutoZ
         '
         'mnuProcesar
         '
-        Me.mnuProcesar.Caption = "Procesar"
+        Me.mnuProcesar.Caption = "Importar Ventas"
         Me.mnuProcesar.Id = 2
         Me.mnuProcesar.Name = "mnuProcesar"
+        '
+        'mnuAplicarPagos
+        '
+        Me.mnuAplicarPagos.Caption = "Aplicar Pagos"
+        Me.mnuAplicarPagos.Id = 3
+        Me.mnuAplicarPagos.Name = "mnuAplicarPagos"
         '
         'barDockControlTop
         '
@@ -215,13 +221,7 @@ Partial Class frmPagosAutoZ
         Me.txt.Text = ""
         Me.txt.Visible = False
         '
-        'mnuAplicarPagos
-        '
-        Me.mnuAplicarPagos.Caption = "Aplicar Pagos"
-        Me.mnuAplicarPagos.Id = 3
-        Me.mnuAplicarPagos.Name = "mnuAplicarPagos"
-        '
-        'frmPagosAutoZ
+        'frmVentasZ
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -235,9 +235,9 @@ Partial Class frmPagosAutoZ
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
-        Me.Name = "frmPagosAutoZ"
+        Me.Name = "frmVentasZ"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Pagos por franquiciado"
+        Me.Text = "Consulta y sincronización de ventas"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)

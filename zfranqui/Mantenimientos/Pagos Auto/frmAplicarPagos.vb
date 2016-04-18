@@ -2,16 +2,8 @@
 
 Public Class frmAplicarPagos
 
-    Enum TipoReporte As Integer
-
-        CuotasDetalleDescuento = 1
-
-    End Enum
-
-    Private Property TipoRep As TipoReporte = -1
-
-    Public Property DescuentoEnc As New clsBeDescuento_enc
-
+    Public Property lventas As New List(Of clsBeVentasdet)
+    Public Property ldescuentosref As New List(Of clsBeDescuento_ref)
     Public Sub New()
 
         MyBase.New()
@@ -20,16 +12,6 @@ Public Class frmAplicarPagos
         InitializeComponent()
 
     End Sub
-
-    Private _Nom_Rep As String = ""
-    Public Property Nom_Rep() As String
-        Get
-            Return _Nom_Rep
-        End Get
-        Set(ByVal value As String)
-            _Nom_Rep = value
-        End Set
-    End Property
 
     Private Sub cmdActualizar_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdActualizar.ItemClick
         Llenar_Ventas()
@@ -42,7 +24,7 @@ Public Class frmAplicarPagos
             Dim printingSystem1 As New DevExpress.XtraPrinting.PrintingSystem()
             Dim printLink As New DevExpress.XtraPrinting.PrintableComponentLink()
 
-            AddHandler printLink.CreateReportHeaderArea, AddressOf PrintableComponentLink1_CreateReportHeaderArea
+            ' AddHandler printLink.CreateReportHeaderArea, AddressOf PrintableComponentLink1_CreateReportHeaderArea
 
             Dim leftColumnFoot As String = "Páginas: [Page # of Pages #] "
             Dim leftColumnHead As String = "Usuario: [User Name] - " & gUsuario.Nombre
@@ -74,89 +56,79 @@ Public Class frmAplicarPagos
         End Try
 
     End Sub
-
-    Private Sub PrintableComponentLink1_CreateReportHeaderArea(ByVal sender As System.Object, ByVal e As DevExpress.XtraPrinting.CreateAreaEventArgs)
-
-
-        Select Case TipoRep
-
-            Case TipoReporte.CuotasDetalleDescuento
-
-                Dim reportHeader As String = vbNewLine & "Detalle de descuentos " & vbNewLine & _
-                "Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
-
-                e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
-                e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
-
-                Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
-                e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
-
-            Case Else
-
-        End Select
-
-    End Sub
-
     Private Sub Llenar_Ventas()
 
         Try
 
-            vSQL = "SELECT " & _
-                    "ventasdet.IdVenta," & _
-                    "cef.Codigo AS CEF, " & _
-                    "franquiciado.Codigo AS Franquiciado, " & _
-                    "ventasdet.IdFranquiciado, " & _
-                    "SUM(ventasdet.Monto) AS Monto, " & _
-                    "ventasdet.Fecha, " & _
-                    "ventasdet.Saldo, " & _
-                    "ventasdet.Pagado " & _
-                    "FROM " & _
-                    "	franquiciadocef " & _
-                    "INNER JOIN cef ON franquiciadocef.IdCEF = cef.IdCef " & _
-                    "INNER JOIN ventasdet ON franquiciadocef.IdFranquiciado = ventasdet.IdFranquiciado " & _
-                    "INNER JOIN franquiciado ON franquiciadocef.IdFranquiciado = franquiciado.IdFranquiciado " & _
-                    " AND ventasdet.fecha>=" & FormatoFechas.fFecha(dtpFechaDesdeVentas.Value) & _
-                   " AND ventasdet.fecha<=" & FormatoFechas.fFecha(dtpFechaHastaVentas.Value)
+            lventas = New List(Of clsBeVentasdet)
 
-            vSQL += "GROUP BY " & _
-                    "ventasdet.IdVenta, " & _
-                    "cef.Codigo, " & _
-                    "franquiciado.Codigo, " & _
-                    "ventasdet.IdFranquiciado, " & _
-                    "ventasdet.Fecha, " & _
-                    "ventasdet.Saldo, " & _
-                    "ventasdet.Pagado "
+            lventas = clsLnVentasdet.GetByDate(dtpFechaDesdeVentas.Value, dtpFechaHastaVentas.Value)
 
-            Dim DT As New DataTable
-            BD.OpenDT(DT, vSQL)
-            dgridVentas.DataSource = DT
-            viewVentas.OptionsBehavior.Editable = False
+            If Not lventas Is Nothing Then
 
-            Application.DoEvents()
+                Dim DT As New DataTable("Result")
+                DT.Columns.Add("CEF", GetType(String))
+                DT.Columns.Add("Franquiciado", GetType(String))                
+                'DT.Columns.Add("IdVenta", GetType(Integer))
+                DT.Columns.Add("Fecha", GetType(DateTime))
+                DT.Columns.Add("Monto", GetType(Decimal))
+                DT.Columns.Add("Pagado", GetType(Decimal))
+                DT.Columns.Add("Saldo", GetType(Decimal))
 
-            If viewVentas.Columns.Count = 0 Then Exit Sub
+                For Each Obj As clsBeVentasdet In lventas
 
-            viewVentas.Columns("Franquiciado").GroupIndex = 0
+                    Application.DoEvents()
 
-            viewVentas.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            viewVentas.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+                    Dim Row As DataRow = DT.NewRow
 
-            viewVentas.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            viewVentas.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+                    Row.Item("CEF") = Obj.CodigoCEF
+                    Row.Item("Franquiciado") = Obj.CodigoFranquiciado
+                    Row.Item("Fecha") = Obj.Fecha
+                    Row.Item("Monto") = Obj.Monto
+                    Row.Item("Pagado") = Obj.Pagado
+                    Row.Item("Saldo") = Obj.Pagado
+                    DT.Rows.Add(Row)
 
-            viewVentas.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            viewVentas.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+                Next
 
-            viewVentas.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            viewVentas.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
+                dgridVentas.DataSource = DT
 
-            viewVentas.Columns("Pagado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            viewVentas.Columns("Pagado").SummaryItem.DisplayFormat = "{0:n2}"
+                viewVentas.OptionsBehavior.Editable = False
 
-            viewVentas.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            viewVentas.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+                Application.DoEvents()
 
-            viewVentas.ExpandAllGroups()
+                viewVentas.Columns("CEF").GroupIndex = 0
+
+                viewVentas.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                viewVentas.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+
+                viewVentas.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                viewVentas.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+
+                viewVentas.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                viewVentas.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+
+                viewVentas.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                viewVentas.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
+
+                viewVentas.Columns("Pagado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                viewVentas.Columns("Pagado").SummaryItem.DisplayFormat = "{0:n2}"
+
+                viewVentas.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                viewVentas.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+
+                viewVentas.ExpandAllGroups()
+
+                viewVentas.BestFitColumns()
+
+                lblTotalVentas.Text = "Total Ventas: " & Format(viewVentas.Columns("Monto").SummaryItem.SummaryValue(), "C")
+
+
+            Else
+
+                lblTotalVentas.Text = "Total Ventas: 0.00 "
+
+            End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -169,12 +141,92 @@ Public Class frmAplicarPagos
 
         Try
 
-            dgridDescuentos.DataSource = clsLnDescuento_enc.GetAllByCefFranquiciadoCuota(dtpFechaDesdeDescuentos.Value, dtpFechaHastaDescuentos.Value)
+            ldescuentosref = New List(Of clsBeDescuento_ref)
 
+            ldescuentosref = clsLnDescuento_ref.GetByDate(dtpFechaDesdeDescuentos.Value, dtpFechaHastaDescuentos.Value)
+
+            If Not ldescuentosref Is Nothing Then
+
+                Dim DT As New DataTable("Result")
+                DT.Columns.Add("CEF", GetType(String))
+                DT.Columns.Add("Franquiciado", GetType(String))
+                DT.Columns.Add("IdDescuentoRef", GetType(Integer))
+                DT.Columns.Add("Beneficio", GetType(String))
+                DT.Columns.Add("Fecha_Descuento", GetType(DateTime))
+                DT.Columns.Add("No_Cuota", GetType(Integer))
+                DT.Columns.Add("Monto", GetType(Decimal))
+                DT.Columns.Add("Abonado", GetType(Decimal))
+                DT.Columns.Add("Pagada", GetType(Boolean))
+
+                For Each Obj As clsBeDescuento_ref In ldescuentosref
+
+                    Application.DoEvents()
+
+                    Dim Row As DataRow = DT.NewRow
+
+                    Row.Item("CEF") = Obj.CodigoCEF & " - " & Obj.NomCEF
+                    Row.Item("Franquiciado") = Obj.CodigoFranquiciado & " - " & Obj.NomFranquiciado
+                    Row.Item("IdDescuentoRef") = Obj.IdDescuentoRef
+
+                    If Obj.Beneficio.TipoBeneficio.EsVehiculo Then
+                        Row.Item("Beneficio") = String.Format("{0} {1} {2} {3} {4}", Obj.Beneficio.Nombre, Obj.Beneficio.Modelo, Obj.Beneficio.NoPlaca, Obj.Beneficio.Motor, Obj.Beneficio.NoChasis).Trim()
+                    ElseIf Obj.Beneficio.TipoBeneficio.EsTelefono Then
+                        Row.Item("Beneficio") = String.Format("{0} {1} {2}", Obj.Beneficio.Nombre, Obj.Beneficio.NumeroTelefono, Obj.Beneficio.EmpresaTelco).Trim()
+                    ElseIf Obj.Beneficio.TipoBeneficio.EsServicio Then
+                        Row.Item("Beneficio") = String.Format("{0}", Obj.Beneficio.Nombre).Trim()
+                    End If
+
+                    Row.Item("Fecha_Descuento") = Obj.FechaCobro
+                    Row.Item("No_Cuota") = Obj.NoCuota
+                    Row.Item("Monto") = Obj.Monto
+                    Row.Item("Abonado") = Obj.Abonado
+                    Row.Item("Pagada") = Obj.Pagada
+                    DT.Rows.Add(Row)
+
+                Next
+
+                dgridDescuentos.DataSource = DT
+
+                viewDescuentos.OptionsBehavior.Editable = False
+
+                Application.DoEvents()
+
+                If viewDescuentos.Columns.Count = 0 OrElse viewDescuentos.RowCount = 0 Then Exit Sub
+
+                viewDescuentos.Columns("CEF").GroupIndex = 0
+                'viewDescuentos.Columns("Franquiciado").GroupIndex = 1
+
+                viewDescuentos.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                viewDescuentos.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+
+                viewDescuentos.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                viewDescuentos.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+
+                viewDescuentos.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                viewDescuentos.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+
+                viewDescuentos.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                viewDescuentos.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+
+                viewDescuentos.Columns("Fecha_Descuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+                viewDescuentos.Columns("Fecha_Descuento").DisplayFormat.FormatString = "dd/MM/yyyy"
+
+                viewDescuentos.ExpandAllGroups()
+
+                viewDescuentos.BestFitColumns()
+
+                lblTotalDescuentos.Text = "Total Descuentos: " & Format(viewDescuentos.Columns("Monto").SummaryItem.SummaryValue(), "C")
+
+            Else
+
+                lblTotalDescuentos.Text = "Total Descuentos: 0"
+
+            End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+
 
     End Sub
 
@@ -182,8 +234,8 @@ Public Class frmAplicarPagos
 
         Try
 
-            If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
-            viewDescuentos.SaveLayoutToXml(CurDir() & "\" & Nom_Rep & ".xml")
+            'If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
+            'viewDescuentos.SaveLayoutToXml(CurDir() & "\" & Nom_Rep & ".xml")
 
         Catch ex As Exception
         End Try
@@ -227,172 +279,16 @@ Public Class frmAplicarPagos
     End Sub
 
     Private Sub mnuProcesar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuProcesar.ItemClick
-        SincronizarVentas()
+        AplicarPagosDesdeVentas()
     End Sub
 
 
-    Public Function SincronizarVentas() As Boolean
+    Public Function AplicarPagosDesdeVentas() As Boolean
 
-        SincronizarVentas = False
-
-        Dim DT As New DataTable
-        Dim v As New clsBeVentasdet
-        Dim dv As New clsLnVentasdet
-        Dim lv As New List(Of clsBeVentasdet)
-        Dim ListaCEFSinFranquiciados As New List(Of String)
-
-        txt.Visible = True
-        txt.Text = ""
+        AplicarPagosDesdeVentas = False
 
         Try
 
-            vSQL = " SELECT " & _
-                " 	e.crmrdi as IdCEF, " & _
-                " 	c.despes as despes, " & _
-                " 	SUM(a.cant) as cilindros, " & _
-                " 	d.cantidad as 'RetencionCliente', " & _
-                " 	SUM(a.cant) * d.cantidad as Monto, " & _
-                "	b.fecha as Fecha " & _
-                " FROM " & _
-                " 	facdet a " & _
-                " INNER JOIN facenc b ON a.codpla = b.codpla " & _
-                " AND a.serie = b.serie " & _
-                " AND a.numero = b.numero " & _
-                " INNER JOIN pesmae c ON a.codpes = c.codpes " & _
-                " INNER JOIN retencionmae d ON a.codpes = d.codpes " & _
-                " INNER JOIN rdimae e ON a.codcli = e.codrdi " & _
-                " WHERE  b.status='ACTIVA' " & _
-                " AND b.fecha>=" & FormatoFechas.fFecha(dtpFechaDesdeVentas.Value) & _
-                " AND b.fecha<=" & FormatoFechas.fFecha(dtpFechaHastaVentas.Value) & _
-                " GROUP BY " & _
-                " 	e.crmrdi, " & _
-                " 	a.codpes, " & _
-                " 	b.fecha " & _
-                " ORDER BY " & _
-                " b.fecha, " & _
-                " a.codcli; "
-
-            BD.OpenDT(DT, vSQL, BD.CadenaConexionZVentas)
-
-            Dim vPkVentaDET As Integer = dv.MaxID() + 1
-
-            Dim CodigoCEF As String = ""
-            Dim IdCEF As Integer = 0
-            Dim dCEF As New clsLnCef
-
-            Dim dfran As New clsLnFranquiciadocef
-            Dim IdFranqui As Integer = 0
-
-            prg.Maximum = DT.Rows.Count
-
-            txt.AppendText("Procesando " & DT.Rows.Count & " Detalles de ventas..." & vbNewLine)
-
-            Application.DoEvents()
-
-            For i As Integer = 0 To DT.Rows.Count - 1
-
-                v = New clsBeVentasdet
-                v.Cilindros = IIf(IsDBNull(DT.Rows(i).Item("cilindros")), 0, DT.Rows(i).Item("cilindros"))
-                v.Despes = IIf(IsDBNull(DT.Rows(i).Item("despes")), 0, DT.Rows(i).Item("despes"))
-                v.Fec_agr = Now
-                v.Fecha = IIf(IsDBNull(DT.Rows(i).Item("Fecha")), 0, DT.Rows(i).Item("Fecha"))
-
-                CodigoCEF = IIf(IsDBNull(DT.Rows(i).Item("IdCEF")), 0, DT.Rows(i).Item("IdCEF"))
-
-                'If CodigoCEF <> "AT39" Then MsgBox("ESPERA")
-
-                If Not ListaCEFSinFranquiciados.Contains(CodigoCEF) Then
-
-                    IdCEF = dCEF.Get_IdCEF(CodigoCEF)
-
-                    txt.AppendText("Obteniendo IdCEF: " & IdCEF & vbNewLine)
-
-                    IdFranqui = dfran.GetIdFranquiciado(IdCEF)
-                    txt.AppendText("Obteniendo IdFranquiciado: " & IdFranqui & vbNewLine)
-
-                    If IdFranqui <= 0 Then
-
-                        txt.AppendText("No se pudo obtener el IdFranquiciado para el CEF: " & CodigoCEF & vbNewLine)
-                        ListaCEFSinFranquiciados.Add(CodigoCEF)
-
-                    Else
-
-                        v.IdFranquiciado = IdFranqui
-                        v.IdPagoDet = 0
-                        v.IdPagoEnc = 0
-                        v.Monto = IIf(IsDBNull(DT.Rows(i).Item("Monto")), 0, DT.Rows(i).Item("Monto"))
-                        v.Pagado = 0
-                        v.Pagado = 0
-                        v.RetencionCliente = IIf(IsDBNull(DT.Rows(i).Item("RetencionCliente")), 0, DT.Rows(i).Item("RetencionCliente"))
-                        v.IdVenta = vPkVentaDET
-                        vPkVentaDET += 1
-
-                        If Not dv.ExisteRegistro(v) Then
-                            lv.Add(v)
-                            txt.AppendText("Adicionando a la lista de transacciones CEF: " & CodigoCEF & " Fecha: " & v.Fecha & " Monto: " & v.Monto & vbNewLine)
-                        Else
-                            txt.AppendText("Omitiendo CEF: " & CodigoCEF & " Fecha: " & v.Fecha & " Monto: " & v.Monto & " ***(Ya existe)*** " & vbNewLine)
-                        End If
-
-                    End If
-
-                Else
-
-                    txt.AppendText("Omitiendo registros de CEF: " & CodigoCEF & " (Sin Franquiciado) " & i & vbNewLine)
-
-                End If
-
-                prg.Value = i
-
-                Application.DoEvents()
-
-            Next
-
-            prg.Value = 0
-
-            If lv.Count > 0 Then
-
-                txt.AppendText("Iniciando inserción transaccional..." & vbNewLine)
-
-                Dim cnn As New MySqlConnection(BD.CadenaConexion)
-                Dim ltrans As MySqlTransaction = Nothing
-
-                Try
-
-                    cnn.Open()
-
-                    ltrans = cnn.BeginTransaction
-
-                    prg.Maximum = lv.Count
-
-                    Dim Contador As Integer = 0
-
-                    For Each ven As clsBeVentasdet In lv
-
-                        txt.AppendText("Procesando VentaId: " & ven.IdVenta & vbNewLine)
-
-                        dv.Insertar(ven, cnn, ltrans)
-                        prg.Value = Contador
-                        Contador += 1
-                        Application.DoEvents()
-
-                    Next
-
-                    ltrans.Commit()
-
-                    MsgBox("Se procesaro correctamente " & lv.Count & " Registros de ventas", MsgBoxStyle.Information, Me.Text)
-
-                Catch ex As Exception
-                    ltrans.Rollback()
-                    MsgBox("Error al insertar el detalle de ventas: " & ex.Message)
-                Finally
-                    If Not cnn Is Nothing AndAlso cnn.State = ConnectionState.Open Then cnn.Close()
-                    ltrans.Dispose()
-                End Try
-
-            Else
-                MsgBox("No se encontraron registros para insertar", MsgBoxStyle.Exclamation, Me.Text)
-            End If
 
 
         Catch ex As Exception

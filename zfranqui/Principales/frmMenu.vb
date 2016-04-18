@@ -654,7 +654,7 @@ Public Class frmMenu
 
         Try
 
-            Dim PagoAuto As New frmPagosAutoZ()
+            Dim PagoAuto As New frmVentasZ()
             PagoAuto.ShowDialog()
             PagoAuto.Dispose()
 

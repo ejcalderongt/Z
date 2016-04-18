@@ -1,6 +1,8 @@
 ﻿Imports MySql.Data.MySqlClient
 
-Public Class frmPagosAutoZ
+Public Class frmVentasZ
+
+    Private EstaIniciando As Boolean = False
 
     Enum TipoReporte As Integer
 
@@ -16,8 +18,12 @@ Public Class frmPagosAutoZ
 
         MyBase.New()
 
+        EstaIniciando = True
+
         'This call is required by the Windows Form Designer.
         InitializeComponent()
+
+        EstaIniciando = False
 
     End Sub
 
@@ -195,19 +201,19 @@ Public Class frmPagosAutoZ
 
 
     Private Sub dtpFechaDesde_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaDesde.ValueChanged
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub dtpFechaHasta_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaHasta.ValueChanged
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub chkActivo_CheckedChanged(sender As Object, e As EventArgs)
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub mnuProcesar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuProcesar.ItemClick
@@ -381,8 +387,8 @@ Public Class frmPagosAutoZ
 
             Else
                 MsgBox("No se encontraron registros para insertar", MsgBoxStyle.Exclamation, Me.Text)
-            End If              
-          
+            End If
+
 
         Catch ex As Exception
             MsgBox(ex.Message)

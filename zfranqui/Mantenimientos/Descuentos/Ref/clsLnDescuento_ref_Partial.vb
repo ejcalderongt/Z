@@ -25,7 +25,9 @@ Partial Public Class clsLnDescuento_ref
                     Dim Obj As clsBeDescuento_ref
 
                     If lDataTable IsNot Nothing AndAlso lDataTable.Rows.Count > 0 Then
+
                         For Each lRow As DataRow In lDataTable.Rows
+
                             Obj = New clsBeDescuento_ref
 
                             Obj.IdDescuentoEnc = CType(lRow("IdDescuentoEnc"), System.Int32)
@@ -68,9 +70,13 @@ Partial Public Class clsLnDescuento_ref
                             End If
 
                             lReturnList.Add(Obj)
+
                         Next
+
                     End If
+
                 End Using
+
             End Using
 
             Return lReturnList
@@ -520,6 +526,156 @@ Partial Public Class clsLnDescuento_ref
 
         Catch ex As Exception
             Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function GetByDate(ByVal FechaDesde As Date, ByVal FechaHasta As Date) As List(Of clsBeDescuento_ref)
+
+        GetByDate = Nothing
+
+        Try
+
+            Dim lReturnList As New List(Of clsBeDescuento_ref)
+
+            vSQL = " SELECT " & _
+                   " descuento_ref.IdDescuentoRef, " & _
+                   " descuento_ref.IdDescuentoEnc, " & _
+                   " descuento_ref.IdDescuentoDet, " & _
+                   " descuento_ref.IdBeneficio, " & _
+                   " descuento_ref.NoCuota, " & _
+                   " descuento_ref.Monto,  " & _
+                   " descuento_ref.Abonado, " & _
+                   " descuento_ref.FechaCobro, " & _
+                   " descuento_ref.Pagada, " & _
+                   " descuento_ref.Anulada, " & _
+                   " beneficio.Nombre, " & _
+                   " beneficio.Modelo, " & _
+                   " beneficio.NoChasis, " & _
+                   " beneficio.NoPlaca, " & _
+                   " beneficio.Motor, " & _
+                   " beneficio.NumeroTelefono, " & _
+                   " beneficio.EmpresaTelco, " & _
+                   " tipobeneficio.Nombre AS NomTipoDescuento, " & _
+                   " tipobeneficio.Prioridad, " & _
+                   " franquiciado.Codigo AS CodigoFranquiciado, " & _
+                   " franquiciado.Nombres AS NomFranquiciado, " & _
+                   " cef.Codigo AS CodigoCEF, " & _
+                   " cef.Descripcion AS NomCEF, " & _
+                   " tipobeneficio.EsVehiculo, " & _
+                   " tipobeneficio.EsTelefono, " & _
+                   " tipobeneficio.EsServicio " & _
+                   " FROM " & _
+                   "	descuento_ref " & _
+                   " INNER JOIN beneficio ON descuento_ref.IdBeneficio = beneficio.IdBeneficio " & _
+                   " INNER JOIN tipobeneficio ON beneficio.IdTipoBeneficio = tipobeneficio.IdTipoBeneficio " & _
+                   " INNER JOIN descuento_enc ON descuento_ref.IdDescuentoEnc = descuento_enc.IdDescuentoEnc " & _
+                   " INNER JOIN cef ON descuento_enc.IdCEF = cef.IdCef " & _
+                   " INNER JOIN franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
+                   "   WHERE cast(descuento_enc.fec_agr AS DATE) BETWEEN " & FormatoFechas.fFecha(FechaDesde) & _
+                   "   AND " & FormatoFechas.fFecha(FechaHasta) & _
+                   " AND (descuento_ref.Anulada=0) " & _
+                   " AND beneficio.activo = 1 " & _
+                   " AND Pagada = 0 " & _
+                   " ORDER BY " & _
+                   " descuento_ref.FechaCobro, " & _
+                   " tipobeneficio.Prioridad "
+
+            Using lCnn As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lDTA As New MySql.Data.MySqlClient.MySqlDataAdapter(vSQL, lCnn)
+
+                    lDTA.SelectCommand.CommandType = CommandType.Text
+
+                    Dim lDataTable As New DataTable
+                    lDTA.Fill(lDataTable)
+
+                    Dim Obj As clsBeDescuento_ref
+
+                    If lDataTable IsNot Nothing AndAlso lDataTable.Rows.Count > 0 Then
+
+                        For Each lRow As DataRow In lDataTable.Rows
+
+                            Obj = New clsBeDescuento_ref
+                            Obj.Beneficio = New clsBeBeneficio
+                            Obj.Beneficio.TipoBeneficio = New clsBeTipobeneficio
+
+                            Obj.IdDescuentoEnc = CType(lRow("IdDescuentoEnc"), System.Int32)
+
+                            If lRow("IdDescuentoDet") IsNot DBNull.Value AndAlso lRow("IdDescuentoDet") IsNot Nothing Then
+                                Obj.IdDescuentoDet = CType(lRow("IdDescuentoDet"), System.Int32)
+                            End If
+                            If lRow("IdDescuentoRef") IsNot DBNull.Value AndAlso lRow("IdDescuentoRef") IsNot Nothing Then
+                                Obj.IdDescuentoRef = CType(lRow("IdDescuentoRef"), System.Int32)
+                            End If
+                            If lRow("IdBeneficio") IsNot DBNull.Value AndAlso lRow("IdBeneficio") IsNot Nothing Then
+                                Obj.IdBeneficio = CType(lRow("IdBeneficio"), System.Int32)
+                            End If
+                            If lRow("NoCuota") IsNot DBNull.Value AndAlso lRow("NoCuota") IsNot Nothing Then
+                                Obj.NoCuota = CType(lRow("NoCuota"), System.Int32)
+                            End If
+                            If lRow("Monto") IsNot DBNull.Value AndAlso lRow("Monto") IsNot Nothing Then
+                                Obj.Monto = CType(lRow("Monto"), System.Decimal)
+                            End If
+                            If lRow("Abonado") IsNot DBNull.Value AndAlso lRow("Abonado") IsNot Nothing Then
+                                Obj.Abonado = CType(lRow("Abonado"), System.Decimal)
+                            End If
+                            If lRow("FechaCobro") IsNot DBNull.Value AndAlso lRow("FechaCobro") IsNot Nothing Then
+                                Obj.FechaCobro = CType(lRow("FechaCobro"), System.DateTime)
+                            End If
+                            If lRow("Pagada") IsNot DBNull.Value AndAlso lRow("Pagada") IsNot Nothing Then
+                                Obj.Pagada = CType(lRow("Pagada"), System.Boolean)
+                            End If
+
+                            Obj.CodigoCEF = IIf(IsDBNull(lRow("CodigoCEF")), "", lRow("CodigoCEF"))
+                            Obj.NomCEF = IIf(IsDBNull(lRow("NomCEF")), "", lRow("NomCEF"))
+
+                            Obj.CodigoFranquiciado = IIf(IsDBNull(lRow("CodigoFranquiciado")), "", lRow("CodigoFranquiciado"))
+                            Obj.NomFranquiciado = IIf(IsDBNull(lRow("NomFranquiciado")), "", lRow("NomFranquiciado"))
+
+                            'If lRow("user_agr") IsNot DBNull.Value AndAlso lRow("user_agr") IsNot Nothing Then
+                            '    Obj.User_agr = CType(lRow("user_agr"), System.Int32)
+                            'End If
+                            'If lRow("fec_agr") IsNot DBNull.Value AndAlso lRow("fec_agr") IsNot Nothing Then
+                            '    Obj.Fec_agr = CType(lRow("fec_agr"), System.DateTime)
+                            'End If
+                            'If lRow("user_mod") IsNot DBNull.Value AndAlso lRow("user_mod") IsNot Nothing Then
+                            '    Obj.User_mod = CType(lRow("user_mod"), System.Int32)
+                            'End If
+                            'If lRow("fec_mod") IsNot DBNull.Value AndAlso lRow("fec_mod") IsNot Nothing Then
+                            '    Obj.Fec_mod = CType(lRow("fec_mod"), System.DateTime)
+                            'End If
+
+                            Obj.Beneficio.IdBeneficio = IIf(IsDBNull(lRow("IdBeneficio")), -1, lRow("IdBeneficio"))
+                            Obj.Beneficio.Nombre = IIf(IsDBNull(lRow("Nombre")), "", lRow("Nombre"))
+                            Obj.Beneficio.Modelo = IIf(IsDBNull(lRow("Modelo")), "", lRow("Modelo"))
+                            Obj.Beneficio.NoChasis = IIf(IsDBNull(lRow("NoChasis")), "", lRow("NoChasis"))
+                            Obj.Beneficio.NoPlaca = IIf(IsDBNull(lRow("NoPlaca")), "", lRow("NoPlaca"))
+                            Obj.Beneficio.Motor = IIf(IsDBNull(lRow("Motor")), "", lRow("Motor"))
+                            Obj.Beneficio.NumeroTelefono = IIf(IsDBNull(lRow("NumeroTelefono")), "", lRow("NumeroTelefono"))
+                            Obj.Beneficio.EmpresaTelco = IIf(IsDBNull(lRow("EmpresaTelco")), "", lRow("EmpresaTelco"))
+                            Obj.Beneficio.TipoBeneficio.EsVehiculo = IIf(IsDBNull(lRow.Item("EsVehiculo")), False, lRow.Item("EsVehiculo"))
+                            Obj.Beneficio.TipoBeneficio.EsTelefono = IIf(IsDBNull(lRow.Item("EsTelefono")), False, lRow.Item("EsTelefono"))
+                            Obj.Beneficio.TipoBeneficio.EsServicio = IIf(IsDBNull(lRow.Item("EsServicio")), False, lRow.Item("EsServicio"))
+
+                            'Dim lbeneficio As New clsLnBeneficio
+                            'lbeneficio.Obtener(Obj.Beneficio, True)
+
+                            lReturnList.Add(Obj)
+
+                        Next
+
+                    End If
+
+                End Using
+
+            End Using
+
+            Return lReturnList
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
         End Try
 
     End Function
