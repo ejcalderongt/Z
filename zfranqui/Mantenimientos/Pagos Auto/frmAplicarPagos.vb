@@ -2,7 +2,7 @@
 
 Public Class frmAplicarPagos
 
-    Public Property lventas As New List(Of clsBeVentasdet)
+    Public Property lventas As New List(Of clsBeVentasenc)
     Public Property ldescuentosref As New List(Of clsBeDescuento_ref)
     Public Sub New()
 
@@ -60,34 +60,44 @@ Public Class frmAplicarPagos
 
         Try
 
-            lventas = New List(Of clsBeVentasdet)
+            UseWaitCursor = True
 
-            lventas = clsLnVentasdet.GetByDate(dtpFechaDesdeVentas.Value, dtpFechaHastaVentas.Value)
+            lventas = New List(Of clsBeVentasenc)
+
+            lventas = clsLnVentasenc.GetByDate(dtpFechaDesdeVentas.Value, dtpFechaHastaVentas.Value)
 
             If Not lventas Is Nothing Then
 
                 Dim DT As New DataTable("Result")
+                DT.Columns.Add("IdPeriodoVenta", GetType(Integer))
+                DT.Columns.Add("FechaDesde", GetType(Date))
+                DT.Columns.Add("FechaHasta", GetType(Date))
                 DT.Columns.Add("CEF", GetType(String))
-                DT.Columns.Add("Franquiciado", GetType(String))                
-                'DT.Columns.Add("IdVenta", GetType(Integer))
-                DT.Columns.Add("Fecha", GetType(DateTime))
+                DT.Columns.Add("Franquiciado", GetType(String))
                 DT.Columns.Add("Monto", GetType(Decimal))
                 DT.Columns.Add("Pagado", GetType(Decimal))
                 DT.Columns.Add("Saldo", GetType(Decimal))
 
-                For Each Obj As clsBeVentasdet In lventas
+                Dim cef As New clsLnCef
+                Dim fra As New clsLnFranquiciado
+
+                For Each Obj As clsBeVentasenc In lventas
 
                     Application.DoEvents()
 
                     Dim Row As DataRow = DT.NewRow
 
+                    Row.Item("IdPeriodoVenta") = Obj.IdPeriodoVenta
+                    Row.Item("FechaDesde") = Obj.FechaDesde
+                    Row.Item("FechaHasta") = Obj.FechaHasta
                     Row.Item("CEF") = Obj.CodigoCEF
                     Row.Item("Franquiciado") = Obj.CodigoFranquiciado
-                    Row.Item("Fecha") = Obj.Fecha
                     Row.Item("Monto") = Obj.Monto
                     Row.Item("Pagado") = Obj.Pagado
                     Row.Item("Saldo") = Obj.Pagado
                     DT.Rows.Add(Row)
+
+                    Application.DoEvents()
 
                 Next
 
@@ -97,7 +107,7 @@ Public Class frmAplicarPagos
 
                 Application.DoEvents()
 
-                viewVentas.Columns("CEF").GroupIndex = 0
+                'viewVentas.Columns("CEF").GroupIndex = 0
 
                 viewVentas.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
                 viewVentas.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
@@ -129,6 +139,8 @@ Public Class frmAplicarPagos
                 lblTotalVentas.Text = "Total Ventas: 0.00 "
 
             End If
+
+            UseWaitCursor = False
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -289,6 +301,105 @@ Public Class frmAplicarPagos
 
         Try
 
+            Dim lpagoenc As New List(Of clsBePago_enc)
+            Dim lpagodet As New List(Of clsBePago_det)
+
+            Dim pe As New clsBePago_enc
+            Dim pd As New clsBePago_det
+
+            Dim IdPagoEnc As Integer = clsLnPago_enc.Generar_Nuevo_IdPago()
+            Dim IdPagoDet As Integer = clsLnPago_det.MaxID(IdPagoEnc)
+
+            If Not lventas Is Nothing AndAlso lventas.Count > 0 Then
+
+                If Not ldescuentosref Is Nothing AndAlso ldescuentosref.Count > 0 Then
+
+                    If MsgBox("¿Se aplicarán los pagos a los descuentos en base a la lista de ventas seleccionada, ¿continuar?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+
+
+                        Dim FranquiciadosConVentas = From f In lventas Select New With {Key f.IdCEF, f.IdFranquiciado} Distinct.ToList
+
+                        'Recorrer los franquiciados que tienen ventas
+                        For Each F In FranquiciadosConVentas
+
+                            pe = New clsBePago_enc
+                            pe.IdPagoEnc = IdPagoEnc
+                            pe.IdFranquiciado = F.IdFranquiciado
+                            pe.IdCEF = F.IdCEF
+                            pe.IsNew = True
+                            pe.Anulado = False
+                            pe.FechaPago = Now.Date
+                            pe.User_agr = gUsuario.IdUsuario
+                            pe.User_mod = gUsuario.IdUsuario
+                            pe.Fec_agr = Now
+                            pe.Fec_mod = Now
+                            'pe.NoDeposito = FormatoFechas.fFechaHora(Now)
+
+                            'Filtrar la lista de ventas por franquiciado.
+                            Dim VentasFranqui = lventas.Where(Function(vf) vf.IdFranquiciado = F.IdFranquiciado)
+
+                            'Filtrar la lista de descuentos por franquiciado y solo los descuentos con fecha menor a la actual
+                            Dim DescuentosRefPorFranqui = ldescuentosref.Where _
+                                                          (Function(df) df.CodigoFranquiciado = clsLnFranquiciado.GetCodigo(F.IdFranquiciado) _
+                                                               And df.FechaCobro <= Now.Date).OrderBy(Function(od) od.FechaCobro)
+
+                            'Recorrer el detalle de ventas delfranquiciado filtrado
+                            For Each v In VentasFranqui
+
+                                For Each d In DescuentosRefPorFranqui
+
+                                    pd = New clsBePago_det
+                                    pd.Beneficio = New clsBeBeneficio
+                                    pd.Fec_agr = Date.Now
+                                    pd.Fec_mod = Date.Now
+                                    pd.IdBeneficio = d.IdBeneficio
+                                    pd.IdDescuentoDet = d.IdDescuentoDet
+                                    pd.IdDescuentoEnc = d.IdDescuentoEnc
+                                    pd.IdDescuentoRef = d.IdDescuentoRef
+                                    pd.IdPagoDet = IdPagoDet
+                                    pd.IdPagoEnc = IdPagoEnc
+                                    pd.IsNew = True
+                                    pd.NoCuota = d.NoCuota
+                                    pd.MontoCuota = d.Monto
+
+                                    'pd.MontoAbono = 
+
+                                Next
+
+                            Next 'lista de detalle de ventas por franquiciado
+
+                        Next 'lista de franquiciados con ventas
+
+                        For Each v As clsBeVentasenc In lventas
+
+                            'Filtrar la lista de descuentos por franquiciado y solo los descuentos con fecha menor a la actual
+                            Dim DescuentosRefPorFranqui = ldescuentosref.Where _
+                                                          (Function(f) f.CodigoFranquiciado = clsLnFranquiciado.GetCodigo(v.IdFranquiciado) _
+                                                               And f.FechaCobro <= Now.Date)
+
+                            'dr = descuentoref
+                            For Each dr In DescuentosRefPorFranqui
+
+                                'Si el monto de esa venta es mayor que la cuota
+                                'aplicar el monto de esa venta a la cuota y pagar la todadlidad de la misma
+
+                                If v.Monto >= dr.Monto Then
+
+                                End If
+
+                            Next
+
+                        Next 'Recorrer detalle de ventas para aplicar a descuentos
+
+                    End If 'No confirmó mensaje
+
+                Else
+                    MsgBox("No se ha definido la lista de descuentos a los que se le aplicarán los pagos", MsgBoxStyle.Exclamation, Me.Text)
+                End If 'No se listaron los descuentos
+
+            Else
+                MsgBox("No se encontraron ventas para aplicar los pagos", MsgBoxStyle.Exclamation, Me.Text)
+            End If 'No se listaron las ventas
 
 
         Catch ex As Exception

@@ -306,10 +306,13 @@
     <Compile Include="Mantenimientos\Descuentos\Periodo\frmPeriodo.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Mantenimientos\Pagos Auto\clsBeVentasdet.vb" />
-    <Compile Include="Mantenimientos\Pagos Auto\clsBeVentasdetPartial.vb" />
-    <Compile Include="Mantenimientos\Pagos Auto\clsLnVentasdet.vb" />
-    <Compile Include="Mantenimientos\Pagos Auto\clsLnVentasDetPartial.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\Det\clsBeVentasdet.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\Det\clsBeVentasdetPartial.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\Enc\clsBeVentasenc.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\Det\clsLnVentasdet.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\Det\clsLnVentasDetPartial.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\Enc\clsLnVentasenc.vb" />
+    <Compile Include="Mantenimientos\Pagos Auto\Enc\clsLnVentasencPartial.vb" />
     <Compile Include="Mantenimientos\Pagos Auto\frmAplicarPagos.Designer.vb">
       <DependentUpon>frmAplicarPagos.vb</DependentUpon>
     </Compile>

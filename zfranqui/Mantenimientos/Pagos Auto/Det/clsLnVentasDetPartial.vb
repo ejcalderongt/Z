@@ -9,6 +9,7 @@
             vSQL = "SELECT " & _
                   "ventasdet.IdVenta," & _
                   "cef.Codigo AS CEF, " & _
+                  "cef.IdCef, " & _
                   "franquiciado.Codigo AS Franquiciado, " & _
                   "ventasdet.IdFranquiciado, " & _
                   "SUM(ventasdet.Monto) AS Monto, " & _
@@ -54,6 +55,7 @@
                             Obj = New clsBeVentasdet
                             Obj.IdVenta = lRow.Item("IdVenta")
                             Obj.CodigoCEF = lRow.Item("CEF")
+                            Obj.IdCEF = lRow.Item("CEF")
                             Obj.CodigoFranquiciado = lRow.Item("Franquiciado")
                             Obj.IdFranquiciado = lRow.Item("IdFranquiciado")
                             Obj.Monto = IIf(IsDBNull(lRow.Item("Monto")), 0, lRow.Item("Monto"))

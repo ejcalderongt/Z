@@ -1,8 +1,9 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports MySql.Data
 
 Partial Public Class clsLnCef
 
-    Public Function Get_IdCEF(ByVal Codigo As String) As Integer
+    Public Shared Function Get_IdCEF(ByVal Codigo As String) As Integer
 
         Get_IdCEF = 0
 
@@ -34,7 +35,7 @@ Partial Public Class clsLnCef
 
     End Function
 
-    Public Sub Cargar(ByRef oBeCef As clsBeCef, ByRef dr As DataRow, ByVal Parcial As Boolean)
+    Public Shared Sub Cargar(ByRef oBeCef As clsBeCef, ByRef dr As DataRow, ByVal Parcial As Boolean)
 
         Try
 
@@ -59,5 +60,40 @@ Partial Public Class clsLnCef
         End Try
 
     End Sub
+
+    Public Shared Function GetCodigoCEF(ByVal IdCEF As Integer) As String
+
+        GetCodigoCEF = ""
+
+        Try
+
+            Dim sp As String = ""
+
+            sp = "SELECT * FROM Cef" & _
+            " Where(IdCef = @IdCef)"
+
+            If sp = "" Then Exit Function
+
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand(sp, cnn)
+            cmd.CommandType = CommandType.Text
+
+            Dim dad As New MySqlDataAdapter(cmd)
+
+            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDCEF", IdCEF))
+
+            Dim dt As New DataTable
+            dad.Fill(dt)
+
+            If dt.Rows.Count = 1 Then
+                GetCodigoCEF = IIf(IsDBNull(dt.Rows(0).Item("Codigo")), "", dt.Rows(0).Item("Codigo"))
+            End If
+
+            Return True
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
 
 End Class

@@ -309,4 +309,36 @@ Partial Public Class clsLnFranquiciado
 
     End Sub
 
+    Public Shared Function GetCodigo(ByVal IdFranquiciado As Integer) As String
+
+        GetCodigo = False
+
+        Try
+
+            vSQL$ = "SELECT Codigo FROM Franquiciado WHERE IdFranquiciado ='" & IdFranquiciado & "'"
+
+            Dim sp As String = vSQL
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand(sp, cnn)
+            cmd.CommandType = CommandType.Text
+
+            Dim dad As New MySqlDataAdapter(cmd)
+            Dim dt As New DataTable
+            dad.Fill(dt)
+
+            If dt.Rows.Count > 0 Then
+                GetCodigo = IIf(IsDBNull(dt.Rows(0).Item("Codigo")), "", dt.Rows(0).Item("Codigo"))
+            End If
+
+            cnn.Dispose()
+            cmd.Dispose()
+            dad.Dispose()
+            dt.Dispose()
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
+
 End Class
