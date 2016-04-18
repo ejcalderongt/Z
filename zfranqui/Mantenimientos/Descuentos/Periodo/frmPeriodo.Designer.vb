@@ -40,8 +40,8 @@ Partial Class frmPeriodo
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.GroupControl3 = New DevExpress.XtraEditors.GroupControl()
-        Me.cmbTipoBeneficio = New System.Windows.Forms.ComboBox()
         Me.cmdNuevo = New DevExpress.XtraEditors.SimpleButton()
+        Me.cmbTipoBeneficio = New System.Windows.Forms.ComboBox()
         Label2 = New System.Windows.Forms.Label()
         Label1 = New System.Windows.Forms.Label()
         IdEmpresaLabel = New System.Windows.Forms.Label()
@@ -247,16 +247,6 @@ Partial Class frmPeriodo
         Me.GroupControl3.TabIndex = 2
         Me.GroupControl3.Text = "Filtro"
         '
-        'cmbTipoBeneficio
-        '
-        Me.cmbTipoBeneficio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbTipoBeneficio.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.cmbTipoBeneficio.ForeColor = System.Drawing.Color.Navy
-        Me.cmbTipoBeneficio.Location = New System.Drawing.Point(139, 27)
-        Me.cmbTipoBeneficio.Name = "cmbTipoBeneficio"
-        Me.cmbTipoBeneficio.Size = New System.Drawing.Size(159, 21)
-        Me.cmbTipoBeneficio.TabIndex = 0
-        '
         'cmdNuevo
         '
         Me.cmdNuevo.Appearance.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
@@ -266,6 +256,16 @@ Partial Class frmPeriodo
         Me.cmdNuevo.Size = New System.Drawing.Size(71, 21)
         Me.cmdNuevo.TabIndex = 4
         Me.cmdNuevo.Text = "Nuevo"
+        '
+        'cmbTipoBeneficio
+        '
+        Me.cmbTipoBeneficio.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbTipoBeneficio.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.cmbTipoBeneficio.ForeColor = System.Drawing.Color.Navy
+        Me.cmbTipoBeneficio.Location = New System.Drawing.Point(139, 27)
+        Me.cmbTipoBeneficio.Name = "cmbTipoBeneficio"
+        Me.cmbTipoBeneficio.Size = New System.Drawing.Size(159, 21)
+        Me.cmbTipoBeneficio.TabIndex = 0
         '
         'frmPeriodo
         '

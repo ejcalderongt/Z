@@ -188,7 +188,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsBeTipobeneficio.vb" />
+    <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsBeTipobeneficio_Partial.vb" />
     <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsLnTipobeneficio.vb" />
+    <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsLnTipobeneficio_Partial.vb" />
     <Compile Include="Mantenimientos\Carga_Excel\clsExcel.vb" />
     <Compile Include="Mantenimientos\Carga_Excel\DsExcel.Designer.vb">
       <AutoGen>True</AutoGen>

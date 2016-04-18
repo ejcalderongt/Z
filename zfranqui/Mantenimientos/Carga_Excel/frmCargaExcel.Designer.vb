@@ -23,14 +23,12 @@ Partial Class frmCargaExcel
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim lblBorra As System.Windows.Forms.Label
         Dim SerializableAppearanceObject1 As DevExpress.Utils.SerializableAppearanceObject = New DevExpress.Utils.SerializableAppearanceObject()
         Me.RepositoryItemCheckEdit1 = New DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit()
-        Me.GrpBorraTabla = New System.Windows.Forms.GroupBox()
-        Me.lblTipo = New System.Windows.Forms.Label()
-        Me.chkBorraTabla = New DevExpress.XtraEditors.CheckEdit()
         Me.GrpSeleccion = New DevExpress.XtraEditors.GroupControl()
         Me.Grid = New DevExpress.XtraGrid.GridControl()
+        Me.DataBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DsExcel = New zfranqui.DsExcel()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.colSeleccionar = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colHoja = New DevExpress.XtraGrid.Columns.GridColumn()
@@ -40,68 +38,26 @@ Partial Class frmCargaExcel
         Me.cmdSalir = New System.Windows.Forms.Button()
         Me.cmdCargar = New System.Windows.Forms.Button()
         Me.Label1 = New System.Windows.Forms.Label()
-        Me.DsExcel = New zfranqui.DsExcel()
-        Me.DataBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        lblBorra = New System.Windows.Forms.Label()
         CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GrpBorraTabla.SuspendLayout()
-        CType(Me.chkBorraTabla.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GrpSeleccion, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GrpSeleccion.SuspendLayout()
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DsExcel, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.RepositoryItemTextEdit1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txtArchivo.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DsExcel, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'lblBorra
-        '
-        lblBorra.AutoSize = True
-        lblBorra.Location = New System.Drawing.Point(6, 18)
-        lblBorra.Name = "lblBorra"
-        lblBorra.Size = New System.Drawing.Size(65, 13)
-        lblBorra.TabIndex = 1
-        lblBorra.Text = "Borra Tabla:"
         '
         'RepositoryItemCheckEdit1
         '
         Me.RepositoryItemCheckEdit1.AutoHeight = False
         Me.RepositoryItemCheckEdit1.Name = "RepositoryItemCheckEdit1"
         '
-        'GrpBorraTabla
-        '
-        Me.GrpBorraTabla.Controls.Add(Me.lblTipo)
-        Me.GrpBorraTabla.Controls.Add(lblBorra)
-        Me.GrpBorraTabla.Controls.Add(Me.chkBorraTabla)
-        Me.GrpBorraTabla.Location = New System.Drawing.Point(11, 33)
-        Me.GrpBorraTabla.Name = "GrpBorraTabla"
-        Me.GrpBorraTabla.Size = New System.Drawing.Size(582, 73)
-        Me.GrpBorraTabla.TabIndex = 88
-        Me.GrpBorraTabla.TabStop = False
-        '
-        'lblTipo
-        '
-        Me.lblTipo.AutoSize = True
-        Me.lblTipo.Location = New System.Drawing.Point(6, 45)
-        Me.lblTipo.Name = "lblTipo"
-        Me.lblTipo.Size = New System.Drawing.Size(16, 13)
-        Me.lblTipo.TabIndex = 67
-        Me.lblTipo.Text = "---"
-        '
-        'chkBorraTabla
-        '
-        Me.chkBorraTabla.Location = New System.Drawing.Point(87, 15)
-        Me.chkBorraTabla.Name = "chkBorraTabla"
-        Me.chkBorraTabla.Properties.Caption = ""
-        Me.chkBorraTabla.Size = New System.Drawing.Size(75, 19)
-        Me.chkBorraTabla.TabIndex = 0
-        '
         'GrpSeleccion
         '
         Me.GrpSeleccion.Controls.Add(Me.Grid)
-        Me.GrpSeleccion.Location = New System.Drawing.Point(11, 112)
+        Me.GrpSeleccion.Location = New System.Drawing.Point(11, 33)
         Me.GrpSeleccion.Name = "GrpSeleccion"
         Me.GrpSeleccion.Size = New System.Drawing.Size(584, 136)
         Me.GrpSeleccion.TabIndex = 87
@@ -119,6 +75,16 @@ Partial Class frmCargaExcel
         Me.Grid.Size = New System.Drawing.Size(580, 113)
         Me.Grid.TabIndex = 1
         Me.Grid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
+        '
+        'DataBindingSource
+        '
+        Me.DataBindingSource.DataMember = "Data"
+        Me.DataBindingSource.DataSource = Me.DsExcel
+        '
+        'DsExcel
+        '
+        Me.DsExcel.DataSetName = "DsExcel"
+        Me.DsExcel.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'GridView1
         '
@@ -158,9 +124,9 @@ Partial Class frmCargaExcel
         'prg
         '
         Me.prg.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.prg.Location = New System.Drawing.Point(0, 287)
+        Me.prg.Location = New System.Drawing.Point(0, 207)
         Me.prg.Name = "prg"
-        Me.prg.Size = New System.Drawing.Size(607, 23)
+        Me.prg.Size = New System.Drawing.Size(603, 23)
         Me.prg.TabIndex = 86
         Me.prg.Visible = False
         '
@@ -175,7 +141,7 @@ Partial Class frmCargaExcel
         '
         'cmdSalir
         '
-        Me.cmdSalir.Location = New System.Drawing.Point(500, 254)
+        Me.cmdSalir.Location = New System.Drawing.Point(500, 173)
         Me.cmdSalir.Name = "cmdSalir"
         Me.cmdSalir.Size = New System.Drawing.Size(95, 24)
         Me.cmdSalir.TabIndex = 84
@@ -184,7 +150,7 @@ Partial Class frmCargaExcel
         '
         'cmdCargar
         '
-        Me.cmdCargar.Location = New System.Drawing.Point(399, 254)
+        Me.cmdCargar.Location = New System.Drawing.Point(399, 173)
         Me.cmdCargar.Name = "cmdCargar"
         Me.cmdCargar.Size = New System.Drawing.Size(95, 24)
         Me.cmdCargar.TabIndex = 83
@@ -200,49 +166,34 @@ Partial Class frmCargaExcel
         Me.Label1.TabIndex = 85
         Me.Label1.Text = "Archivo"
         '
-        'DsExcel
-        '
-        Me.DsExcel.DataSetName = "DsExcel"
-        Me.DsExcel.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'DataBindingSource
-        '
-        Me.DataBindingSource.DataMember = "Data"
-        Me.DataBindingSource.DataSource = Me.DsExcel
-        '
         'frmCargaExcel
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(607, 310)
-        Me.Controls.Add(Me.GrpBorraTabla)
+        Me.ClientSize = New System.Drawing.Size(603, 230)
         Me.Controls.Add(Me.GrpSeleccion)
         Me.Controls.Add(Me.prg)
         Me.Controls.Add(Me.txtArchivo)
         Me.Controls.Add(Me.cmdSalir)
         Me.Controls.Add(Me.cmdCargar)
         Me.Controls.Add(Me.Label1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.Name = "frmCargaExcel"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "frmCargaExcel"
         CType(Me.RepositoryItemCheckEdit1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GrpBorraTabla.ResumeLayout(False)
-        Me.GrpBorraTabla.PerformLayout()
-        CType(Me.chkBorraTabla.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GrpSeleccion, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GrpSeleccion.ResumeLayout(False)
         CType(Me.Grid, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DataBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DsExcel, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.RepositoryItemTextEdit1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txtArchivo.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DsExcel, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DataBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents GrpBorraTabla As System.Windows.Forms.GroupBox
-    Friend WithEvents lblTipo As System.Windows.Forms.Label
-    Friend WithEvents chkBorraTabla As DevExpress.XtraEditors.CheckEdit
     Friend WithEvents GrpSeleccion As DevExpress.XtraEditors.GroupControl
     Private WithEvents Grid As DevExpress.XtraGrid.GridControl
     Private WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView

@@ -32,5 +32,4 @@ Partial Public Class clsLnPeriodo_descuento
 
     End Function
 
-
 End Class

@@ -352,7 +352,7 @@ Partial Public Class clsLnBeneficio
 
     End Function
 
-    Public Shared Function Exists(ByVal pIdBeneficio As Integer) As Boolean
+    Public Shared Function Exists(ByVal pIdTipoBeneficio As Integer) As Boolean
 
         Dim lExists As Boolean = False
 
@@ -362,10 +362,10 @@ Partial Public Class clsLnBeneficio
             Using lConnection As New MySqlConnection(BD.CadenaConexion)
 
                 'Acceso a los datos.
-                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM beneficio WHERE IdBeneficio=@IdBeneficio", lConnection)
+                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM tipobeneficio WHERE IdTipoBeneficio=@IdTipoBeneficio", lConnection)
 
                     lCommand.CommandType = CommandType.Text
-                    lCommand.Parameters.AddWithValue("@IdBeneficio", pIdBeneficio)
+                    lCommand.Parameters.AddWithValue("@IdTipoBeneficio", pIdTipoBeneficio)
 
                     lConnection.Open()
                     Dim lReturnValue As Object = lCommand.ExecuteScalar()
