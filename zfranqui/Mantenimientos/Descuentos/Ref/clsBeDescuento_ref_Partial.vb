@@ -51,6 +51,11 @@
         End Set
     End Property
 
+    Public Property CodigoFranquiciado As String = ""
+    Public Property NomFranquiciado As String = ""
+
+    Public Property CodigoCEF As String = ""
+    Public Property NomCEF As String = ""
     Public Sub New()
 
         _MontoTotal = Nothing

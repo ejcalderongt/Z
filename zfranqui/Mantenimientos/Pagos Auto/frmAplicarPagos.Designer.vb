@@ -22,7 +22,8 @@ Partial Class frmAplicarPagos
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.BarManager1 = New DevExpress.XtraBars.BarManager()
+        Me.components = New System.ComponentModel.Container()
+        Me.BarManager1 = New DevExpress.XtraBars.BarManager(Me.components)
         Me.Bar2 = New DevExpress.XtraBars.Bar()
         Me.cmdImprimir = New DevExpress.XtraBars.BarButtonItem()
         Me.cmdActualizar = New DevExpress.XtraBars.BarButtonItem()
@@ -48,6 +49,9 @@ Partial Class frmAplicarPagos
         Me.Label2 = New System.Windows.Forms.Label()
         Me.dtpFechaHastaDescuentos = New System.Windows.Forms.DateTimePicker()
         Me.dtpFechaDesdeDescuentos = New System.Windows.Forms.DateTimePicker()
+        Me.GroupBox3 = New System.Windows.Forms.GroupBox()
+        Me.lblTotalVentas = New System.Windows.Forms.Label()
+        Me.lblTotalDescuentos = New System.Windows.Forms.Label()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.dgridDescuentos, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -56,6 +60,7 @@ Partial Class frmAplicarPagos
         CType(Me.dgridVentas, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.viewVentas, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox2.SuspendLayout()
+        Me.GroupBox3.SuspendLayout()
         Me.SuspendLayout()
         '
         'BarManager1
@@ -76,6 +81,7 @@ Partial Class frmAplicarPagos
         Me.Bar2.DockCol = 0
         Me.Bar2.DockRow = 0
         Me.Bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top
+        Me.Bar2.FloatLocation = New System.Drawing.Point(760, 108)
         Me.Bar2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.cmdImprimir), New DevExpress.XtraBars.LinkPersistInfo(Me.cmdActualizar), New DevExpress.XtraBars.LinkPersistInfo(Me.mnuProcesar)})
         Me.Bar2.OptionsBar.MultiLine = True
         Me.Bar2.OptionsBar.UseWholeRow = True
@@ -167,7 +173,7 @@ Partial Class frmAplicarPagos
         Me.GroupBox1.Controls.Add(Me.lbldesde)
         Me.GroupBox1.Controls.Add(Me.dtpFechaHastaVentas)
         Me.GroupBox1.Controls.Add(Me.dtpFechaDesdeVentas)
-        Me.GroupBox1.Location = New System.Drawing.Point(148, 40)
+        Me.GroupBox1.Location = New System.Drawing.Point(33, 16)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(320, 87)
         Me.GroupBox1.TabIndex = 9
@@ -182,7 +188,7 @@ Partial Class frmAplicarPagos
         Me.dgridDescuentos.MainView = Me.viewDescuentos
         Me.dgridDescuentos.MenuManager = Me.BarManager1
         Me.dgridDescuentos.Name = "dgridDescuentos"
-        Me.dgridDescuentos.Size = New System.Drawing.Size(575, 334)
+        Me.dgridDescuentos.Size = New System.Drawing.Size(575, 349)
         Me.dgridDescuentos.TabIndex = 17
         Me.dgridDescuentos.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.viewDescuentos})
         '
@@ -190,6 +196,7 @@ Partial Class frmAplicarPagos
         '
         Me.viewDescuentos.GridControl = Me.dgridDescuentos
         Me.viewDescuentos.Name = "viewDescuentos"
+        Me.viewDescuentos.OptionsView.ColumnAutoWidth = False
         Me.viewDescuentos.OptionsView.ShowFooter = True
         '
         'prg
@@ -205,9 +212,9 @@ Partial Class frmAplicarPagos
         Me.txt.BackColor = System.Drawing.Color.White
         Me.txt.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txt.ForeColor = System.Drawing.Color.SteelBlue
-        Me.txt.Location = New System.Drawing.Point(0, 534)
+        Me.txt.Location = New System.Drawing.Point(0, 584)
         Me.txt.Name = "txt"
-        Me.txt.Size = New System.Drawing.Size(1052, 95)
+        Me.txt.Size = New System.Drawing.Size(1052, 45)
         Me.txt.TabIndex = 34
         Me.txt.Text = ""
         Me.txt.Visible = False
@@ -217,14 +224,14 @@ Partial Class frmAplicarPagos
         Me.TableLayoutPanel1.ColumnCount = 2
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 44.8!))
         Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 55.2!))
-        Me.TableLayoutPanel1.Controls.Add(Me.dgridVentas, 0, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.dgridDescuentos, 1, 0)
+        Me.TableLayoutPanel1.Controls.Add(Me.dgridVentas, 0, 0)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 194)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 229)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1052, 340)
+        Me.TableLayoutPanel1.Size = New System.Drawing.Size(1052, 355)
         Me.TableLayoutPanel1.TabIndex = 39
         '
         'dgridVentas
@@ -235,7 +242,7 @@ Partial Class frmAplicarPagos
         Me.dgridVentas.MainView = Me.viewVentas
         Me.dgridVentas.MenuManager = Me.BarManager1
         Me.dgridVentas.Name = "dgridVentas"
-        Me.dgridVentas.Size = New System.Drawing.Size(465, 334)
+        Me.dgridVentas.Size = New System.Drawing.Size(465, 349)
         Me.dgridVentas.TabIndex = 18
         Me.dgridVentas.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.viewVentas})
         '
@@ -243,6 +250,7 @@ Partial Class frmAplicarPagos
         '
         Me.viewVentas.GridControl = Me.dgridVentas
         Me.viewVentas.Name = "viewVentas"
+        Me.viewVentas.OptionsView.ColumnAutoWidth = False
         Me.viewVentas.OptionsView.ShowFooter = True
         '
         'GroupBox2
@@ -251,7 +259,7 @@ Partial Class frmAplicarPagos
         Me.GroupBox2.Controls.Add(Me.Label2)
         Me.GroupBox2.Controls.Add(Me.dtpFechaHastaDescuentos)
         Me.GroupBox2.Controls.Add(Me.dtpFechaDesdeDescuentos)
-        Me.GroupBox2.Location = New System.Drawing.Point(542, 40)
+        Me.GroupBox2.Location = New System.Drawing.Point(631, 16)
         Me.GroupBox2.Name = "GroupBox2"
         Me.GroupBox2.Size = New System.Drawing.Size(320, 87)
         Me.GroupBox2.TabIndex = 40
@@ -292,23 +300,55 @@ Partial Class frmAplicarPagos
         Me.dtpFechaDesdeDescuentos.Size = New System.Drawing.Size(106, 20)
         Me.dtpFechaDesdeDescuentos.TabIndex = 5
         '
+        'GroupBox3
+        '
+        Me.GroupBox3.Controls.Add(Me.GroupBox2)
+        Me.GroupBox3.Controls.Add(Me.GroupBox1)
+        Me.GroupBox3.Dock = System.Windows.Forms.DockStyle.Top
+        Me.GroupBox3.Location = New System.Drawing.Point(0, 22)
+        Me.GroupBox3.Name = "GroupBox3"
+        Me.GroupBox3.Size = New System.Drawing.Size(1052, 119)
+        Me.GroupBox3.TabIndex = 45
+        Me.GroupBox3.TabStop = False
+        '
+        'lblTotalVentas
+        '
+        Me.lblTotalVentas.AutoSize = True
+        Me.lblTotalVentas.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalVentas.Location = New System.Drawing.Point(97, 187)
+        Me.lblTotalVentas.Name = "lblTotalVentas"
+        Me.lblTotalVentas.Size = New System.Drawing.Size(172, 25)
+        Me.lblTotalVentas.TabIndex = 46
+        Me.lblTotalVentas.Text = "Total Ventas: 0"
+        '
+        'lblTotalDescuentos
+        '
+        Me.lblTotalDescuentos.AutoSize = True
+        Me.lblTotalDescuentos.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTotalDescuentos.Location = New System.Drawing.Point(651, 187)
+        Me.lblTotalDescuentos.Name = "lblTotalDescuentos"
+        Me.lblTotalDescuentos.Size = New System.Drawing.Size(223, 25)
+        Me.lblTotalDescuentos.TabIndex = 47
+        Me.lblTotalDescuentos.Text = "Total Descuentos: 0"
+        '
         'frmAplicarPagos
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1052, 652)
-        Me.Controls.Add(Me.GroupBox2)
+        Me.Controls.Add(Me.lblTotalDescuentos)
+        Me.Controls.Add(Me.lblTotalVentas)
+        Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.txt)
         Me.Controls.Add(Me.prg)
-        Me.Controls.Add(Me.GroupBox1)
         Me.Controls.Add(Me.barDockControlLeft)
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
         Me.Name = "frmAplicarPagos"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Pagos por franquiciado"
+        Me.Text = "Aplicar pagos"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
@@ -320,7 +360,9 @@ Partial Class frmAplicarPagos
         CType(Me.viewVentas, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
+        Me.GroupBox3.ResumeLayout(False)
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
     Friend WithEvents BarManager1 As DevExpress.XtraBars.BarManager
@@ -349,4 +391,7 @@ Partial Class frmAplicarPagos
     Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
     Friend WithEvents dgridVentas As DevExpress.XtraGrid.GridControl
     Friend WithEvents viewVentas As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents GroupBox3 As System.Windows.Forms.GroupBox
+    Friend WithEvents lblTotalDescuentos As System.Windows.Forms.Label
+    Friend WithEvents lblTotalVentas As System.Windows.Forms.Label
 End Class

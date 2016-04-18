@@ -1,8 +1,9 @@
 ﻿Imports MySql.Data.MySqlClient
+Imports MySql.Data
 
 Partial Public Class clsLnCef
 
-    Public Function Get_IdCEF(ByVal Codigo As String) As Integer
+    Public Shared Function Get_IdCEF(ByVal Codigo As String) As Integer
 
         Get_IdCEF = 0
 
@@ -34,7 +35,7 @@ Partial Public Class clsLnCef
 
     End Function
 
-    Public Sub Cargar(ByRef oBeCef As clsBeCef, ByRef dr As DataRow, ByVal Parcial As Boolean)
+    Public Shared Sub Cargar(ByRef oBeCef As clsBeCef, ByRef dr As DataRow, ByVal Parcial As Boolean)
 
         Try
 
@@ -60,35 +61,35 @@ Partial Public Class clsLnCef
 
     End Sub
 
-    Public Shared Function Exists(ByVal pIdCef As Integer) As Boolean
+    Public Shared Function GetCodigoCEF(ByVal IdCEF As Integer) As String
 
-        Dim lExists As Boolean = False
+        GetCodigoCEF = ""
 
         Try
 
-            'Validacion y estandarizacion de los datos
-            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+            Dim sp As String = ""
 
-                'Acceso a los datos.
-                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM franquiciadocef WHERE IdCef=@IdCef", lConnection)
+            sp = "SELECT * FROM Cef" & _
+            " Where(IdCef = @IdCef)"
 
-                    lCommand.CommandType = CommandType.Text
-                    lCommand.Parameters.AddWithValue("@IdCef", pIdCef)
+            If sp = "" Then Exit Function
 
-                    lConnection.Open()
-                    Dim lReturnValue As Object = lCommand.ExecuteScalar()
-                    lConnection.Close()
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand(sp, cnn)
+            cmd.CommandType = CommandType.Text
 
-                    If lReturnValue IsNot DBNull.Value AndAlso lReturnValue IsNot Nothing Then
-                        lExists = CInt(lReturnValue) > 0
-                    End If
+            Dim dad As New MySqlDataAdapter(cmd)
 
-                End Using
+            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDCEF", IdCEF))
 
-            End Using
+            Dim dt As New DataTable
+            dad.Fill(dt)
 
-            Return lExists
+            If dt.Rows.Count = 1 Then
+                GetCodigoCEF = IIf(IsDBNull(dt.Rows(0).Item("Codigo")), "", dt.Rows(0).Item("Codigo"))
+            End If
 
+            Return True
         Catch ex As Exception
             Throw ex
         End Try

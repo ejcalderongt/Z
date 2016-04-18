@@ -58,6 +58,7 @@
 
             prg.Visible = True
             prg.Maximum = DT.Rows.Count
+            txt.Text = ""
 
             Dim IdDescuentoEnc As Integer = 0
             Dim IdDescuentoDet As Integer = 0
@@ -148,35 +149,61 @@
 
                 End If
 
-                If lref.Count > 0 Then
+                'If lref.Count > 0 Then
 
-                    txt.AppendText("Iniciando inserción transaccional..." & vbNewLine)
+                '    txt.AppendText("Iniciando inserción transaccional..." & vbNewLine)
 
-                    lConnection.Open()
+                '    lConnection.Open()
 
-                    lTransaction = lConnection.BeginTransaction()
+                '    lTransaction = lConnection.BeginTransaction()
 
-                    Dim ObjLNRef As New clsLnDescuento_ref
+                '    Dim ObjLNRef As New clsLnDescuento_ref
 
-                    For Each C As clsBeDescuento_ref In lref
-                        ObjLNRef.Insertar(C, lConnection, lTransaction)
-                        txt.AppendText("Insertando CuotaREF: " & C.NoCuota & " DescuentoEnc: " & C.IdDescuentoEnc & vbNewLine)
-                    Next
+                '    For Each C As clsBeDescuento_ref In lref
+                '        ObjLNRef.Insertar(C, lConnection, lTransaction)
+                '        txt.AppendText("Insertando CuotaREF: " & C.NoCuota & " DescuentoEnc: " & C.IdDescuentoEnc & vbNewLine)
+                '    Next
 
-                    txt.AppendText("Haciendo commit de las transacciones..." & vbNewLine)
+                '    txt.AppendText("Haciendo commit de las transacciones..." & vbNewLine)
 
-                    lTransaction.Commit()
-                    lConnection.Close()
+                '    lTransaction.Commit()
+                '    lConnection.Close()
 
-                    txt.AppendText("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref")
+                '    txt.AppendText("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref" & vbNewLine)
 
-                Else
-                    txt.AppendText("No hay cuotas nuevas que generar para descuento: " & IdDescuentoEnc)
-                End If
+                'Else
+                '    txt.AppendText("No hay cuotas nuevas que generar para descuento: " & IdDescuentoEnc)
+                'End If
                 
                 
 
             Next
+
+            If lref.Count > 0 Then
+
+                txt.AppendText("Iniciando inserción transaccional..." & vbNewLine)
+
+                lConnection.Open()
+
+                lTransaction = lConnection.BeginTransaction()
+
+                Dim ObjLNRef As New clsLnDescuento_ref
+
+                For Each C As clsBeDescuento_ref In lref
+                    ObjLNRef.Insertar(C, lConnection, lTransaction)
+                    txt.AppendText("Insertando CuotaREF: " & C.NoCuota & " DescuentoEnc: " & C.IdDescuentoEnc & vbNewLine)
+                Next
+
+                txt.AppendText("Haciendo commit de las transacciones..." & vbNewLine)
+
+                lTransaction.Commit()
+                lConnection.Close()
+
+                txt.AppendText("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref" & vbNewLine)
+
+            Else
+                txt.AppendText("No hay cuotas nuevas que generar para descuento: " & IdDescuentoEnc)
+            End If
 
 
         Catch ex As Exception

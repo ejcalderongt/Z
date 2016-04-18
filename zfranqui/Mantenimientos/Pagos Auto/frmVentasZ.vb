@@ -1,6 +1,8 @@
 ﻿Imports MySql.Data.MySqlClient
 
-Public Class frmPagosAutoZ
+Public Class frmVentasZ
+
+    Private EstaIniciando As Boolean = False
 
     Enum TipoReporte As Integer
 
@@ -16,8 +18,12 @@ Public Class frmPagosAutoZ
 
         MyBase.New()
 
+        EstaIniciando = True
+
         'This call is required by the Windows Form Designer.
         InitializeComponent()
+
+        EstaIniciando = False
 
     End Sub
 
@@ -103,27 +109,27 @@ Public Class frmPagosAutoZ
 
             vSQL = " SELECT " & _
                     "	e.crmrdi, " & _
-                    "	c.`despes`, " & _
+                    "	c.despes, " & _
                     "	SUM(a.cant) cilindros, " & _
-                    "	d.`cantidad` 'retencion x cil', " & _
-                    "	SUM(a.cant) * d.`cantidad` Total " & _
+                    "	d.cantidad 'retencion x cil', " & _
+                    "	SUM(a.cant) * d.cantidad Total " & _
                     " FROM " & _
                     "	facdet a " & _
-                    " INNER JOIN facenc b ON a.`codpla` = b.`codpla` " & _
-                    " AND a.`serie` = b.`serie` " & _
-                    " AND a.`numero` = b.`numero` " & _
-                    " INNER JOIN pesmae c ON a.`codpes` = c.`codpes` " & _
-                    " INNER JOIN retencionmae d ON a.`codpes` = d.`codpes` " & _
+                    " INNER JOIN facenc b ON a.codpla = b.codpla " & _
+                    " AND a.serie = b.serie " & _
+                    " AND a.numero = b.numero " & _
+                    " INNER JOIN pesmae c ON a.codpes = c.codpes " & _
+                    " INNER JOIN retencionmae d ON a.codpes = d.codpes " & _
                     " INNER JOIN rdimae e ON a.codcli = e.codrdi " & _
-                    " WHERE  b.`status`='ACTIVA' " & _
-                    " AND b.`fecha`>=" & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
-                    " AND b.`fecha`<=" & FormatoFechas.fFecha(dtpFechaHasta.Value)
+                    " WHERE  b.status='ACTIVA' " & _
+                    " AND b.fecha>=" & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
+                    " AND b.fecha<=" & FormatoFechas.fFecha(dtpFechaHasta.Value)
 
             If txtFiltro.Text.Trim <> "" Then
                 vSQL += "AND (e.crmrdi LIKE '%" & txtFiltro.Text.Trim & "%')"
             End If
 
-            vSQL += " GROUP BY e.`crmrdi`,a.`codpes` " & _
+            vSQL += " GROUP BY e.crmrdi,a.codpes " & _
             " ORDER BY crmrdi; "
 
             Dim DT As New DataTable
@@ -195,19 +201,19 @@ Public Class frmPagosAutoZ
 
 
     Private Sub dtpFechaDesde_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaDesde.ValueChanged
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub dtpFechaHasta_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaHasta.ValueChanged
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub chkActivo_CheckedChanged(sender As Object, e As EventArgs)
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
-        Llenar_Grid()
+        If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub mnuProcesar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuProcesar.ItemClick
@@ -215,14 +221,192 @@ Public Class frmPagosAutoZ
     End Sub
 
 
+    'Public Function SincronizarVentas() As Boolean
+
+    '    SincronizarVentas = False
+
+    '    Dim DT As New DataTable
+    '    Dim v As New clsBeVentasdet
+    '    Dim dv As New clsLnVentasdet
+    '    Dim lv As New List(Of clsBeVentasdet)
+    '    Dim ListaCEFSinFranquiciados As New List(Of String)
+
+    '    txt.Visible = True
+    '    txt.Text = ""
+
+    '    Try
+
+    '        vSQL = " SELECT " & _
+    '            " 	e.crmrdi as IdCEF, " & _
+    '            " 	c.despes as despes, " & _
+    '            " 	SUM(a.cant) as cilindros, " & _
+    '            " 	d.cantidad as 'RetencionCliente', " & _
+    '            " 	SUM(a.cant) * d.cantidad as Monto, " & _
+    '            "	b.fecha as Fecha " & _
+    '            " FROM " & _
+    '            " 	facdet a " & _
+    '            " INNER JOIN facenc b ON a.codpla = b.codpla " & _
+    '            " AND a.serie = b.serie " & _
+    '            " AND a.numero = b.numero " & _
+    '            " INNER JOIN pesmae c ON a.codpes = c.codpes " & _
+    '            " INNER JOIN retencionmae d ON a.codpes = d.codpes " & _
+    '            " INNER JOIN rdimae e ON a.codcli = e.codrdi " & _
+    '            " WHERE  b.status='ACTIVA' " & _
+    '            " AND b.fecha>=" & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
+    '            " AND b.fecha<=" & FormatoFechas.fFecha(dtpFechaHasta.Value)
+
+    '        If txtFiltro.Text.Trim <> "" Then
+    '            vSQL += "AND (e.crmrdi LIKE '%" & txtFiltro.Text.Trim & "%')"
+    '        End If
+
+    '        vSQL += " GROUP BY " & _
+    '            " 	e.crmrdi, " & _
+    '            " 	a.codpes, " & _
+    '            " 	b.fecha " & _
+    '            " ORDER BY " & _
+    '            " b.fecha, " & _
+    '            " a.codcli; "
+
+    '        BD.OpenDT(DT, vSQL, BD.CadenaConexionZVentas)
+
+    '        Dim vPkVentaDET As Integer = dv.MaxID() + 1
+
+    '        Dim CodigoCEF As String = ""
+    '        Dim IdCEF As Integer = 0
+    '        Dim dCEF As New clsLnCef
+
+    '        Dim dfran As New clsLnFranquiciadocef
+    '        Dim IdFranqui As Integer = 0
+
+    '        prg.Maximum = DT.Rows.Count
+
+    '        txt.AppendText("Procesando " & DT.Rows.Count & " Detalles de ventas..." & vbNewLine)
+
+    '        Application.DoEvents()
+
+    '        For i As Integer = 0 To DT.Rows.Count - 1
+
+    '            v = New clsBeVentasdet
+    '            v.Cilindros = IIf(IsDBNull(DT.Rows(i).Item("cilindros")), 0, DT.Rows(i).Item("cilindros"))
+    '            v.Despes = IIf(IsDBNull(DT.Rows(i).Item("despes")), 0, DT.Rows(i).Item("despes"))
+    '            v.Fec_agr = Now
+    '            v.Fecha = IIf(IsDBNull(DT.Rows(i).Item("Fecha")), 0, DT.Rows(i).Item("Fecha"))
+
+    '            CodigoCEF = IIf(IsDBNull(DT.Rows(i).Item("IdCEF")), 0, DT.Rows(i).Item("IdCEF"))
+
+    '            'If CodigoCEF <> "AT39" Then MsgBox("ESPERA")
+
+    '            If Not ListaCEFSinFranquiciados.Contains(CodigoCEF) Then
+
+    '                IdCEF = dCEF.Get_IdCEF(CodigoCEF)
+
+    '                txt.AppendText("Obteniendo IdCEF: " & IdCEF & vbNewLine)
+
+    '                IdFranqui = dfran.GetIdFranquiciado(IdCEF)
+    '                txt.AppendText("Obteniendo IdFranquiciado: " & IdFranqui & vbNewLine)
+
+    '                If IdFranqui <= 0 Then
+
+    '                    txt.AppendText("No se pudo obtener el IdFranquiciado para el CEF: " & CodigoCEF & vbNewLine)
+    '                    ListaCEFSinFranquiciados.Add(CodigoCEF)
+
+    '                Else
+
+    '                    v.IdFranquiciado = IdFranqui
+    '                    v.IdPagoDet = 0
+    '                    v.IdPagoEnc = 0
+    '                    v.Monto = IIf(IsDBNull(DT.Rows(i).Item("Monto")), 0, DT.Rows(i).Item("Monto"))
+    '                    v.Pagado = 0
+    '                    v.Pagado = 0
+    '                    v.RetencionCliente = IIf(IsDBNull(DT.Rows(i).Item("RetencionCliente")), 0, DT.Rows(i).Item("RetencionCliente"))
+    '                    v.IdVenta = vPkVentaDET
+    '                    vPkVentaDET += 1
+
+    '                    If Not dv.ExisteRegistro(v) Then
+    '                        lv.Add(v)
+    '                        txt.AppendText("Adicionando a la lista de transacciones CEF: " & CodigoCEF & " Fecha: " & v.Fecha & " Monto: " & v.Monto & vbNewLine)
+    '                    Else
+    '                        txt.AppendText("Omitiendo CEF: " & CodigoCEF & " Fecha: " & v.Fecha & " Monto: " & v.Monto & " ***(Ya existe)*** " & vbNewLine)
+    '                    End If
+
+    '                End If
+
+    '            Else
+
+    '                txt.AppendText("Omitiendo registros de CEF: " & CodigoCEF & " (Sin Franquiciado) " & i & vbNewLine)
+
+    '            End If
+
+    '            prg.Value = i
+
+    '            Application.DoEvents()
+
+    '        Next
+
+    '        prg.Value = 0
+
+    '        If lv.Count > 0 Then
+
+    '            txt.AppendText("Iniciando inserción transaccional..." & vbNewLine)
+
+    '            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+    '            Dim ltrans As MySqlTransaction = Nothing
+
+    '            Try
+
+    '                cnn.Open()
+
+    '                ltrans = cnn.BeginTransaction
+
+    '                prg.Maximum = lv.Count
+
+    '                Dim Contador As Integer = 0
+
+    '                For Each ven As clsBeVentasdet In lv
+
+    '                    txt.AppendText("Procesando VentaId: " & ven.IdVenta & vbNewLine)
+
+    '                    dv.Insertar(ven, cnn, ltrans)
+    '                    prg.Value = Contador
+    '                    Contador += 1
+    '                    Application.DoEvents()
+
+    '                Next
+
+    '                ltrans.Commit()
+
+    '                MsgBox("Se procesaro correctamente " & lv.Count & " Registros de ventas", MsgBoxStyle.Information, Me.Text)
+
+    '            Catch ex As Exception
+    '                ltrans.Rollback()
+    '                MsgBox("Error al insertar el detalle de ventas: " & ex.Message)
+    '            Finally
+    '                If Not cnn Is Nothing AndAlso cnn.State = ConnectionState.Open Then cnn.Close()
+    '                ltrans.Dispose()
+    '            End Try
+
+    '        Else
+    '            MsgBox("No se encontraron registros para insertar", MsgBoxStyle.Exclamation, Me.Text)
+    '        End If
+
+
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message)
+    '    Finally
+    '        prg.Visible = False
+    '        'txt.Visible = False
+    '    End Try
+
+    'End Function
+
     Public Function SincronizarVentas() As Boolean
 
         SincronizarVentas = False
 
         Dim DT As New DataTable
-        Dim v As New clsBeVentasdet
-        Dim dv As New clsLnVentasdet
-        Dim lv As New List(Of clsBeVentasdet)
+        Dim v As New clsBeVentasenc
+        Dim dv As New clsLnVentasenc
+        Dim lv As New List(Of clsBeVentasenc)
         Dim ListaCEFSinFranquiciados As New List(Of String)
 
         txt.Visible = True
@@ -231,12 +415,10 @@ Public Class frmPagosAutoZ
         Try
 
             vSQL = " SELECT " & _
-                " 	e.crmrdi as IdCEF, " & _
-                " 	c.despes as despes, " & _
-                " 	SUM(a.cant) as cilindros, " & _
-                " 	d.cantidad as 'RetencionCliente', " & _
-                " 	SUM(a.cant) * d.cantidad as Monto, " & _
-                "	b.fecha as Fecha " & _
+                " 	min(b.fecha) as desde, " & _
+                "   max(b.fecha) as hasta, " & _
+                "   e.crmrdi as IdCEF, " & _
+                " 	SUM(a.cant) * d.cantidad as Monto " & _
                 " FROM " & _
                 " 	facdet a " & _
                 " INNER JOIN facenc b ON a.codpla = b.codpla " & _
@@ -254,16 +436,14 @@ Public Class frmPagosAutoZ
             End If
 
             vSQL += " GROUP BY " & _
-                " 	e.crmrdi, " & _
-                " 	a.codpes, " & _
-                " 	b.fecha " & _
+                " 	e.crmrdi " & _
                 " ORDER BY " & _
                 " b.fecha, " & _
                 " a.codcli; "
 
             BD.OpenDT(DT, vSQL, BD.CadenaConexionZVentas)
 
-            Dim vPkVentaDET As Integer = dv.MaxID() + 1
+            Dim vPkVentaDET As Integer = clsLnVentasenc.MaxID() + 1
 
             Dim CodigoCEF As String = ""
             Dim IdCEF As Integer = 0
@@ -280,11 +460,11 @@ Public Class frmPagosAutoZ
 
             For i As Integer = 0 To DT.Rows.Count - 1
 
-                v = New clsBeVentasdet
-                v.Cilindros = IIf(IsDBNull(DT.Rows(i).Item("cilindros")), 0, DT.Rows(i).Item("cilindros"))
-                v.Despes = IIf(IsDBNull(DT.Rows(i).Item("despes")), 0, DT.Rows(i).Item("despes"))
+                v = New clsBeVentasenc
+
                 v.Fec_agr = Now
-                v.Fecha = IIf(IsDBNull(DT.Rows(i).Item("Fecha")), 0, DT.Rows(i).Item("Fecha"))
+                v.FechaDesde = IIf(IsDBNull(DT.Rows(i).Item("desde")), Now.Date, DT.Rows(i).Item("desde"))
+                v.FechaHasta = IIf(IsDBNull(DT.Rows(i).Item("hasta")), Now.Date, DT.Rows(i).Item("hasta"))
 
                 CodigoCEF = IIf(IsDBNull(DT.Rows(i).Item("IdCEF")), 0, DT.Rows(i).Item("IdCEF"))
 
@@ -292,7 +472,7 @@ Public Class frmPagosAutoZ
 
                 If Not ListaCEFSinFranquiciados.Contains(CodigoCEF) Then
 
-                    IdCEF = dCEF.Get_IdCEF(CodigoCEF)
+                    IdCEF = clsLnCef.Get_IdCEF(CodigoCEF)
 
                     txt.AppendText("Obteniendo IdCEF: " & IdCEF & vbNewLine)
 
@@ -307,20 +487,18 @@ Public Class frmPagosAutoZ
                     Else
 
                         v.IdFranquiciado = IdFranqui
-                        v.IdPagoDet = 0
-                        v.IdPagoEnc = 0
                         v.Monto = IIf(IsDBNull(DT.Rows(i).Item("Monto")), 0, DT.Rows(i).Item("Monto"))
                         v.Pagado = 0
-                        v.Pagado = 0
-                        v.RetencionCliente = IIf(IsDBNull(DT.Rows(i).Item("RetencionCliente")), 0, DT.Rows(i).Item("RetencionCliente"))
-                        v.IdVenta = vPkVentaDET
+                        v.IdPeriodoVenta = vPkVentaDET
+                        v.IdCEF = IdCEF
+
                         vPkVentaDET += 1
 
                         If Not dv.ExisteRegistro(v) Then
                             lv.Add(v)
-                            txt.AppendText("Adicionando a la lista de transacciones CEF: " & CodigoCEF & " Fecha: " & v.Fecha & " Monto: " & v.Monto & vbNewLine)
+                            txt.AppendText("Adicionando a la lista de transacciones CEF: " & CodigoCEF & " Desde: " & v.FechaDesde & " Monto: " & v.Monto & vbNewLine)
                         Else
-                            txt.AppendText("Omitiendo CEF: " & CodigoCEF & " Fecha: " & v.Fecha & " Monto: " & v.Monto & " ***(Ya existe)*** " & vbNewLine)
+                            txt.AppendText("Omitiendo CEF: " & CodigoCEF & " Fecha: " & v.FechaDesde & " Monto: " & v.Monto & " ***(Ya existe)*** " & vbNewLine)
                         End If
 
                     End If
@@ -356,9 +534,9 @@ Public Class frmPagosAutoZ
 
                     Dim Contador As Integer = 0
 
-                    For Each ven As clsBeVentasdet In lv
+                    For Each ven As clsBeVentasenc In lv
 
-                        txt.AppendText("Procesando VentaId: " & ven.IdVenta & vbNewLine)
+                        txt.AppendText("Procesando VentaId: " & ven.IdPeriodoVenta & vbNewLine)
 
                         dv.Insertar(ven, cnn, ltrans)
                         prg.Value = Contador
@@ -381,8 +559,8 @@ Public Class frmPagosAutoZ
 
             Else
                 MsgBox("No se encontraron registros para insertar", MsgBoxStyle.Exclamation, Me.Text)
-            End If              
-          
+            End If
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
