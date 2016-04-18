@@ -61,35 +61,35 @@ Partial Public Class clsLnCef
 
     End Sub
 
-    Public Shared Function GetCodigoCEF(ByVal IdCEF As Integer) As String
+    Public Shared Function Exists(ByVal pIdCef As Integer) As Boolean
 
-        GetCodigoCEF = ""
+        Dim lExists As Boolean = False
 
         Try
 
-            Dim sp As String = ""
+            'Validacion y estandarizacion de los datos
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
 
-            sp = "SELECT * FROM Cef" & _
-            " Where(IdCef = @IdCef)"
+                'Acceso a los datos.
+                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM franquiciadocef WHERE IdCef=@IdCef", lConnection)
 
-            If sp = "" Then Exit Function
+                    lCommand.CommandType = CommandType.Text
+                    lCommand.Parameters.AddWithValue("@IdCef", pIdCef)
 
-            Dim cnn As New MySqlConnection(BD.CadenaConexion)
-            Dim cmd As New MySqlCommand(sp, cnn)
-            cmd.CommandType = CommandType.Text
+                    lConnection.Open()
+                    Dim lReturnValue As Object = lCommand.ExecuteScalar()
+                    lConnection.Close()
 
-            Dim dad As New MySqlDataAdapter(cmd)
+                    If lReturnValue IsNot DBNull.Value AndAlso lReturnValue IsNot Nothing Then
+                        lExists = CInt(lReturnValue) > 0
+                    End If
 
-            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDCEF", IdCEF))
+                End Using
 
-            Dim dt As New DataTable
-            dad.Fill(dt)
+            End Using
 
-            If dt.Rows.Count = 1 Then
-                GetCodigoCEF = IIf(IsDBNull(dt.Rows(0).Item("Codigo")), "", dt.Rows(0).Item("Codigo"))
-            End If
+            Return lExists
 
-            Return True
         Catch ex As Exception
             Throw ex
         End Try
