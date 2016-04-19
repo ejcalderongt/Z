@@ -52,7 +52,7 @@
 
                     IdUsuarioSpinEdit.Text = Usuario.IdUsuario
 
-                    cmbRol.SelectedItem = Usuario.IdRol
+                    cmbRol.SelectedValue = Usuario.IdRol
 
                     Ultimo_loginDateEdit.Text = Usuario.Ultimo_login.ToShortDateString
                     chkActivo.Checked = CBool(IIf(Usuario.Activo = 1, True, False))

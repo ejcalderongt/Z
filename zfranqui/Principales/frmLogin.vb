@@ -259,8 +259,10 @@ Public Class frmLogin
 
                     Me.Hide()
 
+                    Dim drol As New clsLnRol
+
                     Dim Menu As New frmMenu
-                    Menu.lblUser.Caption = Usuario.Nombre
+                    Menu.lblUser.Caption = Usuario.Nombre & " - " & drol.GetNombre(Usuario.IdRol)
                     Menu.ShowDialog()
 
                     Usuario = Nothing : lUsuario = Nothing

@@ -229,9 +229,13 @@ Public Class clsLnRol
 
     End Function
 
-    Public Function Obtener(ByRef oBeRol As clsBeRol) As Boolean
+    Public Function GetNombre(ByVal IdRol As Integer) As String
+
+        GetNombre = ""
+
         Try
-            Dim sp As String = "SELECT * FROM Rol" & _
+
+            Dim sp As String = "SELECT Nombre FROM Rol" & _
             " Where(IdRol = @IdRol)"
 
             Dim cnn As New MySqlConnection(BD.CadenaConexion)
@@ -240,21 +244,19 @@ Public Class clsLnRol
 
 
             Dim dad As New MySqlDataAdapter(cmd)
-            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDROL", oBeRol.IdRol))
+            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDROL", IdRol))
 
             Dim dt As New DataTable
             dad.Fill(dt)
 
             If dt.Rows.Count = 1 Then
-                Cargar(oBeRol, dt.Rows(0))
-            Else
-                Throw New Exception("No se pudo obtener el registro")
+                GetNombre = IIf(IsDBNull(dt.Rows(0).Item("Nombre")), "", dt.Rows(0).Item("Nombre"))
             End If
 
-            Return True
         Catch ex As Exception
             Throw ex
         End Try
+
     End Function
 
     Public Function Generar_Nuevo_IdRol() As Integer
@@ -287,9 +289,36 @@ Public Class clsLnRol
             MsgBox(ex.Message)
         End Try
 
-
     End Function
 
+
+    Public Function Obtener(ByRef oBeRol As clsBeRol) As Boolean
+        Try
+            Dim sp As String = "SELECT * FROM Rol" & _
+            " Where(IdRol = @IdRol)"
+
+            Dim cnn As New MySqlConnection(BD.CadenaConexion)
+            Dim cmd As New MySqlCommand(sp, cnn)
+            cmd.CommandType = CommandType.Text
+
+
+            Dim dad As New MySqlDataAdapter(cmd)
+            dad.SelectCommand.Parameters.Add(New MySqlClient.MySqlParameter("@IDROL", oBeRol.IdRol))
+
+            Dim dt As New DataTable
+            dad.Fill(dt)
+
+            If dt.Rows.Count = 1 Then
+                Cargar(oBeRol, dt.Rows(0))
+            Else
+                Throw New Exception("No se pudo obtener el registro")
+            End If
+
+            Return True
+        Catch ex As Exception
+            Throw ex
+        End Try
+    End Function
 
     Public Sub CargaMenuSistema(ByRef Lv As ListView)
 

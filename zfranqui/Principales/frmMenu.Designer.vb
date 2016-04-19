@@ -120,7 +120,7 @@ Partial Class frmMenu
         'lblVersion
         '
         Me.lblVersion.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right
-        Me.lblVersion.Caption = "14042016 - Entrega V"
+        Me.lblVersion.Caption = "19042016- Entrega VI"
         Me.lblVersion.Glyph = CType(resources.GetObject("lblVersion.Glyph"), System.Drawing.Image)
         Me.lblVersion.Id = 43
         Me.lblVersion.Name = "lblVersion"
