@@ -12,7 +12,7 @@ Public Class frmMenu
 
             GetIPAddress()
 
-            'DesactivarMenu()
+            DesactivarMenu()
 
             HabilitarMenuRol()
 
@@ -97,6 +97,7 @@ Public Class frmMenu
                                 mSubLink.Item.Enabled = False
 
                                 Debug.Print(currentPage.Text & " - " & currentGroup.Text & " - " & mSubLink.Item.Caption & " - " & mSubLink.Item.Name & " - " & mSubLink.Item.GetType.FullName)
+
                             Next
 
                         End If
@@ -127,6 +128,8 @@ Public Class frmMenu
 
         Try
 
+            rbMain.Enabled = True
+
             ' Habilita las opciones asignadas al rol
             vSQL$ = "select  a.nombremenu as titulo, b.visible, a.nivel from menu a, menurol b " & _
             " where a.idmenu = b.idmenu " & _
@@ -135,13 +138,21 @@ Public Class frmMenu
 
             ' Nivel 1
             For I = 0 To DT.Rows.Count - 1
+
                 vMenu$ = DT.Rows(I).Item("titulo").ToString
                 vHabilitar = (DT.Rows(I).Item("visible").ToString = "1")
+
                 For Each currentPage As RibbonPage In Me.rbMain.Pages
+
+                    If currentPage.Text = "Descuentos por franquiciados (Resumen)" Then MsgBox("Espera")
+
                     If currentPage.Text = vMenu$ Then
                         currentPage.Visible = vHabilitar
+                        currentPage.Ribbon.Enabled = vHabilitar
                     End If
-                Next                
+
+                Next
+
             Next I
 
             ' Nivel 2
@@ -151,12 +162,22 @@ Public Class frmMenu
                 vHabilitar = (DT.Rows(I).Item("visible").ToString = "1")
 
                 For Each currentPage As RibbonPage In Me.rbMain.Pages
+
                     For Each currentGroup As RibbonPageGroup In currentPage.Groups
-                        If currentGroup.Text = vMenu$ Then
+
+                        If currentPage.Text = "Descuentos por franquiciados (Resumen)" Then MsgBox("Espera")
+
+                        If currentPage.Text = vMenu$ Then
+
+                            'currentPage.i()
                             currentGroup.Visible = vHabilitar
+                            currentGroup.Enabled = True
+
                         End If
-                    Next                    
-                Next
+
+                    Next currentGroup
+
+                Next currentPage
 
             Next I
 
@@ -166,14 +187,28 @@ Public Class frmMenu
                 vMenu$ = DT.Rows(I).Item("titulo").ToString
                 vHabilitar = (DT.Rows(I).Item("visible").ToString = "1")
 
-                 For Each currentPage As RibbonPage In Me.rbMain.Pages
+                For Each currentPage As RibbonPage In Me.rbMain.Pages
+
                     For Each currentGroup As RibbonPageGroup In currentPage.Groups
+
                         For Each currenLink As BarItemLink In currentGroup.ItemLinks
+
+                            If currenLink.Item.Caption = "Descuentos por franquiciados (Resumen)" Then MsgBox("Espera")
+
                             If currenLink.Item.Caption = vMenu$ Then
+
+                                'currentPage.Visible = True
+                                'currentPage.Ribbon.Enabled = True
+                                'currentGroup.Enabled = True
                                 currenLink.Visible = vHabilitar
+                                currenLink.Item.Enabled = vHabilitar
+
                             End If
+
                         Next
+
                     Next
+
                 Next
 
             Next I
@@ -186,19 +221,36 @@ Public Class frmMenu
                 vHabilitar = (DT.Rows(I).Item("visible").ToString = "1")
 
                 For Each currentPage As RibbonPage In Me.rbMain.Pages
+
                     For Each currentGroup As RibbonPageGroup In currentPage.Groups
+
                         For Each currenLink As BarItemLink In currentGroup.ItemLinks
+
                             mCurrentItem = currenLink.Item
+
                             If mCurrentItem.GetType.FullName = "DevExpress.XtraBars.BarSubItem" Then
+
                                 mBarSubItem = mCurrentItem
+
                                 For Each mSubLink In mBarSubItem.ItemLinks
+
+                                    'If vMenu$ = "Descuentos por franquiciados (Resumen)" Then MsgBox("Espera")
+
                                     If mSubLink.Item.Caption = vMenu$ Then
+
                                         mSubLink.Visible = vHabilitar
+                                        mSubLink.Item.Enabled = vHabilitar
+
                                     End If
+
                                 Next
+
                             End If
+
                         Next
+
                     Next
+
                 Next
 
             Next I
@@ -209,10 +261,6 @@ Public Class frmMenu
             MsgBox(ex.Message)
         End Try
 
-    End Sub
-
-    Private Sub SimpleButton1_Click(sender As Object, e As EventArgs)
-        DesactivarMenu()
     End Sub
 
     Private Sub mnuDepartamento_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuDepartamento.ItemClick
@@ -535,13 +583,6 @@ Public Class frmMenu
 
     End Sub
 
-    Private Sub BarButtonItem1_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1.ItemClick
-
-        'Dim Rep As New frmReporteGrid
-        'Rep.ShowDialog()
-        'Rep.Close()
-
-    End Sub
     Private Sub Inserta_Bitacora_Acceso_Menu(ByVal Opcion As String)
 
         Try

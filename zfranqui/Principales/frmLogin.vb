@@ -146,12 +146,12 @@ Public Class frmLogin
         'lblFechaActualizacion
         '
         Me.lblFechaActualizacion.AutoSize = True
-        Me.lblFechaActualizacion.ForeColor = System.Drawing.Color.CadetBlue
+        Me.lblFechaActualizacion.ForeColor = System.Drawing.Color.YellowGreen
         Me.lblFechaActualizacion.Location = New System.Drawing.Point(306, 255)
         Me.lblFechaActualizacion.Name = "lblFechaActualizacion"
         Me.lblFechaActualizacion.Size = New System.Drawing.Size(55, 13)
         Me.lblFechaActualizacion.TabIndex = 4
-        Me.lblFechaActualizacion.Text = "14042016"
+        Me.lblFechaActualizacion.Text = "19042016"
         '
         'frmLogin
         '
