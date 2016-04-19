@@ -369,6 +369,10 @@ Public Class frmAplicarPagos
                                 'Saldo Disponible
                                 v.Monto = v.Monto - v.Pagado
 
+                                'Total disponible (no varía en el ciclo)
+                                'Se utiliza para calcular el saldo de venta
+                                v.MontoInicial = v.Monto
+
                                 'El franquiciado no tiene descuentos en el rango seleccioando
                                 If DescuentosRefPorFranqui.Count = 0 Then Exit For
 
@@ -376,6 +380,7 @@ Public Class frmAplicarPagos
 
                                     'Saldo de la cuota
                                     d.Monto = d.Monto - d.Abonado
+
 
                                     pd = New clsBePago_det
                                     pd.Beneficio = New clsBeBeneficio
@@ -428,7 +433,7 @@ Public Class frmAplicarPagos
 
                                         pd.DescuentosRef = d
 
-                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & v.Pagado & " Saldo: " & (d.Monto - v.Pagado) & vbNewLine)
+                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & pd.MontoAbono & " Saldo: " & (d.Monto - pd.MontoAbono) & vbNewLine)
 
                                         lpagodet.Add(pd)
 
@@ -459,7 +464,7 @@ Public Class frmAplicarPagos
 
                                         pd.DescuentosRef = d
 
-                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & v.Pagado & " Saldo: " & (d.Monto - v.Pagado) & vbNewLine)
+                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & pd.MontoAbono & " Saldo: " & (d.Monto - pd.MontoAbono) & vbNewLine)
 
                                         lpagodet.Add(pd)
 
@@ -493,7 +498,7 @@ Public Class frmAplicarPagos
 
                                         pd.DescuentosRef = d
 
-                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & v.Pagado & " Saldo: " & (d.Monto - v.Pagado) & vbNewLine)
+                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & pd.MontoAbono & " Saldo: " & (d.Monto - pd.MontoAbono) & vbNewLine)
 
                                         lpagodet.Add(pd)
 

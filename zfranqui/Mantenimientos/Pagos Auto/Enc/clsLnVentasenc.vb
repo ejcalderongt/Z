@@ -131,7 +131,7 @@ Public Class clsLnVentasenc
             'cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FECHAHASTA", oBeVentasenc.FechaHasta))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@MONTO", oBeVentasenc.Monto))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@PAGADO", oBeVentasenc.Pagado))
-            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@SALDO", oBeVentasenc.Monto - oBeVentasenc.Pagado))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@SALDO", oBeVentasenc.MontoInicial - oBeVentasenc.Pagado))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_AGR", oBeVentasenc.Fec_agr))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBeVentasenc.User_agr))
 			

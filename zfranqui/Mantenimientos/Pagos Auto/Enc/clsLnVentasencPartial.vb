@@ -45,6 +45,7 @@
                             Obj.Saldo = IIf(IsDBNull(lRow("Saldo")), 0, lRow("Saldo"))
                             Obj.CodigoCEF = IIf(IsDBNull(lRow("CodigoCEF")), 0, lRow("CodigoCEF"))
                             Obj.CodigoFranquiciado = IIf(IsDBNull(lRow("CodigoFranquiciado")), 0, lRow("CodigoFranquiciado"))
+                            Obj.MontoInicial = IIf(IsDBNull(lRow("Monto")), 0, lRow("Monto"))
                             lReturnList.Add(Obj)
 
                         Next

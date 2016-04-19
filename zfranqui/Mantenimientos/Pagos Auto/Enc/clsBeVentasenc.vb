@@ -60,6 +60,8 @@ Public Class clsBeVentasenc
         End Set
     End Property
 
+    Public Property MontoInicial As Double = 0
+
 	Public Property Monto() As Double
 		Get
 			Return mMonto
