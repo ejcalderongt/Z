@@ -212,12 +212,11 @@ Partial Class frmAplicarPagos
         Me.txt.BackColor = System.Drawing.Color.White
         Me.txt.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.txt.ForeColor = System.Drawing.Color.SteelBlue
-        Me.txt.Location = New System.Drawing.Point(0, 584)
+        Me.txt.Location = New System.Drawing.Point(0, 511)
         Me.txt.Name = "txt"
-        Me.txt.Size = New System.Drawing.Size(1052, 45)
+        Me.txt.Size = New System.Drawing.Size(1052, 118)
         Me.txt.TabIndex = 34
         Me.txt.Text = ""
-        Me.txt.Visible = False
         '
         'TableLayoutPanel1
         '
@@ -227,7 +226,7 @@ Partial Class frmAplicarPagos
         Me.TableLayoutPanel1.Controls.Add(Me.dgridDescuentos, 1, 0)
         Me.TableLayoutPanel1.Controls.Add(Me.dgridVentas, 0, 0)
         Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 229)
+        Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 156)
         Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
         Me.TableLayoutPanel1.RowCount = 1
         Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))

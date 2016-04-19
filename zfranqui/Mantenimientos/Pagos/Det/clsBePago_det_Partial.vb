@@ -13,4 +13,10 @@
 
     Public Property Beneficio As New clsBeBeneficio
 
+    Public Property DescuentosRef As New clsBeDescuento_ref
+
+    Public Property PagoAutomatico As Integer = 0
+
+    Public Property IdVentaDet As Integer = 0
+
 End Class

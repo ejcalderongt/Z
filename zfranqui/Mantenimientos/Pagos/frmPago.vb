@@ -119,6 +119,7 @@ Public Class frmPago
             ObjLNenc.Insertar(pObjBeEnc, lConnection, lTransaction)
 
             Dim lMaxDet As Integer = clsLnPago_det.MaxID(pObjBeEnc.IdPagoEnc)
+
             For Each Obj As clsBePago_det In ListObjPago
 
                 lMaxDet += 1

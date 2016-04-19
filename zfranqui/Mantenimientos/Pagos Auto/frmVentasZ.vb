@@ -418,7 +418,7 @@ Public Class frmVentasZ
                 " 	min(b.fecha) as desde, " & _
                 "   max(b.fecha) as hasta, " & _
                 "   e.crmrdi as IdCEF, " & _
-                " 	SUM(a.cant) * d.cantidad as Monto " & _
+                " 	SUM(a.cant * d.cantidad) as Monto " & _
                 " FROM " & _
                 " 	facdet a " & _
                 " INNER JOIN facenc b ON a.codpla = b.codpla " & _

@@ -572,8 +572,8 @@ Partial Public Class clsLnDescuento_ref
                    " INNER JOIN descuento_enc ON descuento_ref.IdDescuentoEnc = descuento_enc.IdDescuentoEnc " & _
                    " INNER JOIN cef ON descuento_enc.IdCEF = cef.IdCef " & _
                    " INNER JOIN franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
-                   "   WHERE cast(descuento_enc.fec_agr AS DATE) BETWEEN " & FormatoFechas.fFecha(FechaDesde) & _
-                   "   AND " & FormatoFechas.fFecha(FechaHasta) & _
+                   "   WHERE descuento_ref.FechaCobro>= " & FormatoFechas.fFecha(FechaDesde) & _
+                   "   AND descuento_ref.FechaCobro <=" & FormatoFechas.fFecha(FechaHasta) & _
                    " AND (descuento_ref.Anulada=0) " & _
                    " AND beneficio.activo = 1 " & _
                    " AND Pagada = 0 " & _
@@ -658,7 +658,7 @@ Partial Public Class clsLnDescuento_ref
                             Obj.Beneficio.TipoBeneficio.EsVehiculo = IIf(IsDBNull(lRow.Item("EsVehiculo")), False, lRow.Item("EsVehiculo"))
                             Obj.Beneficio.TipoBeneficio.EsTelefono = IIf(IsDBNull(lRow.Item("EsTelefono")), False, lRow.Item("EsTelefono"))
                             Obj.Beneficio.TipoBeneficio.EsServicio = IIf(IsDBNull(lRow.Item("EsServicio")), False, lRow.Item("EsServicio"))
-
+                            Obj.IsNew = False
                             'Dim lbeneficio As New clsLnBeneficio
                             'lbeneficio.Obtener(Obj.Beneficio, True)
 

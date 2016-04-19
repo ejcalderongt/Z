@@ -97,15 +97,15 @@ Public Class clsLnVentasenc
 		Try
 
 			Upd.Init("ventasenc")
-			Upd.Add("idperiodoventa","@idperiodoventa","F")
-			Upd.Add("idcef","@idcef","F")
-			Upd.Add("idfranquiciado","@idfranquiciado","F")
-			Upd.Add("fechadesde","@fechadesde","F")
-			Upd.Add("fechahasta","@fechahasta","F")
-			Upd.Add("monto","@monto","F")
+            'Upd.Add("idperiodoventa","@idperiodoventa","F")
+            'Upd.Add("idcef","@idcef","F")
+            'Upd.Add("idfranquiciado","@idfranquiciado","F")
+            'Upd.Add("fechadesde","@fechadesde","F")
+            'Upd.Add("fechahasta","@fechahasta","F")
+            'Upd.Add("monto","@monto","F")
 			Upd.Add("pagado","@pagado","F")
 			Upd.Add("saldo","@saldo","F")
-			Upd.Add("fec_agr","@fec_agr","F")
+            Upd.Add("fec_agr", "@fec_agr", "F")
 			Upd.Add("user_agr","@user_agr","F")
 			Upd.Where("IdPeriodoVenta = @IdPeriodoVenta")
 
@@ -125,13 +125,13 @@ Public Class clsLnVentasenc
 			End If
 
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDPERIODOVENTA", oBeVentasenc.IdPeriodoVenta))
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDCEF", oBeVentasenc.IdCEF))
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDFRANQUICIADO", oBeVentasenc.IdFranquiciado))
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FECHADESDE", oBeVentasenc.FechaDesde))
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FECHAHASTA", oBeVentasenc.FechaHasta))
+            '         cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDCEF", oBeVentasenc.IdCEF))
+            'cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDFRANQUICIADO", oBeVentasenc.IdFranquiciado))
+            'cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FECHADESDE", oBeVentasenc.FechaDesde))
+            'cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FECHAHASTA", oBeVentasenc.FechaHasta))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@MONTO", oBeVentasenc.Monto))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@PAGADO", oBeVentasenc.Pagado))
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@SALDO", oBeVentasenc.Saldo))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@SALDO", oBeVentasenc.Monto - oBeVentasenc.Pagado))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_AGR", oBeVentasenc.Fec_agr))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBeVentasenc.User_agr))
 			

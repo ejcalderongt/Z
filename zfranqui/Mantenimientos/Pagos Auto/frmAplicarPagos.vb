@@ -94,7 +94,7 @@ Public Class frmAplicarPagos
                     Row.Item("Franquiciado") = Obj.CodigoFranquiciado
                     Row.Item("Monto") = Obj.Monto
                     Row.Item("Pagado") = Obj.Pagado
-                    Row.Item("Saldo") = Obj.Pagado
+                    Row.Item("Saldo") = Obj.Saldo
                     DT.Rows.Add(Row)
 
                     Application.DoEvents()
@@ -303,29 +303,39 @@ Public Class frmAplicarPagos
 
             Dim lpagoenc As New List(Of clsBePago_enc)
             Dim lpagodet As New List(Of clsBePago_det)
+            Dim tventas As New List(Of clsBeVentasenc)
 
             Dim pe As New clsBePago_enc
             Dim pd As New clsBePago_det
 
+
             Dim IdPagoEnc As Integer = clsLnPago_enc.Generar_Nuevo_IdPago()
-            Dim IdPagoDet As Integer = clsLnPago_det.MaxID(IdPagoEnc)
+            Dim IdPagoDet As Integer = clsLnPago_det.MaxID(IdPagoEnc) + 1
 
             If Not lventas Is Nothing AndAlso lventas.Count > 0 Then
 
                 If Not ldescuentosref Is Nothing AndAlso ldescuentosref.Count > 0 Then
 
-                    If MsgBox("¿Se aplicarán los pagos a los descuentos en base a la lista de ventas seleccionada, ¿continuar?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                    If MsgBox("Se aplicarán los pagos a los descuentos en base a la lista de ventas seleccionada, ¿continuar?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
 
+                        Dim FranquiciadosConVentas = From f In lventas Select New With {Key f.IdCEF, f.IdFranquiciado, f.CodigoFranquiciado, f.CodigoCEF} Distinct.ToList.OrderBy(Function(f) f.IdFranquiciado)
 
-                        Dim FranquiciadosConVentas = From f In lventas Select New With {Key f.IdCEF, f.IdFranquiciado} Distinct.ToList
+                        prg.Maximum = FranquiciadosConVentas.Count
+
+                        Dim ContadorPrg As Integer = 0
 
                         'Recorrer los franquiciados que tienen ventas
                         For Each F In FranquiciadosConVentas
 
+                            prg.Value = ContadorPrg
+
                             pe = New clsBePago_enc
+                            pe.Franquiciado = New clsBeFranquiciado
+                            pe.CEF = New clsBeCef
+
                             pe.IdPagoEnc = IdPagoEnc
-                            pe.IdFranquiciado = F.IdFranquiciado
-                            pe.IdCEF = F.IdCEF
+                            pe.Franquiciado.IdFranquiciado = F.IdFranquiciado
+                            pe.CEF.IdCef = F.IdCEF
                             pe.IsNew = True
                             pe.Anulado = False
                             pe.FechaPago = Now.Date
@@ -335,18 +345,37 @@ Public Class frmAplicarPagos
                             pe.Fec_mod = Now
                             'pe.NoDeposito = FormatoFechas.fFechaHora(Now)
 
+                            txt.AppendText("Procesando Franquiciado: " & F.CodigoFranquiciado & vbNewLine)
+
                             'Filtrar la lista de ventas por franquiciado.
                             Dim VentasFranqui = lventas.Where(Function(vf) vf.IdFranquiciado = F.IdFranquiciado)
 
+                            txt.AppendText("Consultando monto disponible en ventas : " & VentasFranqui.Sum(Function(v) v.Monto) & vbNewLine)
+
+                            'If F.CodigoCEF = "AT39" Then MsgBox("Espera")
+
                             'Filtrar la lista de descuentos por franquiciado y solo los descuentos con fecha menor a la actual
                             Dim DescuentosRefPorFranqui = ldescuentosref.Where _
-                                                          (Function(df) df.CodigoFranquiciado = clsLnFranquiciado.GetCodigo(F.IdFranquiciado) _
+                                                          (Function(df) df.CodigoFranquiciado = F.CodigoFranquiciado _
+                                                            And df.CodigoCEF = F.CodigoCEF _
                                                                And df.FechaCobro <= Now.Date).OrderBy(Function(od) od.FechaCobro)
+
+
+                            txt.AppendText("Filtrando cuotas pendientes por franquiciado: (" & DescuentosRefPorFranqui.Count & ")" & vbNewLine)
 
                             'Recorrer el detalle de ventas delfranquiciado filtrado
                             For Each v In VentasFranqui
 
+                                'Saldo Disponible
+                                v.Monto = v.Monto - v.Pagado
+
+                                'El franquiciado no tiene descuentos en el rango seleccioando
+                                If DescuentosRefPorFranqui.Count = 0 Then Exit For
+
                                 For Each d In DescuentosRefPorFranqui
+
+                                    'Saldo de la cuota
+                                    d.Monto = d.Monto - d.Abonado
 
                                     pd = New clsBePago_det
                                     pd.Beneficio = New clsBeBeneficio
@@ -361,37 +390,193 @@ Public Class frmAplicarPagos
                                     pd.IsNew = True
                                     pd.NoCuota = d.NoCuota
                                     pd.MontoCuota = d.Monto
+                                    pd.User_agr = gUsuario.IdUsuario
+                                    pd.User_mod = gUsuario.IdUsuario
+                                    pd.PagoAutomatico = 1
+                                    pd.IdVentaDet = v.IdPeriodoVenta
 
-                                    'pd.MontoAbono = 
+                                    txt.AppendText("IdPagoEnc: " & IdPagoEnc & " IdPagoDet: " & IdPagoDet & vbNewLine)
 
-                                Next
+                                    'Si el saldo de la venta es mayor que el monto de la cuota de descuento
+                                    If v.Monto > d.Monto Then
+
+                                        'Pago detalle se le agrega el monto total de la cuota
+                                        pd.MontoAbono = d.Monto
+
+                                        'Se le resta al saldo de la venta el monto abonado a la cuota
+                                        v.Monto = v.Monto - d.Monto
+
+                                        'Se actualiza en el detalle de la venta, el monto pagado de ese rango de fechas 
+                                        If v.Pagado = 0 Then
+                                            v.Pagado = d.Monto
+                                        Else
+                                            v.Pagado += d.Monto
+                                        End If
+
+                                        'En el detalle del descuento, se marca la cuota pagada en su totalidad
+                                        d.Pagada = True
+
+                                        'Se registra cuanto se abonó en el detalle de esa cuota
+                                        If d.Abonado = 0 Then
+                                            d.Abonado = d.Monto
+                                        Else
+                                            d.Abonado += d.Monto
+                                        End If
+
+                                        'Se aumenta en 1 el iddescuentodet
+                                        IdPagoDet += 1
+
+                                        pd.DescuentosRef = d
+
+                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & v.Pagado & " Saldo: " & (d.Monto - v.Pagado) & vbNewLine)
+
+                                        lpagodet.Add(pd)
+
+                                    ElseIf v.Monto < d.Monto Then 'Si el saldo de la venta es menor que el monto de la cuota de descuento
+
+                                        'Pago detalle se le agrega el saldo disponible de la venta a la cuota
+                                        pd.MontoAbono = v.Monto
+
+                                        'Se actualiza en el detalle de la venta, el monto pagado de ese rango de fechas 
+                                        If v.Pagado = 0 Then
+                                            v.Pagado = d.Monto
+                                        Else
+                                            v.Pagado += d.Monto
+                                        End If
+
+                                        'Se actualiza el saldo de la venta a 0, pues se consumió su totalidad
+                                        v.Monto = 0
+
+                                        'En el detalle del descuento, se marca la cuota pagada en su totalidad
+                                        d.Pagada = True
+
+                                        'Se registra cuanto se abonó en el detalle de esa cuota
+                                        If d.Abonado = 0 Then
+                                            d.Abonado = d.Monto
+                                        Else
+                                            d.Abonado += d.Monto
+                                        End If
+
+                                        pd.DescuentosRef = d
+
+                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & v.Pagado & " Saldo: " & (d.Monto - v.Pagado) & vbNewLine)
+
+                                        lpagodet.Add(pd)
+
+                                        'Se sale del ciclo, pues ya no hay saldo de ventas para cubrir cuotas de descuentos
+                                        Exit For
+
+                                    ElseIf v.Monto = d.Monto Then 'Si el saldo de la venta es iugal que el monto de la cuota de descuento
+
+                                        'Pago detalle se le agrega el saldo disponible de la venta a la cuota
+                                        pd.MontoAbono = d.Monto
+
+                                        'Se actualiza en el detalle de la venta, el monto pagado de ese rango de fechas 
+                                        If v.Pagado = 0 Then
+                                            v.Pagado = d.Monto
+                                        Else
+                                            v.Pagado += d.Monto
+                                        End If
+
+                                        'Se actualiza el saldo de la venta a 0, pues se consumió su totalidad
+                                        v.Monto = 0
+
+                                        'En el detalle del descuento, se marca la cuota pagada en su totalidad
+                                        d.Pagada = True
+
+                                        'Se registra cuanto se abonó en el detalle de esa cuota
+                                        If d.Abonado = 0 Then
+                                            d.Abonado = d.Monto
+                                        Else
+                                            d.Abonado += d.Monto
+                                        End If
+
+                                        pd.DescuentosRef = d
+
+                                        txt.AppendText("No cuota: " & d.NoCuota & " Monto: " & d.Monto & " Pagado: " & v.Pagado & " Saldo: " & (d.Monto - v.Pagado) & vbNewLine)
+
+                                        lpagodet.Add(pd)
+
+                                        Exit For
+
+                                    End If
+
+                                Next 'Lista de descuentosref por franquiciado
+
+                                lpagoenc.Add(pe)
+                                tventas.Add(v)
+
+                                IdPagoDet = 1
 
                             Next 'lista de detalle de ventas por franquiciado
 
+                            ContadorPrg += 1
+                            IdPagoEnc += 1
+
                         Next 'lista de franquiciados con ventas
 
-                        For Each v As clsBeVentasenc In lventas
+                    End If 'No confirmó mensaje
 
-                            'Filtrar la lista de descuentos por franquiciado y solo los descuentos con fecha menor a la actual
-                            Dim DescuentosRefPorFranqui = ldescuentosref.Where _
-                                                          (Function(f) f.CodigoFranquiciado = clsLnFranquiciado.GetCodigo(v.IdFranquiciado) _
-                                                               And f.FechaCobro <= Now.Date)
+                    'MsgBox("Terminé", MsgBoxStyle.Information, Me.Text)
 
-                            'dr = descuentoref
-                            For Each dr In DescuentosRefPorFranqui
+                    Dim dpe As New clsLnPago_enc
+                    Dim dpd As New clsLnPago_det
 
-                                'Si el monto de esa venta es mayor que la cuota
-                                'aplicar el monto de esa venta a la cuota y pagar la todadlidad de la misma
+                    Dim lConnection As New MySqlConnection(BD.CadenaConexion)
+                    Dim ltrans As MySqlTransaction = Nothing
 
-                                If v.Monto >= dr.Monto Then
+                    Try
 
-                                End If
+                        lConnection.Open()
+
+                        ltrans = lConnection.BeginTransaction
+
+                        prg.Maximum = lpagoenc.Count
+
+                        Dim Contador As Integer = 0
+
+                        For Each P As clsBePago_enc In lpagoenc
+
+                            txt.AppendText("Procesando Pagao #: " & P.IdPagoEnc & " Franquiciado: " & P.IdFranquiciado & vbNewLine)
+
+                            'Insertar el encabezado
+                            dpe.Insertar(P, lConnection, ltrans)
+
+                            For Each pDet As clsBePago_det In lpagodet.Where(Function(z) z.IdPagoEnc = P.IdPagoEnc)
+
+                                txt.AppendText("Procesando PagaoEnc #: " & P.IdPagoEnc & " PagoDET: " & pDet.IdPagoDet & vbNewLine)
+
+                                'Insertar el detalle del pago
+                                dpd.Insertar(pDet, lConnection, ltrans)
+
+                                'Actualizar el detalle del descuento
+                                clsLnDescuento_ref.ActualizarByPago(pDet.DescuentosRef, lConnection, ltrans)
 
                             Next
 
-                        Next 'Recorrer detalle de ventas para aplicar a descuentos
+                            prg.Value = Contador
+                            Contador += 1
+                            Application.DoEvents()
 
-                    End If 'No confirmó mensaje
+                        Next
+
+                        Dim dVentasEnc As New clsLnVentasenc
+
+                        For Each v As clsBeVentasenc In tventas
+                            dVentasEnc.Actualizar(v, lConnection, ltrans)
+                        Next
+
+                        ltrans.Commit()
+
+                        MsgBox("Se procesaro correctamente " & lpagoenc.Count & " Registros de ventas", MsgBoxStyle.Information, Me.Text)
+
+                    Catch ex As Exception
+                        ltrans.Rollback()
+                        MsgBox("Error al insertar el detalle de ventas: " & ex.Message)
+                    Finally
+                        If Not lConnection Is Nothing AndAlso lConnection.State = ConnectionState.Open Then lConnection.Close()
+                        ltrans.Dispose()
+                    End Try
 
                 Else
                     MsgBox("No se ha definido la lista de descuentos a los que se le aplicarán los pagos", MsgBoxStyle.Exclamation, Me.Text)

@@ -19,7 +19,9 @@ Public Class clsLnPago_det
 				.Fec_agr = IIf(IsDBNull(dr.Item("fec_agr")), Date.Now, dr.Item("fec_agr"))
 				.Fec_mod = IIf(IsDBNull(dr.Item("fec_mod")), Date.Now, dr.Item("fec_mod"))
 				.User_agr = IIf(IsDBNull(dr.Item("user_agr")), 0, dr.Item("user_agr"))
-				.User_mod = IIf(IsDBNull(dr.Item("user_mod")), 0, dr.Item("user_mod"))
+                .User_mod = IIf(IsDBNull(dr.Item("user_mod")), 0, dr.Item("user_mod"))
+                .PagoAutomatico = IIf(IsDBNull(dr.Item("PagoAutomatico")), 0, dr.Item("PagoAutomatico"))
+                .IdVentaDet = IIf(IsDBNull(dr.Item("IdVentaDet")), 0, dr.Item("IdVentaDet"))
 			End With
 		Catch ex As Exception
 			Throw ex
@@ -46,7 +48,9 @@ Public Class clsLnPago_det
 			Ins.Add("fec_agr","@fec_agr","F")
 			Ins.Add("fec_mod","@fec_mod","F")
 			Ins.Add("user_agr","@user_agr","F")
-			Ins.Add("user_mod","@user_mod","F")
+            Ins.Add("user_mod", "@user_mod", "F")
+            Ins.Add("IdVentaDet", "@IdVentaDet", "F")
+            Ins.Add("PagoAutomatico", "@PagoAutomatico", "F")
 
 			Dim sp As String = Ins.SQL()
 
@@ -65,7 +69,7 @@ Public Class clsLnPago_det
 			End If
 
 
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGODET", oBePago_det.IdPagoDet))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGODET", oBePago_det.IdPagoDet))
             cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDPAGOENC", oBePago_det.IdPagoEnc))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOENC", oBePago_det.IdDescuentoEnc))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTODET", oBePago_det.IdDescuentoDet))
@@ -77,7 +81,9 @@ Public Class clsLnPago_det
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_AGR", oBePago_det.Fec_agr))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_MOD", oBePago_det.Fec_mod))
 			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBePago_det.User_agr))
-			cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_MOD", oBePago_det.User_mod))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_MOD", oBePago_det.User_mod))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@PagoAutomatico", oBePago_det.PagoAutomatico))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDVENTADET", oBePago_det.IdVentaDet))
 
 			Dim rowsAffected As Integer = 0
 			rowsAffected = cmd.ExecuteNonQuery()
