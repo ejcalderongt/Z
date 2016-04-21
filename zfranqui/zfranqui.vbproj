@@ -253,10 +253,10 @@
     <Compile Include="Mantenimientos\Descuentos\frmDescuentoList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Mantenimientos\Descuentos\frmGeneraDescuentoIndefinido.Designer.vb">
-      <DependentUpon>frmGeneraDescuentoIndefinido.vb</DependentUpon>
+    <Compile Include="Mantenimientos\Descuentos\frmDescuentosAuto.Designer.vb">
+      <DependentUpon>frmDescuentosAuto.vb</DependentUpon>
     </Compile>
-    <Compile Include="Mantenimientos\Descuentos\frmGeneraDescuentoIndefinido.vb">
+    <Compile Include="Mantenimientos\Descuentos\frmDescuentosAuto.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Mantenimientos\Descuentos\Ref\clsBeDescuento_ref.vb" />
@@ -556,8 +556,8 @@
     <EmbeddedResource Include="Mantenimientos\Descuentos\frmDescuentoList.resx">
       <DependentUpon>frmDescuentoList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Mantenimientos\Descuentos\frmGeneraDescuentoIndefinido.resx">
-      <DependentUpon>frmGeneraDescuentoIndefinido.vb</DependentUpon>
+    <EmbeddedResource Include="Mantenimientos\Descuentos\frmDescuentosAuto.resx">
+      <DependentUpon>frmDescuentosAuto.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Franquiciado\frmFList.resx">
       <DependentUpon>frmFList.vb</DependentUpon>

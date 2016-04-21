@@ -498,6 +498,8 @@ Public Class frmDescuento
 
                 GridViewCuota.Columns("Fecha_Cobro").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
 
+            Else
+                GridCuota.DataSource = Nothing
             End If
 
         Catch ex As Exception
@@ -699,6 +701,14 @@ Public Class frmDescuento
                         pObjEnc.Detalle.RemoveAt(lIndex)
                         GridViewDescuento.DeleteSelectedRows()
 
+                        For Each Obj As clsBeDescuento_ref In pObjEnc.Referencia.FindAll(Function(ref) ref.IdBeneficio = Det.Beneficio.IdBeneficio)
+                            pObjEnc.Referencia.Remove(Obj)
+                        Next
+
+                        CargarCuota()
+
+                        MsgBox("Se eliminó el beneficio y sus cutoas", MsgBoxStyle.Information, Me.Text)
+
                     Else
 
                         'VALIDAR SI NO TIENE PAGO PARA ELIMINARLO
@@ -710,7 +720,7 @@ Public Class frmDescuento
                                 MsgBox("Se ha eliminado el beneficio y sus cuotas", MsgBoxStyle.Information, Me.Text)
                                 pObjEnc.Detalle.RemoveAt(lIndex) 'Remover de lista de clase
                                 GridViewDescuento.DeleteSelectedRows() 'Remover de gridview
-                                CargarDetalle()
+                                CargarDetalle() : CargarCuota()
 
                                 'Si solo tiene un beneficio anular el descuento ?
 

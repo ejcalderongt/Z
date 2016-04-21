@@ -108,7 +108,7 @@ Public Class frmRepDescuentoTipoDet
         Try
 
             vSQL = " SELECT " & _
-                "	cast(descuento_enc.fec_agr AS DATE) AS FechaDescuento, " & _
+                "	cast(r.FechaCobro AS DATE) AS FechaDescuento, " & _
                 "	b.Nombre, " & _
                 "	b.Modelo, " & _
                 "	b.NoChasis, " & _
@@ -208,7 +208,7 @@ Public Class frmRepDescuentoTipoDet
 
             'Llenar_Grid()
 
-            If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
+            'If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
 
             If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then GridView1.RestoreLayoutFromXml(CurDir() & "\" & Nom_Rep & ".xml")
 

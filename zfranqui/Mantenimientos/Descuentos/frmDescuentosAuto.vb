@@ -1,16 +1,6 @@
-﻿Public Class frmGeneraDescuentoIndefinido
+﻿Public Class frmDescuentosAuto
 
-    Private Sub frmGeneraDescuentoIndefinido_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-        Try
-
-
-
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
-        End Try
-
-    End Sub
+    Private lref As New List(Of clsBeDescuento_ref)
 
     Private Sub Genera_Descuentos_REF()
 
@@ -74,7 +64,7 @@
             Dim FechaIni As Date = Now.Date
 
             Dim ObjRef As New clsBeDescuento_ref
-            Dim lref As New List(Of clsBeDescuento_ref)
+
             Dim UltimaCuota As Integer = 0
 
             lref.Clear()
@@ -174,8 +164,8 @@
                 'Else
                 '    txt.AppendText("No hay cuotas nuevas que generar para descuento: " & IdDescuentoEnc)
                 'End If
-                
-                
+
+
 
             Next
 
@@ -196,10 +186,15 @@
 
                 txt.AppendText("Haciendo commit de las transacciones..." & vbNewLine)
 
-                lTransaction.Commit()
-                lConnection.Close()
+                dgrid.DataSource = lref
 
-                txt.AppendText("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref" & vbNewLine)
+                If MsgBox("¿Hacer commit de las transacciones?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                    lTransaction.Commit()
+                    txt.AppendText("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref" & vbNewLine)
+                    MsgBox("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref", MsgBoxStyle.Information, Me.Text)
+                End If
+
+                lConnection.Close()
 
             Else
                 txt.AppendText("No hay cuotas nuevas que generar para descuento: " & IdDescuentoEnc)
@@ -229,7 +224,7 @@
         Try
             '
 
-            vSQL = "select fechacobro from descuento_ref where IdDescuentoEnc =" & IdDescuentoDet & _
+            vSQL = "select fechacobro from descuento_ref where IdDescuentoEnc =" & IdDescuentoEnc & _
                 " and IdDescuentoDet = " & IdDescuentoDet & _
                 " and IdBeneficio = " & IdBeneficio & _
                 " order by fechacobro desc "
@@ -252,12 +247,62 @@
 
     End Function
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs)
+
+    Private Sub frmDescuentosAuto_Shown(sender As Object, e As EventArgs) Handles Me.Shown
         Genera_Descuentos_REF()
     End Sub
 
-    Private Sub frmGeneraDescuentoIndefinido_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-        Genera_Descuentos_REF()
+    Private Sub ButtonProcesar_Click(sender As Object, e As EventArgs) Handles ButtonProcesar.Click
+
+        Dim lConnection As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
+        Dim lTransaction As MySql.Data.MySqlClient.MySqlTransaction = Nothing
+
+        Try
+
+            If lref.Count > 0 Then
+
+                txt.AppendText("Iniciando inserción transaccional..." & vbNewLine)
+
+                lConnection.Open()
+
+                lTransaction = lConnection.BeginTransaction()
+
+                Dim ObjLNRef As New clsLnDescuento_ref
+
+                For Each C As clsBeDescuento_ref In lref
+                    ObjLNRef.Insertar(C, lConnection, lTransaction)
+                    txt.AppendText("Insertando CuotaREF: " & C.NoCuota & " DescuentoEnc: " & C.IdDescuentoEnc & vbNewLine)
+                Next
+
+                txt.AppendText("Haciendo commit de las transacciones..." & vbNewLine)
+
+                If MsgBox("¿Hacer commit de las transacciones?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                    lTransaction.Commit()
+                End If
+
+                lConnection.Close()
+
+                txt.AppendText("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref" & vbNewLine)
+
+                MsgBox("Se insertaron correctamente " & lref.Count & " Cuotas de descuentos período indefinido en descuento_ref", MsgBoxStyle.Information, Me.Text)
+
+            Else
+                txt.AppendText("No hay cuotas nuevas que generar")
+            End If
+
+
+        Catch ex As Exception
+            Try
+                lTransaction.Rollback()
+            Catch ex1 As Exception
+                txt.AppendText("InRollBack: " & ex1.Message)
+            End Try
+            MsgBox(ex.Message)
+            txt.AppendText("ErrGenDescREF: " & ex.Message)
+        Finally
+            prg.Visible = False
+        End Try
+
     End Sub
 
 End Class

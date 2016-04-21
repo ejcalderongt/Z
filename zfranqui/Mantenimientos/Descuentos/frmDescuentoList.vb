@@ -126,7 +126,7 @@
 
         Try
 
-            Dim frmGen As New frmGeneraDescuentoIndefinido
+            Dim frmGen As New frmDescuentosAuto
             frmGen.ShowDialog()
 
         Catch ex As Exception

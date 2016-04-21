@@ -315,6 +315,9 @@ Public Class frmPago
                     txtCodCEF.Text = pObjBeEnc.Franquiciado.CEF.Codigo
                     txtNomCEF.Text = pObjBeEnc.Franquiciado.CEF.Descripcion
 
+                    CargaResumenDescuento()
+                    CargaCuotas()
+
                 Else
                     'MsgBox("El código ingresado de franquiciado no es válido", MsgBoxStyle.Exclamation, Me.Text)
                     XtraMessageBox.Show("El código ingresado de franquiciado no es válido", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)

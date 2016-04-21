@@ -578,8 +578,9 @@ Partial Public Class clsLnDescuento_ref
                    " AND beneficio.activo = 1 " & _
                    " AND Pagada = 0 " & _
                    " ORDER BY " & _
-                   " descuento_ref.FechaCobro, " & _
-                   " tipobeneficio.Prioridad "
+                   " tipobeneficio.Prioridad, " & _
+                   " descuento_ref.FechaCobro "
+
 
             Using lCnn As New MySql.Data.MySqlClient.MySqlConnection(BD.CadenaConexion)
 
