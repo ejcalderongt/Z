@@ -90,7 +90,7 @@ Public Class frmRepSaldoVehiculos
         Try
 
             vSQL = "    SELECT " & _
-                   "	descuento_enc.fec_agr AS FechaDescuento, " & _
+                   "	r.FechaCobro AS FechaDescuento, " & _
                    "	b.Nombre, " & _
                    "	b.Modelo, " & _
                    "	b.NoChasis, " & _

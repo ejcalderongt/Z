@@ -106,7 +106,7 @@ Public Class frmRepDescuentoFranSupervisor
         Try
 
             vSQL = "    SELECT " & _
-                   "	descuento_enc.fec_agr AS FechaDescuento, " & _
+                   "	r.FechaCobro AS FechaDescuento, " & _
                    "	b.Nombre, " & _
                    "	b.Modelo, " & _
                    "	b.NoChasis, " & _
@@ -272,14 +272,24 @@ Public Class frmRepDescuentoFranSupervisor
 
     Private Sub GridView1_RowStyle(ByVal sender As Object, ByVal e As DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs) Handles GridView1.RowStyle
 
-        Dim View As GridView = sender
-        If (e.RowHandle >= 0) Then
-            Dim category As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
-            If category = "0.00" Then
-                e.Appearance.BackColor = Color.Salmon
-                e.Appearance.BackColor2 = Color.SeaShell
+        Try
+
+            If chkColorfocus.Checked Then
+
+                Dim View As GridView = sender
+                If (e.RowHandle >= 0) Then
+                    Dim category As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
+                    If Val(category) = 0 Then
+                        e.Appearance.BackColor = Color.Salmon
+                        e.Appearance.BackColor2 = Color.SeaShell
+                    End If
+                End If
+
             End If
-        End If
+
+        Catch ex As Exception
+
+        End Try
 
     End Sub
 

@@ -1,18 +1,12 @@
 ﻿Imports DevExpress.XtraGrid.Views.Grid
 
-Public Class frmRepEstadoCuentaDef
-
-    Public pIdFranquiciado As Integer
+Public Class frmPagosDet
 
     Enum TipoReporte As Integer
 
         CuotasDetalleDescuento = 1
 
     End Enum
-
-    Private Property TipoRep As TipoReporte = -1
-
-    Public Property DescuentoEnc As New clsBeDescuento_enc
 
     Public Sub New()
 
@@ -79,28 +73,14 @@ Public Class frmRepEstadoCuentaDef
 
     Private Sub PrintableComponentLink1_CreateReportHeaderArea(ByVal sender As System.Object, ByVal e As DevExpress.XtraPrinting.CreateAreaEventArgs)
 
-
-        'Select Case TipoRep
-
-        'Case TipoReporte.CuotasDetalleDescuento
-
-        'Dim reportHeader As String = vbNewLine & "Estado de cuenta (Descuentos Definidos)" & vbNewLine & _
-        '"Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
-
-        Dim reportHeader As String = vbNewLine & "Estados de Cuenta - Descuentos " & _
-       "Desde: " & dtpFechaDesde.Value.Date & " Hasta: " & dtpFechaHasta.Value.Date
+        Dim reportHeader As String = vbNewLine & "Reporte detalle de pagos " & _
+        "Desde: " & dtpFechaDesde.Value.Date & " Hasta: " & dtpFechaHasta.Value.Date
 
         e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
         e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
 
         Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
         e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
-
-
-        'Case Else
-
-
-        'End Select
 
 
     End Sub
@@ -110,55 +90,54 @@ Public Class frmRepEstadoCuentaDef
         Try
 
             vSQL = " SELECT " & _
-                "	cast(r.FechaCobro AS DATE) AS FechaDescuento, " & _
-                "	b.Nombre, " & _
-                "	b.Modelo, " & _
-                "	b.NoChasis, " & _
-                "	b.NoPlaca, " & _
-                "	b.Motor, " & _
-                "	b.NumeroTelefono, " & _
-                "	b.EmpresaTelco,	 " & _
-                "	r.NoCuota, " & _
-                "	r.Monto AS Monto, " & _
-                "	r.Abonado AS Abonado, " & _
-                "	tipodescuento.Nombre AS TipoDescuento, " & _
-                "	CONCAT( " & _
-                "		CAST( " & _
-                "			franquiciado.Codigo AS CHAR (50) " & _
-                "		), " & _
-                "		' - ', " & _
-                "		franquiciado.Nombres " & _
-                "	) AS Franquiciado, " & _
-                "	CONCAT( 		cef.Codigo, 		' ', 		cef.Descripcion, 		 ' - Inter: ', " & _
-                "   cast(if(cef.Interlocutor is null,'',cef.Interlocutor) as unsigned), ' Pts: ', cast(if(cef.Puntos is null,'',cef.Puntos) as unsigned)) AS CEF  " & _
-                "FROM " & _
-                "	descuento_ref AS r " & _
-                " INNER JOIN beneficio AS b ON r.IdBeneficio = b.IdBeneficio " & _
-                " INNER JOIN tipobeneficio AS tp ON b.IdTipoBeneficio = tp.IdTipoBeneficio " & _
-                " INNER JOIN descuento_enc ON r.IdDescuentoEnc = descuento_enc.IdDescuentoEnc " & _
-                " INNER JOIN tipodescuento ON descuento_enc.IdTipoDescuento = tipodescuento.IdTipoDescuento " & _
-                " INNER JOIN franquiciado ON descuento_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
-                " INNER JOIN cef ON descuento_enc.IdCEF = cef.IdCef " & _
-                "   WHERE cast(descuento_enc.fec_agr AS DATE) BETWEEN " & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
-                "   AND " & FormatoFechas.fFecha(dtpFechaHasta.Value)
+                   " 	cef.Codigo AS CodigoCEF, " & _
+                   " 	cef.Descripcion AS NomCEF, " & _
+                   " 	descuento_ref.FechaCobro, " & _
+                   " 	pago_enc.FechaPago, " & _
+                   " 	pago_det.NoCuota, " & _
+                   " 	pago_det.MontoCuota, " & _
+                   " 	pago_det.MontoAbono, " & _
+                   " 	(pago_det.MontoCuota - pago_det.MontoAbono)  as SaldoCuota, " & _
+                   " 	pago_det.PagoAutomatico, " & _
+                   " 	franquiciado.Codigo AS CodigoFranquiciado, " & _
+                   " 	franquiciado.Nombres AS NomFranquiciado, " & _
+                   "	beneficio.Nombre, " & _
+                   "	beneficio.Modelo, " & _
+                   "	beneficio.NoChasis, " & _
+                   "	beneficio.NoPlaca, " & _
+                   "	beneficio.Motor, " & _
+                   "	beneficio.NumeroTelefono, " & _
+                   "	beneficio.EmpresaTelco, " & _
+                   "	pago_det.IdPagoEnc as NoPago, " & _
+                   "	pago_det.IdPagoDet, " & _
+                   "	pago_det.IdDescuentoEnc, " & _
+                   "	pago_det.IdDescuentoDet, " & _
+                   "	pago_det.IdDescuentoRef " & _
+                   " FROM " & _
+                   "	pago_enc " & _
+                   " INNER JOIN pago_det ON pago_enc.IdPagoEnc = pago_det.IdPagoEnc " & _
+                   " INNER JOIN descuento_ref ON pago_det.IdDescuentoRef = descuento_ref.IdDescuentoRef " & _
+                   " INNER JOIN franquiciado ON pago_enc.IdFranquiciado = franquiciado.IdFranquiciado " & _
+                   " INNER JOIN cef ON pago_enc.IdCEF = cef.IdCef " & _
+                   " INNER JOIN beneficio ON pago_det.IdBeneficio = beneficio.IdBeneficio " & _
+                   " WHERE cast(pago_enc.FechaPago AS DATE) BETWEEN " & FormatoFechas.fFecha(dtpFechaDesde.Value) & _
+                   " AND " & FormatoFechas.fFecha(dtpFechaHasta.Value)
 
             If txtFiltro.Text.Trim <> "" Then
                 vSQL += "AND (franquiciado.Codigo LIKE '%" & txtFiltro.Text.Trim & "%'" & _
                     " OR ( franquiciado.Nombres LIKE '%" & txtFiltro.Text.Trim & "%'" & _
-                    " OR ( b.NoChasis LIKE '%" & txtFiltro.Text.Trim & "%'" & _
-                    " OR ( b.Motor LIKE '%" & txtFiltro.Text.Trim & "%'" & _
+                    " OR ( beneficio.NoChasis LIKE '%" & txtFiltro.Text.Trim & "%'" & _
+                    " OR ( beneficio.Motor LIKE '%" & txtFiltro.Text.Trim & "%'" & _
                     " OR ( cef.Codigo LIKE '%" & txtFiltro.Text.Trim & "%')"
             End If
 
             If chkActivo.Checked Then
-                vSQL += "AND  descuento_enc.IdDescuentoEnc in " & _
-                    " (select iddescuentoenc from descuento_det where activo =1) " & _
-                    " AND (r.Anulada=0)"
+                vSQL += "AND (Pago_Enc.Anulado =0) " & _
+                    " AND (descuento_ref.Anulada=0)"
             End If
 
-            If pIdFranquiciado <> 0 Then
-                vSQL += " AND franquiciado.IdFranquiciado=" & pIdFranquiciado
-            End If
+            vSQL += "Order by  descuento_ref.FechaCobro,pago_enc.FechaPago,franquiciado.Codigo "
+
 
             Dim DT As New DataTable
             BD.OpenDT(DT, vSQL)
@@ -167,27 +146,43 @@ Public Class frmRepEstadoCuentaDef
 
             Application.DoEvents()
 
-            If GridView1.Columns.Count = 0 Then Exit Sub
+            If GridView1.Columns.Count = 0 AndAlso GridView1.RowCount = 0 Then Exit Sub
 
-            GridView1.Columns("CEF").GroupIndex = 0
-            GridView1.Columns("Franquiciado").GroupIndex = 1
+            'GridView1.Columns("CEF").GroupIndex = 0
+            'GridView1.Columns("Franquiciado").GroupIndex = 1
 
-            GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+            GridView1.Columns("MontoCuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("MontoCuota").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+            GridView1.Columns("MontoCuota").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("MontoCuota").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+            GridView1.Columns("MontoAbono").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("MontoAbono").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+            GridView1.Columns("MontoAbono").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("MontoAbono").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-            GridView1.Columns("FechaDescuento").DisplayFormat.FormatString = "dd/MM/yyyy"
+            GridView1.Columns("SaldoCuota").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("SaldoCuota").SummaryItem.DisplayFormat = "{0:n2}"
+            GridView1.Columns("SaldoCuota").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("SaldoCuota").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.ExpandAllGroups()
+            GridView1.Columns("FechaCobro").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+            GridView1.Columns("FechaCobro").DisplayFormat.FormatString = "dd/MM/yyyy"
+
+            GridView1.Columns("FechaPago").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+            GridView1.Columns("FechaPago").DisplayFormat.FormatString = "dd/MM/yyyy"
+
+            'GridView1.Columns("NoPago").Visible = False
+            GridView1.Columns("IdPagoDet").Visible = False
+            GridView1.Columns("IdDescuentoEnc").Visible = False
+            GridView1.Columns("IdDescuentoDet").Visible = False
+            GridView1.Columns("IdDescuentoRef").Visible = False
+
+            'GridView1.ExpandAllGroups()
+
+            GridView1.BestFitColumns()
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -214,7 +209,7 @@ Public Class frmRepEstadoCuentaDef
 
             'Llenar_Grid()
 
-            'If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
+            If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
 
             If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then GridView1.RestoreLayoutFromXml(CurDir() & "\" & Nom_Rep & ".xml")
 
@@ -248,28 +243,14 @@ Public Class frmRepEstadoCuentaDef
 
     Private Sub GridView1_RowStyle(ByVal sender As Object, ByVal e As DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs) Handles GridView1.RowStyle
 
-        Try
-
-            If chkColorfocus.Checked Then
-
-                Dim View As GridView = sender
-
-                If (e.RowHandle >= 0) Then
-
-                    Dim category As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
-
-                    If Val(category) = 0 Then
-                        e.Appearance.BackColor = Color.Salmon
-                        e.Appearance.BackColor2 = Color.SeaShell
-                    End If
-                End If
-
-
-            End If
-
-        Catch ex As Exception
-
-        End Try
+        'Dim View As GridView = sender
+        'If (e.RowHandle >= 0) Then
+        '    Dim category As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
+        '    If category = "0.00" Then
+        '        e.Appearance.BackColor = Color.Salmon
+        '        e.Appearance.BackColor2 = Color.SeaShell
+        '    End If
+        'End If
 
     End Sub
 

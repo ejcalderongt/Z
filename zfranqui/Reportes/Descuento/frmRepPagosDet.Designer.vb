@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmRepDescuentoFran
+Partial Class frmPagosDet
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -40,7 +40,6 @@ Partial Class frmRepDescuentoFran
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
-        Me.chkColorfocus = New System.Windows.Forms.CheckBox()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,7 +152,7 @@ Partial Class frmRepDescuentoFran
         Me.GroupBox1.Controls.Add(Me.dtpFechaDesde)
         Me.GroupBox1.Location = New System.Drawing.Point(263, 51)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(320, 87)
+        Me.GroupBox1.Size = New System.Drawing.Size(320, 99)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Fecha en la que se generó el descuento"
@@ -162,7 +161,7 @@ Partial Class frmRepDescuentoFran
         '
         Me.chkActivo.Checked = True
         Me.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkActivo.Location = New System.Drawing.Point(610, 36)
+        Me.chkActivo.Location = New System.Drawing.Point(610, 75)
         Me.chkActivo.Name = "chkActivo"
         Me.chkActivo.Size = New System.Drawing.Size(179, 52)
         Me.chkActivo.TabIndex = 10
@@ -174,12 +173,7 @@ Partial Class frmRepDescuentoFran
         '
         Me.Dgrid.Cursor = System.Windows.Forms.Cursors.Default
         Me.Dgrid.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Dgrid.EmbeddedNavigator.Appearance.BackColor = System.Drawing.SystemColors.ActiveCaption
-        Me.Dgrid.EmbeddedNavigator.Appearance.BorderColor = System.Drawing.SystemColors.ActiveCaption
-        Me.Dgrid.EmbeddedNavigator.Appearance.Options.UseBackColor = True
-        Me.Dgrid.EmbeddedNavigator.Appearance.Options.UseBorderColor = True
         Me.Dgrid.Location = New System.Drawing.Point(0, 221)
-        Me.Dgrid.LookAndFeel.SkinName = "DevExpress Dark Style"
         Me.Dgrid.MainView = Me.GridView1
         Me.Dgrid.MenuManager = Me.BarManager1
         Me.Dgrid.Name = "Dgrid"
@@ -205,23 +199,11 @@ Partial Class frmRepDescuentoFran
         Me.txtFiltro.TabIndex = 18
         Me.txtFiltro.Tag = "Buscar..."
         '
-        'chkColorfocus
-        '
-        Me.chkColorfocus.Checked = True
-        Me.chkColorfocus.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkColorfocus.Location = New System.Drawing.Point(610, 94)
-        Me.chkColorfocus.Name = "chkColorfocus"
-        Me.chkColorfocus.Size = New System.Drawing.Size(179, 52)
-        Me.chkColorfocus.TabIndex = 23
-        Me.chkColorfocus.Text = "Color Focus"
-        Me.chkColorfocus.UseVisualStyleBackColor = True
-        '
-        'frmRepDescuentoFran
+        'frmPagosDet
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1052, 652)
-        Me.Controls.Add(Me.chkColorfocus)
         Me.Controls.Add(Me.txtFiltro)
         Me.Controls.Add(Me.Dgrid)
         Me.Controls.Add(Me.chkActivo)
@@ -230,9 +212,9 @@ Partial Class frmRepDescuentoFran
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
-        Me.Name = "frmRepDescuentoFran"
+        Me.Name = "frmPagosDet"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Reporte: Resumen de  descuentos por franquiciado"
+        Me.Text = "Reporte detalle de pagos"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
@@ -260,5 +242,4 @@ Partial Class frmRepDescuentoFran
     Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
     Friend WithEvents Dgrid As DevExpress.XtraGrid.GridControl
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
-    Friend WithEvents chkColorfocus As System.Windows.Forms.CheckBox
 End Class

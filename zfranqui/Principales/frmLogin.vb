@@ -291,6 +291,10 @@ Public Class frmLogin
                     Process.Start(CurDir() & "\conn.ini", IO.FileMode.Open)
                     AbrioIni = True
                 End If
+            ElseIf e.Control = True AndAlso e.KeyCode = Keys.U Then
+                If MsgBox(CurDir() & vbNewLine & "¿Abrir?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes Then
+                    Process.Start(CurDir(), IO.FileMode.Open)
+                End If
             End If
 
         Catch ex As Exception

@@ -108,7 +108,7 @@
         Try
 
             vSQL = " SELECT " & _
-                "	cast(descuento_enc.fec_agr AS DATE) AS FechaDescuento, " & _
+                "	cast(r.FechaCobro AS DATE) AS FechaDescuento, " & _
                 "	b.Nombre, " & _
                 "	b.Modelo, " & _
                 "	b.NoChasis, " & _

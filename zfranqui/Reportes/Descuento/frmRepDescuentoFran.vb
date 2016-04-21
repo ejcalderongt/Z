@@ -111,7 +111,7 @@ Public Class frmRepDescuentoFran
         Try
 
             vSQL = "    SELECT " & _
-                   "	descuento_enc.fec_agr AS FechaDescuento, " & _
+                   "	r.FechaCobro AS FechaDescuento, " & _
                    "	b.Nombre, " & _
                    "	b.Modelo, " & _
                    "	b.NoChasis, " & _
@@ -124,6 +124,7 @@ Public Class frmRepDescuentoFran
                    "	tp.EsServicio, " & _
                    "	descuento_det.MontoTotal AS Monto, " & _
                    "	SUM(r.Abonado) AS Abonado, " & _
+                   "	(descuento_det.MontoTotal) -  SUM(r.Abonado)  as Saldo, " & _
                    "	tipodescuento.Nombre AS TipoDescuento, " & _
                    "	CONCAT( " & _
                    "		franquiciado.Codigo, " & _
@@ -192,7 +193,7 @@ Public Class frmRepDescuentoFran
 
             Application.DoEvents()
 
-            If GridView1.Columns.Count = 0 Then Exit Sub
+            If GridView1.Columns.Count = 0 OrElse GridView1.RowCount = 0 Then Exit Sub
 
             GridView1.Columns("CEF").GroupIndex = 0
             GridView1.Columns("Franquiciado").GroupIndex = 1
@@ -206,13 +207,29 @@ Public Class frmRepDescuentoFran
             GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
             GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
 
+            GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
+
+            GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+
             GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
             GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
 
             GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
             GridView1.Columns("FechaDescuento").DisplayFormat.FormatString = "dd/MM/yyyy"
 
+            Try
+
+                GridView1.BestFitColumns()
+
+            Catch ex As Exception
+
+            End Try
+
+
             GridView1.ExpandAllGroups()
+
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -274,14 +291,35 @@ Public Class frmRepDescuentoFran
     Private Sub GridView1_RowStyle(ByVal sender As Object, _
 ByVal e As DevExpress.XtraGrid.Views.Grid.RowStyleEventArgs) Handles GridView1.RowStyle
 
-        Dim View As GridView = sender
-        If (e.RowHandle >= 0) Then
-            Dim category As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
-            If category = "0.00" Then
-                e.Appearance.BackColor = Color.Salmon
-                e.Appearance.BackColor2 = Color.SeaShell
+        Try
+
+            If chkColorfocus.Checked Then
+
+                Dim View As GridView = sender
+
+                If (e.RowHandle >= 0) Then
+
+                    'Dim Abonado As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Abonado"))
+                    'Dim Monto As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Monto"))
+                    Dim Saldo As String = View.GetRowCellDisplayText(e.RowHandle, View.Columns("Saldo"))
+
+                    If Val(Saldo) <> 0 Then
+                        e.Appearance.BackColor = Color.Salmon
+                        e.Appearance.BackColor2 = Color.SeaShell
+                    Else
+                        e.Appearance.BackColor = Color.GreenYellow
+                        e.Appearance.BackColor2 = Color.LightGreen
+                    End If
+
+                End If
+
             End If
-        End If
+            
+
+        Catch ex As Exception
+
+        End Try
+        
 
     End Sub
 

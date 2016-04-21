@@ -178,6 +178,8 @@
 
             End Select
 
+            GridView1.BestFitColumns()
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

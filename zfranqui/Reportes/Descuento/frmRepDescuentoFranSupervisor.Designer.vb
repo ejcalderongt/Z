@@ -54,6 +54,7 @@ Partial Class frmRepDescuentoFranSupervisor
         Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colSupervisor = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
+        Me.chkColorfocus = New System.Windows.Forms.CheckBox()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -175,7 +176,7 @@ Partial Class frmRepDescuentoFranSupervisor
         '
         Me.chkActivo.Checked = True
         Me.chkActivo.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.chkActivo.Location = New System.Drawing.Point(609, 78)
+        Me.chkActivo.Location = New System.Drawing.Point(612, 36)
         Me.chkActivo.Name = "chkActivo"
         Me.chkActivo.Size = New System.Drawing.Size(179, 52)
         Me.chkActivo.TabIndex = 10
@@ -324,11 +325,23 @@ Partial Class frmRepDescuentoFranSupervisor
         Me.txtFiltro.TabIndex = 18
         Me.txtFiltro.Tag = "Buscar..."
         '
+        'chkColorfocus
+        '
+        Me.chkColorfocus.Checked = True
+        Me.chkColorfocus.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.chkColorfocus.Location = New System.Drawing.Point(612, 94)
+        Me.chkColorfocus.Name = "chkColorfocus"
+        Me.chkColorfocus.Size = New System.Drawing.Size(179, 52)
+        Me.chkColorfocus.TabIndex = 24
+        Me.chkColorfocus.Text = "Color Focus"
+        Me.chkColorfocus.UseVisualStyleBackColor = True
+        '
         'frmRepDescuentoFranSupervisor
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1052, 652)
+        Me.Controls.Add(Me.chkColorfocus)
         Me.Controls.Add(Me.txtFiltro)
         Me.Controls.Add(Me.Dgrid)
         Me.Controls.Add(Me.chkActivo)
@@ -381,4 +394,5 @@ Partial Class frmRepDescuentoFranSupervisor
     Friend WithEvents colFranquiciado1 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colMonto As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colSupervisor As DevExpress.XtraGrid.Columns.GridColumn
+    Friend WithEvents chkColorfocus As System.Windows.Forms.CheckBox
 End Class
