@@ -20,30 +20,48 @@ Public Class frmCargaExcel
         Try
 
             Dim ObjO As New OpenFileDialog()
+
             ObjO.Filter = "All Files|*.*|Excel Files(.xls)|*.xls|Excel Files(.xlsx)|*.xlsx|Excel Files(*.xlsm)|*.xlsm"
+
             If ObjO.ShowDialog() = System.Windows.Forms.DialogResult.OK AndAlso ObjO.FileName.Length <> 0 Then
+
                 txtArchivo.Text = ObjO.FileName
+
+                MsgBox("Archivo: " & ObjO.FileName)
+
                 CargaHojas(ObjO.FileName)
+
             End If
 
         Catch ex As Exception
-            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            XtraMessageBox.Show("SelArchivo " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
 
     End Sub
 
     Private Sub CargaHojas(ByVal pFileName As String)
 
+        Dim Lugar As Integer = 0
+
         DsExcel.Clear()
         Grid.BeginUpdate()
+
         Dim xlApp As New Excel.Application
+
+        Lugar = 1
 
         Try
 
             xlApp.Workbooks.Open(pFileName)
+
+            Lugar += 1
+
             pListObj = New List(Of clsExcel)
 
+            Lugar += 1
+
             Dim i As Integer = -1
+
             For Each sheet As Excel.Worksheet In xlApp.Worksheets
                 i += 1
                 Dim ObjE As New clsExcel()
@@ -53,14 +71,22 @@ Public Class frmCargaExcel
                 pListObj.Add(ObjE)
             Next
 
+            Lugar += 1
+
             If pListObj.Count > 0 Then
+
                 For Each Obj As clsExcel In pListObj
+
                     Dim lRow As DataRow = DsExcel.Data.NewRow
                     lRow.Item("Hoja") = Obj.NombreHoja
                     lRow.Item("Seleccionar") = False
                     DsExcel.Data.AddDataRow(lRow)
+
                 Next
+
             End If
+
+            Lugar += 1
 
             'Dim app As Excel.Application = Nothing
             'app = New Excel.Application()
@@ -72,11 +98,16 @@ Public Class frmCargaExcel
 
             Grid.EndUpdate()
             Grid.ForceInitialize()
+
+            Lugar += 1
+
             Dim ritem As RepositoryItemCheckEdit = TryCast(GridView1.Columns("Seleccionar").RealColumnEdit, RepositoryItemCheckEdit)
             AddHandler ritem.CheckedChanged, AddressOf ritem_CheckedChanged
 
+            Lugar += 1
+
         Catch ex As Exception
-            MsgBox(ex, MsgBoxStyle.Information, Me.Text)
+            MsgBox("CargaHojas :L#" & Lugar & " " & ex.Message, MsgBoxStyle.Information, Me.Text)
         Finally
             If Not xlApp Is Nothing Then xlApp.Quit()
             Runtime.InteropServices.Marshal.ReleaseComObject(xlApp)
@@ -119,12 +150,14 @@ Public Class frmCargaExcel
             End If
 
         Catch ex As Exception
-            Throw ex
+            MsgBox(ex.Message)
         End Try
 
     End Sub
 
     Private Sub CargaArchivo()
+
+        Dim Lugar As Integer = 0
 
         Try
 
@@ -132,18 +165,36 @@ Public Class frmCargaExcel
             Dim dte As New DataTable("Encabezado")
             Dim dtd As New DataTable("Detalle")
 
+            Lugar = 1
+
             If pListObj IsNot Nothing Then
+
                 MsgBox("Dependiendo de la cantidad de datos serà el tiempo estimado para cargar el archivo", MsgBoxStyle.Information, Me.Text)
+
+                Lugar += 1
+
                 For Each Obj As clsExcel In pListObj
+
                     Application.DoEvents()
 
                     Try
 
+                        Lugar = 2
+
                         Dim lConn As String = String.Format("Provider=Microsoft.ACE.OLEDB.12.0; Data Source={0}; Extended Properties=""Excel 12.0;HDR=NO;IMEX= 0""", txtArchivo.Text.Trim)
 
+                        Lugar = 3
+
                         Using lConnection As New OleDbConnection(lConn)
+
+                            Lugar = 4
+
                             Using lDataAdapter As New OleDbDataAdapter(String.Format("SELECT * FROM [{0}$]", Obj.NombreHoja.Trim()), lConnection)
+
+                                Lugar = 5
+
                                 lDataAdapter.SelectCommand.CommandType = CommandType.Text
+
                                 Select Case Obj.Index
                                     Case 0
                                         lDataAdapter.Fill(dtb)
@@ -155,12 +206,20 @@ Public Class frmCargaExcel
                                         lDataAdapter.Fill(dtd)
                                         CargarDetalle(dtd)
                                 End Select
+
+
                             End Using
+
+                            Lugar = 6
+
                         End Using
+
+                        Lugar = 7
 
                     Catch ex As Exception
 
-                        XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        XtraMessageBox.Show("CargaArchivo_1Try L#" & Lugar & " " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
                         'Dim cnn As String = String.Format("Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=""Excel 8.0;HDR=Yes;IMEX=1""", txtArchivo.Text.Trim)
 
                         'Using lConnection As New OleDbConnection(cnn)
@@ -182,14 +241,22 @@ Public Class frmCargaExcel
 
                     End Try
 
+                    Lugar = 8
+
                 Next
+
+                Lugar = 9
+
                 GuardaDatos()
+
+                Lugar = 10
+
             End If
 
             'Dim Obj As clsExcel = pListObj.Find(Function(s) s.Checked = True)
 
         Catch ex As Exception
-            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            XtraMessageBox.Show("CargaArchivo_1Try L#" & Lugar & " " & ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
 
     End Sub
@@ -646,4 +713,7 @@ Public Class frmCargaExcel
 
     End Sub
 
+    Private Sub txtArchivo_EditValueChanged(sender As Object, e As EventArgs) Handles txtArchivo.EditValueChanged
+
+    End Sub
 End Class
