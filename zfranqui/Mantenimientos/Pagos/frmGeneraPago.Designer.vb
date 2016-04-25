@@ -23,16 +23,16 @@ Partial Class frmGeneraPago
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
-        Dim Label2 As System.Windows.Forms.Label
-        Dim Label5 As System.Windows.Forms.Label
+        Dim lblAbono As System.Windows.Forms.Label
+        Dim lblMontoCancelar As System.Windows.Forms.Label
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
         Me.cmdGuardarPago = New System.Windows.Forms.Button()
         Me.txtMontoCancelar = New System.Windows.Forms.NumericUpDown()
-        Me.Label1 = New System.Windows.Forms.Label()
+        Me.lblFechaPago = New System.Windows.Forms.Label()
         Me.dtmFechaPago = New System.Windows.Forms.DateTimePicker()
-        Me.Label3 = New System.Windows.Forms.Label()
+        Me.lblFechaCobro = New System.Windows.Forms.Label()
         Me.dtmFechaCobro = New System.Windows.Forms.DateTimePicker()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.lblCuota = New System.Windows.Forms.Label()
         Me.txtAbono = New System.Windows.Forms.NumericUpDown()
         Me.txtCuota = New System.Windows.Forms.NumericUpDown()
         Me.GroupControl2 = New DevExpress.XtraEditors.GroupControl()
@@ -50,8 +50,8 @@ Partial Class frmGeneraPago
         Me.BarStaticItem1 = New DevExpress.XtraBars.BarStaticItem()
         Me.lblInformacionBeneficio = New System.Windows.Forms.Label()
         Me.lblTipoPeriodo = New System.Windows.Forms.Label()
-        Label2 = New System.Windows.Forms.Label()
-        Label5 = New System.Windows.Forms.Label()
+        lblAbono = New System.Windows.Forms.Label()
+        lblMontoCancelar = New System.Windows.Forms.Label()
         CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupControl1.SuspendLayout()
         CType(Me.txtMontoCancelar, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -64,37 +64,37 @@ Partial Class frmGeneraPago
         CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
-        'Label2
+        'lblAbono
         '
-        Label2.AutoSize = True
-        Label2.Location = New System.Drawing.Point(12, 135)
-        Label2.Name = "Label2"
-        Label2.Size = New System.Drawing.Size(41, 13)
-        Label2.TabIndex = 3
-        Label2.Text = "Abono:"
+        lblAbono.AutoSize = True
+        lblAbono.Location = New System.Drawing.Point(12, 135)
+        lblAbono.Name = "lblAbono"
+        lblAbono.Size = New System.Drawing.Size(41, 13)
+        lblAbono.TabIndex = 3
+        lblAbono.Text = "Abono:"
         '
-        'Label5
+        'lblMontoCancelar
         '
-        Label5.AutoSize = True
-        Label5.Location = New System.Drawing.Point(12, 109)
-        Label5.Name = "Label5"
-        Label5.Size = New System.Drawing.Size(85, 13)
-        Label5.TabIndex = 15
-        Label5.Text = "Monto Cancelar:"
+        lblMontoCancelar.AutoSize = True
+        lblMontoCancelar.Location = New System.Drawing.Point(12, 109)
+        lblMontoCancelar.Name = "lblMontoCancelar"
+        lblMontoCancelar.Size = New System.Drawing.Size(85, 13)
+        lblMontoCancelar.TabIndex = 15
+        lblMontoCancelar.Text = "Monto Cancelar:"
         '
         'GroupControl1
         '
         Me.GroupControl1.Controls.Add(Me.cmdGuardarPago)
         Me.GroupControl1.Controls.Add(Me.txtMontoCancelar)
-        Me.GroupControl1.Controls.Add(Label5)
-        Me.GroupControl1.Controls.Add(Me.Label1)
+        Me.GroupControl1.Controls.Add(lblMontoCancelar)
+        Me.GroupControl1.Controls.Add(Me.lblFechaPago)
         Me.GroupControl1.Controls.Add(Me.dtmFechaPago)
-        Me.GroupControl1.Controls.Add(Me.Label3)
+        Me.GroupControl1.Controls.Add(Me.lblFechaCobro)
         Me.GroupControl1.Controls.Add(Me.dtmFechaCobro)
-        Me.GroupControl1.Controls.Add(Me.Label4)
+        Me.GroupControl1.Controls.Add(Me.lblCuota)
         Me.GroupControl1.Controls.Add(Me.txtAbono)
         Me.GroupControl1.Controls.Add(Me.txtCuota)
-        Me.GroupControl1.Controls.Add(Label2)
+        Me.GroupControl1.Controls.Add(lblAbono)
         Me.GroupControl1.Location = New System.Drawing.Point(2, 79)
         Me.GroupControl1.Name = "GroupControl1"
         Me.GroupControl1.Size = New System.Drawing.Size(704, 192)
@@ -122,15 +122,15 @@ Partial Class frmGeneraPago
         Me.txtMontoCancelar.Size = New System.Drawing.Size(159, 20)
         Me.txtMontoCancelar.TabIndex = 14
         '
-        'Label1
+        'lblFechaPago
         '
-        Me.Label1.AutoSize = True
-        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label1.Location = New System.Drawing.Point(12, 85)
-        Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(68, 13)
-        Me.Label1.TabIndex = 13
-        Me.Label1.Text = "Fecha Pago:"
+        Me.lblFechaPago.AutoSize = True
+        Me.lblFechaPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFechaPago.Location = New System.Drawing.Point(12, 85)
+        Me.lblFechaPago.Name = "lblFechaPago"
+        Me.lblFechaPago.Size = New System.Drawing.Size(68, 13)
+        Me.lblFechaPago.TabIndex = 13
+        Me.lblFechaPago.Text = "Fecha Pago:"
         '
         'dtmFechaPago
         '
@@ -145,15 +145,15 @@ Partial Class frmGeneraPago
         Me.dtmFechaPago.Size = New System.Drawing.Size(159, 20)
         Me.dtmFechaPago.TabIndex = 0
         '
-        'Label3
+        'lblFechaCobro
         '
-        Me.Label3.AutoSize = True
-        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label3.Location = New System.Drawing.Point(12, 59)
-        Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(71, 13)
-        Me.Label3.TabIndex = 11
-        Me.Label3.Text = "Fecha Cobro:"
+        Me.lblFechaCobro.AutoSize = True
+        Me.lblFechaCobro.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFechaCobro.Location = New System.Drawing.Point(12, 59)
+        Me.lblFechaCobro.Name = "lblFechaCobro"
+        Me.lblFechaCobro.Size = New System.Drawing.Size(71, 13)
+        Me.lblFechaCobro.TabIndex = 11
+        Me.lblFechaCobro.Text = "Fecha Cobro:"
         '
         'dtmFechaCobro
         '
@@ -169,15 +169,15 @@ Partial Class frmGeneraPago
         Me.dtmFechaCobro.Size = New System.Drawing.Size(159, 20)
         Me.dtmFechaCobro.TabIndex = 10
         '
-        'Label4
+        'lblCuota
         '
-        Me.Label4.AutoSize = True
-        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Label4.Location = New System.Drawing.Point(12, 31)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(38, 13)
-        Me.Label4.TabIndex = 9
-        Me.Label4.Text = "Cuota:"
+        Me.lblCuota.AutoSize = True
+        Me.lblCuota.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCuota.Location = New System.Drawing.Point(12, 31)
+        Me.lblCuota.Name = "lblCuota"
+        Me.lblCuota.Size = New System.Drawing.Size(38, 13)
+        Me.lblCuota.TabIndex = 9
+        Me.lblCuota.Text = "Cuota:"
         '
         'txtAbono
         '
@@ -370,7 +370,7 @@ Partial Class frmGeneraPago
     Friend WithEvents GridView1 As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents txtAbono As System.Windows.Forms.NumericUpDown
     Friend WithEvents txtCuota As System.Windows.Forms.NumericUpDown
-    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents lblCuota As System.Windows.Forms.Label
     Friend WithEvents BarManager As DevExpress.XtraBars.BarManager
     Friend WithEvents Bar2 As DevExpress.XtraBars.Bar
     Friend WithEvents cmdGrabar As DevExpress.XtraBars.BarButtonItem
@@ -381,9 +381,9 @@ Partial Class frmGeneraPago
     Friend WithEvents barDockControlRight As DevExpress.XtraBars.BarDockControl
     Friend WithEvents BarStaticItem1 As DevExpress.XtraBars.BarStaticItem
     Friend WithEvents cmdCancelar As DevExpress.XtraBars.BarButtonItem
-    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents lblFechaPago As System.Windows.Forms.Label
     Friend WithEvents dtmFechaPago As System.Windows.Forms.DateTimePicker
-    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents lblFechaCobro As System.Windows.Forms.Label
     Friend WithEvents dtmFechaCobro As System.Windows.Forms.DateTimePicker
     Friend WithEvents txtMontoCancelar As System.Windows.Forms.NumericUpDown
     Friend WithEvents cmdGuardarPago As System.Windows.Forms.Button

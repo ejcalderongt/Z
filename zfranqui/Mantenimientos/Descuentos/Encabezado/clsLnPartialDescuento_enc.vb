@@ -261,7 +261,7 @@ Partial Public Class clsLnDescuento_enc
         Try
             Dim lSQl As String = String.Format("SELECT det.IdDescuentoEnc,det.IdDescuentoDet,det.IdBeneficio,b.Nombre,b.Modelo," _
                                              & "b.NoPlaca AS 'No. Placa', b.NoChasis AS 'No. Chasis', b.NumeroTelefono AS 'No. Telefono', b.EmpresaTelco AS Empresa, det.Cuotas, det.MontoTotal AS 'Monto Total', " _
-                                             & "tp.Nombre AS Periodo " _
+                                             & "tp.Nombre AS Periodo,tp.IdTipoDescuento " _
                                              & "FROM descuento_enc AS enc  " _
                                              & "INNER JOIN descuento_det AS det ON enc.IdDescuentoEnc = det.IdDescuentoEnc " _
                                              & "INNER JOIN beneficio AS b ON det.IdBeneficio = b.IdBeneficio " _
