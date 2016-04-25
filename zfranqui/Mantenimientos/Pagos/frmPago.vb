@@ -235,6 +235,7 @@ Public Class frmPago
                 GridViewDescuento.Columns("IdDescuentoEnc").Visible = False
                 GridViewDescuento.Columns("IdDescuentoDet").Visible = False
                 GridViewDescuento.Columns("IdBeneficio").Visible = False
+                GridViewDescuento.Columns("IdTipoDescuento").Visible = False
 
                 GridViewDescuento.Columns("Periodo").GroupIndex = 3
 
@@ -354,9 +355,23 @@ Public Class frmPago
                                                              Dr.Item("No. Chasis"), Dr.Item("No. Telefono"), Dr.Item("Empresa")).ToString.Trim()
 
                     Dim lTipoPeriodo As String = Dr.Item("Periodo").ToString.Trim
+                    Dim lIdTipoDescuento As Integer = CInt(Dr.Item("IdTipoDescuento"))
 
                     Dim Pago As New frmGeneraPago
                     'Pago.pListObjDet = clsLnPago_det.GetAllByPagoEnc(Obj.IdDescuentoEnc, Obj.IdDescuentoDet)
+                    If lIdTipoDescuento = 3 Then
+                        Pago.lblCuota.Visible = False
+                        Pago.txtCuota.Visible = False
+                        Pago.Text = "Pago´Único"
+                    ElseIf lIdTipoDescuento = 2 Then
+                        Pago.Text = "Pago Indefinido"
+                        Pago.lblCuota.Visible = True
+                        Pago.txtCuota.Visible = True
+                    ElseIf lIdTipoDescuento = 1 Then
+                        Pago.Text = "Pago Definido"
+                        Pago.lblCuota.Visible = True
+                        Pago.txtCuota.Visible = True
+                    End If
                     Pago.pObj = Obj
                     Pago.pListObjDet = ListObjPago
                     Pago.pListObjRef = ListObjRef

@@ -159,27 +159,7 @@ Public Class frmCargaExcel
                         End Using
 
                     Catch ex As Exception
-
-                        XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
-                        'Dim cnn As String = String.Format("Provider=Microsoft.Jet.OLEDB.4.0;Data Source={0};Extended Properties=""Excel 8.0;HDR=Yes;IMEX=1""", txtArchivo.Text.Trim)
-
-                        'Using lConnection As New OleDbConnection(cnn)
-                        '    Using lDataAdapter As New OleDbDataAdapter(String.Format("SELECT * FROM [{0}$]", Obj.NombreHoja.Trim()), lConnection)
-                        '        lDataAdapter.SelectCommand.CommandType = CommandType.Text
-                        '        Select Case Obj.Index
-                        '            Case 0
-                        '                lDataAdapter.Fill(dtb)
-                        '                CargarBeneficios(dtb)
-                        '            Case 1
-                        '                lDataAdapter.Fill(dte)
-                        '                CargarEncabezado(dte)
-                        '            Case 2
-                        '                lDataAdapter.Fill(dtd)
-                        '                CargarDetalle(dtd)
-                        '        End Select
-                        '    End Using
-                        'End Using
-
+                        Throw ex
                     End Try
 
                 Next
@@ -646,4 +626,7 @@ Public Class frmCargaExcel
 
     End Sub
 
+    Private Sub cmdSalir_Click(sender As Object, e As EventArgs) Handles cmdSalir.Click
+        Me.Close()
+    End Sub
 End Class

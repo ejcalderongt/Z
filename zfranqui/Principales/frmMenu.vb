@@ -741,9 +741,9 @@ Public Class frmMenu
     End Sub
 
     Private Sub mnuPagosOperados_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuPagosOperados.ItemClick
-        Dim PagosDet As New frmPagosDet()
-        PagosDet.ShowDialog()
-        PagosDet.Dispose()
+        'Dim PagosDet As New frmPagosDet()
+        'PagosDet.ShowDialog()
+        'PagosDet.Dispose()
     End Sub
 
 End Class

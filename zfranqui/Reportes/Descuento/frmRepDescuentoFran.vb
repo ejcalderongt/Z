@@ -193,43 +193,44 @@ Public Class frmRepDescuentoFran
 
             Application.DoEvents()
 
-            If GridView1.Columns.Count = 0 OrElse GridView1.RowCount = 0 Then Exit Sub
+            'If GridView1.Columns.Count = 0 OrElse GridView1.RowCount = 0 Then Exit Sub
+            If GridView1.Columns.Count > 0 AndAlso GridView1.RowCount > 0 Then
 
-            GridView1.Columns("CEF").GroupIndex = 0
-            GridView1.Columns("Franquiciado").GroupIndex = 1
+                GridView1.Columns("CEF").GroupIndex = 0
+                GridView1.Columns("Franquiciado").GroupIndex = 1
 
-            GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
+                GridView1.Columns("Monto").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridView1.Columns("Monto").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
+                GridView1.Columns("Abonado").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridView1.Columns("Abonado").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
+                GridView1.Columns("Monto").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                GridView1.Columns("Monto").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
+                GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
-            GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+                GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
 
-            GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
-            GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+                GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
 
-            GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
-            GridView1.Columns("FechaDescuento").DisplayFormat.FormatString = "dd/MM/yyyy"
+                GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
+                GridView1.Columns("FechaDescuento").DisplayFormat.FormatString = "dd/MM/yyyy"
 
-            Try
+                Try
 
-                GridView1.BestFitColumns()
+                    GridView1.BestFitColumns()
 
-            Catch ex As Exception
+                Catch ex As Exception
+                    Throw ex
+                End Try
 
-            End Try
+                GridView1.ExpandAllGroups()
 
-
-            GridView1.ExpandAllGroups()
-
+            End If
 
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -254,7 +255,7 @@ Public Class frmRepDescuentoFran
 
         Try
 
-            'Llenar_Grid()
+            Llenar_Grid()
 
             If IO.File.Exists(CurDir() & "\" & Nom_Rep & ".xml") Then IO.File.Delete(CurDir() & "\" & Nom_Rep & ".xml")
 
