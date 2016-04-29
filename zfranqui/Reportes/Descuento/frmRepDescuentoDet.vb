@@ -110,7 +110,7 @@
 
             Dim lSQL As String = String.Format("SELECT b.Nombre,b.Modelo,b.NoChasis, b.NoPlaca,b.Motor,b.NumeroTelefono, " _
                                                      & " b.EmpresaTelco, tp.EsVehiculo, tp.EsTelefono, tp.EsServicio, r.FechaCobro, r.NoCuota, r.Monto, " _
-                                                     & "r.Abonado, r.pagada, tipodescuento.Nombre AS TipoDescuento " _
+                                                     & "r.Abonado, (r.Monto - r.Abonado) as Saldo, r.pagada, tipodescuento.Nombre AS TipoDescuento " _
                                                      & "FROM descuento_ref AS r " _
                                                      & "INNER JOIN descuento_det AS det ON r.IdDescuentoEnc= det.IdDescuentoEnc " _
                                                      & "AND r.IdDescuentoDet = det.IdDescuentoDet " _

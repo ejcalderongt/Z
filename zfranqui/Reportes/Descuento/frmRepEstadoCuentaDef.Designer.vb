@@ -52,6 +52,7 @@ Partial Class frmRepEstadoCuentaDef
         Me.colMonto = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colSaldo = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
         Me.chkColorfocus = New System.Windows.Forms.CheckBox()
         CType(Me.BarManager1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -197,10 +198,10 @@ Partial Class frmRepEstadoCuentaDef
         '
         'GridView1
         '
-        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colCEF, Me.colFranquiciado1, Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colAbonado, Me.colTipoDescuento})
+        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colCEF, Me.colFranquiciado1, Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colAbonado, Me.colSaldo, Me.colTipoDescuento})
         Me.GridView1.GridControl = Me.Dgrid
         Me.GridView1.GroupCount = 2
-        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}")})
+        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Saldo", Me.colSaldo, "{0:n2}")})
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsView.ShowFooter = True
         Me.GridView1.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colCEF, DevExpress.Data.ColumnSortOrder.Ascending), New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colFranquiciado1, DevExpress.Data.ColumnSortOrder.Ascending)})
@@ -224,14 +225,14 @@ Partial Class frmRepEstadoCuentaDef
         Me.colFechaDescuento.FieldName = "FechaDescuento"
         Me.colFechaDescuento.Name = "colFechaDescuento"
         Me.colFechaDescuento.Visible = True
-        Me.colFechaDescuento.VisibleIndex = 0
+        Me.colFechaDescuento.VisibleIndex = 1
         '
         'colNombre
         '
         Me.colNombre.FieldName = "Nombre"
         Me.colNombre.Name = "colNombre"
         Me.colNombre.Visible = True
-        Me.colNombre.VisibleIndex = 1
+        Me.colNombre.VisibleIndex = 0
         '
         'colModelo
         '
@@ -252,7 +253,7 @@ Partial Class frmRepEstadoCuentaDef
         Me.colNoPlaca.FieldName = "NoPlaca"
         Me.colNoPlaca.Name = "colNoPlaca"
         Me.colNoPlaca.Visible = True
-        Me.colNoPlaca.VisibleIndex = 4
+        Me.colNoPlaca.VisibleIndex = 5
         '
         'colMotor
         '
@@ -304,7 +305,19 @@ Partial Class frmRepEstadoCuentaDef
         Me.colTipoDescuento.FieldName = "TipoDescuento"
         Me.colTipoDescuento.Name = "colTipoDescuento"
         Me.colTipoDescuento.Visible = True
-        Me.colTipoDescuento.VisibleIndex = 10
+        Me.colTipoDescuento.VisibleIndex = 11
+        '
+        'colSaldo
+        '
+        Me.colSaldo.Caption = "Saldo"
+        Me.colSaldo.DisplayFormat.FormatString = "{0:n2}"
+        Me.colSaldo.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colSaldo.FieldName = "Saldo"
+        Me.colSaldo.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colSaldo.Name = "colSaldo"
+        Me.colSaldo.Summary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Saldo", "{0:n2}")})
+        Me.colSaldo.Visible = True
+        Me.colSaldo.VisibleIndex = 10
         '
         'txtFiltro
         '
@@ -386,4 +399,5 @@ Partial Class frmRepEstadoCuentaDef
     Friend WithEvents colFranquiciado1 As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colMonto As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents chkColorfocus As System.Windows.Forms.CheckBox
+    Friend WithEvents colSaldo As DevExpress.XtraGrid.Columns.GridColumn
 End Class

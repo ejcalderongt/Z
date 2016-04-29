@@ -150,8 +150,7 @@ Public Class frmBeneficio
 
         Try
 
-
-            Bene.IdBeneficio = txtIdBeneficio.Text
+            Bene.IdBeneficio = dBene.Generar_Nuevo_IdBeneficio()
             Bene.TipoBeneficio.IdTipoBeneficio = cmbTipo.SelectedValue
             Bene.Nombre = IIf(txtNombre.Text.Trim = "", cmbTipo.Text, txtNombre.Text)
             Bene.Modelo = txtModelo.Text

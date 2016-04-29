@@ -78,24 +78,27 @@ Public Class frmRepDescuentoFranSupervisor
     Private Sub PrintableComponentLink1_CreateReportHeaderArea(ByVal sender As System.Object, ByVal e As DevExpress.XtraPrinting.CreateAreaEventArgs)
 
 
-        Select Case TipoRep
+        'Select Case TipoRep
 
-            Case TipoReporte.CuotasDetalleDescuento
+        'Case TipoReporte.CuotasDetalleDescuento
 
-                Dim reportHeader As String = vbNewLine & "Detalle de descuentos " & vbNewLine & _
-                "Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
+        'Dim reportHeader As String = vbNewLine & "Detalle de descuentos " & vbNewLine & _
+        '"Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
 
-                e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
-                e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
+        Dim reportHeader As String = vbNewLine & "Reporte de CEF por Supervisor " & _
+       "Desde: " & dtpFechaDesde.Value.Date & " Hasta: " & dtpFechaHasta.Value.Date
 
-                Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
-                e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
+        e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
+        e.Graph.Font = New Font("Tahoma", 10, FontStyle.Bold)
+
+        Dim rec As RectangleF = New RectangleF(0, 0, e.Graph.ClientPageSize.Width, 70)
+        e.Graph.DrawString(reportHeader, Color.Black, rec, DevExpress.XtraPrinting.BorderSide.None)
 
 
-            Case Else
+        'Case Else
 
 
-        End Select
+        'End Select
 
 
 
@@ -119,6 +122,7 @@ Public Class frmRepDescuentoFranSupervisor
                    "	tp.EsServicio, " & _
                    "	descuento_det.MontoTotal AS Monto, " & _
                    "	SUM(r.Abonado) AS Abonado, " & _
+                   "    descuento_det.MontoTotal - SUM(r.Abonado) as Saldo, " & _
                    "	tipodescuento.Nombre AS TipoDescuento, " & _
                    "	CONCAT( " & _
                    "		franquiciado.Codigo, " & _
@@ -205,6 +209,12 @@ Public Class frmRepDescuentoFranSupervisor
 
                 GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
                 GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+
+                GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+                GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
+
+                GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+                GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
 
                 GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
                 GridView1.Columns("FechaDescuento").DisplayFormat.FormatString = "dd/MM/yyyy"

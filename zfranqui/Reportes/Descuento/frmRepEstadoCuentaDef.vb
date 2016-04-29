@@ -87,7 +87,7 @@ Public Class frmRepEstadoCuentaDef
         'Dim reportHeader As String = vbNewLine & "Estado de cuenta (Descuentos Definidos)" & vbNewLine & _
         '"Franquiciado: " & DescuentoEnc.Franquiciado.Codigo & " - " & DescuentoEnc.Franquiciado.Nombres & " CEF: " & DescuentoEnc.Franquiciado.CEF.Codigo & " - " & DescuentoEnc.Franquiciado.CEF.Descripcion
 
-        Dim reportHeader As String = vbNewLine & "Estados de Cuenta - Descuentos " & _
+        Dim reportHeader As String = vbNewLine & "Reporte detallado " & _
        "Desde: " & dtpFechaDesde.Value.Date & " Hasta: " & dtpFechaHasta.Value.Date
 
         e.Graph.StringFormat = New DevExpress.XtraPrinting.BrickStringFormat(StringAlignment.Center)
@@ -121,6 +121,7 @@ Public Class frmRepEstadoCuentaDef
                 "	r.NoCuota, " & _
                 "	r.Monto AS Monto, " & _
                 "	r.Abonado AS Abonado, " & _
+                "   (r.Monto - r.Abonado) as Saldo, " & _
                 "	tipodescuento.Nombre AS TipoDescuento, " & _
                 "	CONCAT( " & _
                 "		CAST( " & _
@@ -167,7 +168,7 @@ Public Class frmRepEstadoCuentaDef
 
             Application.DoEvents()
 
-            If GridView1.Columns.Count = 0 Then Exit Sub
+            If GridView1.Columns.Count = 0 OrElse GridView1.RowCount = 0 Then Exit Sub
 
             GridView1.Columns("CEF").GroupIndex = 0
             GridView1.Columns("Franquiciado").GroupIndex = 1
@@ -183,6 +184,12 @@ Public Class frmRepEstadoCuentaDef
 
             GridView1.Columns("Abonado").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
             GridView1.Columns("Abonado").DisplayFormat.FormatString = "{0:n2}"
+
+            GridView1.Columns("Saldo").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
+            GridView1.Columns("Saldo").SummaryItem.DisplayFormat = "{0:n2}"
+
+            GridView1.Columns("Saldo").DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+            GridView1.Columns("Saldo").DisplayFormat.FormatString = "{0:n2}"
 
             GridView1.Columns("FechaDescuento").DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime
             GridView1.Columns("FechaDescuento").DisplayFormat.FormatString = "dd/MM/yyyy"

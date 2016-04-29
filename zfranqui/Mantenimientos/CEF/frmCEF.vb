@@ -25,7 +25,7 @@
 
             If Datos_Correctos() Then
 
-                CEF.IdCef = txtIdCEF.Text
+                CEF.IdCef = dCEF.Generar_Nuevo_IdCEF()
                 CEF.Sup.IdSupervisor = cmbSupervisor.SelectedValue
                 CEF.Reg.IdRegion = cmbRegion.SelectedValue
                 CEF.Municipo.IdMunicipio = cmbMunicipio.SelectedValue

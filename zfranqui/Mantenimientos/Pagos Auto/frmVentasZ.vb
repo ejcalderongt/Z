@@ -199,7 +199,6 @@ Public Class frmVentasZ
         Imprimir_Vista()
     End Sub
 
-
     Private Sub dtpFechaDesde_ValueChanged(sender As Object, e As EventArgs) Handles dtpFechaDesde.ValueChanged
         If Not EstaIniciando Then Llenar_Grid()
     End Sub
@@ -213,7 +212,7 @@ Public Class frmVentasZ
     End Sub
 
     Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
-        If Not EstaIniciando Then Llenar_Grid()
+        'If Not EstaIniciando Then Llenar_Grid()
     End Sub
 
     Private Sub mnuProcesar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuProcesar.ItemClick
@@ -586,6 +585,14 @@ Public Class frmVentasZ
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+
+    End Sub
+
+    Private Sub txtFiltro_KeyDown(sender As Object, e As KeyEventArgs) Handles txtFiltro.KeyDown
+
+        If e.KeyCode = Keys.Enter Then
+            Llenar_Grid()
+        End If
 
     End Sub
 

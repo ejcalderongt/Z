@@ -51,6 +51,7 @@ Partial Class frmRepDescuentoFranSupervisor
         Me.colEmpresaTelco = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colMonto = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colAbonado = New DevExpress.XtraGrid.Columns.GridColumn()
+        Me.colSaldo = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colTipoDescuento = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.colSupervisor = New DevExpress.XtraGrid.Columns.GridColumn()
         Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
@@ -198,10 +199,10 @@ Partial Class frmRepDescuentoFranSupervisor
         '
         'GridView1
         '
-        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colCEF, Me.colFranquiciado1, Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colAbonado, Me.colTipoDescuento, Me.colSupervisor})
+        Me.GridView1.Columns.AddRange(New DevExpress.XtraGrid.Columns.GridColumn() {Me.colCEF, Me.colFranquiciado1, Me.colFechaDescuento, Me.colNombre, Me.colModelo, Me.colNoChasis, Me.colNoPlaca, Me.colMotor, Me.colNumeroTelefono, Me.colEmpresaTelco, Me.colMonto, Me.colAbonado, Me.colSaldo, Me.colTipoDescuento, Me.colSupervisor})
         Me.GridView1.GridControl = Me.Dgrid
         Me.GridView1.GroupCount = 2
-        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}")})
+        Me.GridView1.GroupSummary.AddRange(New DevExpress.XtraGrid.GridSummaryItem() {New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Abonado", Me.colAbonado, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Monto", Me.colMonto, "{0:n2}"), New DevExpress.XtraGrid.GridGroupSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Saldo", Me.colSaldo, "{0:n2}")})
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsView.ShowFooter = True
         Me.GridView1.SortInfo.AddRange(New DevExpress.XtraGrid.Columns.GridColumnSortInfo() {New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colCEF, DevExpress.Data.ColumnSortOrder.Ascending), New DevExpress.XtraGrid.Columns.GridColumnSortInfo(Me.colFranquiciado1, DevExpress.Data.ColumnSortOrder.Ascending)})
@@ -300,19 +301,29 @@ Partial Class frmRepDescuentoFranSupervisor
         Me.colAbonado.Visible = True
         Me.colAbonado.VisibleIndex = 9
         '
+        'colSaldo
+        '
+        Me.colSaldo.Caption = "Saldo"
+        Me.colSaldo.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colSaldo.FieldName = "Saldo"
+        Me.colSaldo.GroupFormat.FormatType = DevExpress.Utils.FormatType.Numeric
+        Me.colSaldo.Name = "colSaldo"
+        Me.colSaldo.Visible = True
+        Me.colSaldo.VisibleIndex = 10
+        '
         'colTipoDescuento
         '
         Me.colTipoDescuento.FieldName = "TipoDescuento"
         Me.colTipoDescuento.Name = "colTipoDescuento"
         Me.colTipoDescuento.Visible = True
-        Me.colTipoDescuento.VisibleIndex = 10
+        Me.colTipoDescuento.VisibleIndex = 11
         '
         'colSupervisor
         '
         Me.colSupervisor.FieldName = "Supervisor"
         Me.colSupervisor.Name = "colSupervisor"
         Me.colSupervisor.Visible = True
-        Me.colSupervisor.VisibleIndex = 11
+        Me.colSupervisor.VisibleIndex = 12
         '
         'txtFiltro
         '
@@ -395,4 +406,5 @@ Partial Class frmRepDescuentoFranSupervisor
     Friend WithEvents colMonto As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents colSupervisor As DevExpress.XtraGrid.Columns.GridColumn
     Friend WithEvents chkColorfocus As System.Windows.Forms.CheckBox
+    Friend WithEvents colSaldo As DevExpress.XtraGrid.Columns.GridColumn
 End Class

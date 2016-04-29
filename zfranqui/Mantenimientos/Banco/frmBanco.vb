@@ -86,6 +86,7 @@
 
         Try
 
+            Banco.IdBanco = dBanco.Generar_Nuevo_IdBanco()
             Banco.Nombre = txtNomBanco.Text
             Banco.IdBanco = Me.txtIdBanco.Text
 

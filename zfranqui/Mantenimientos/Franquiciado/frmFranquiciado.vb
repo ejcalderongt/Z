@@ -108,6 +108,7 @@ Public Class frmFranquiciado
 
         Try
 
+            Franqui.IdFranquiciado = dFranqui.Generar_Nuevo_IdFranquiciado()
             Franqui.IdBanco = cmbBanco.SelectedValue
             Franqui.Codigo = txtCodigo.Text
             Franqui.Nombres = txtNombres.Text

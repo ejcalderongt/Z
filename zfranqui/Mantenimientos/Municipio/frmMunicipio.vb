@@ -101,7 +101,7 @@
 
         Try
 
-
+            Muni.IdMunicipio = dMuni.Generar_Nuevo_IdMunicipio(cmbDepartamento.SelectedValue)
             Muni.Nombre = txtNomMunicipio.Text
             Muni.IdMunicipio = Me.txtIdMunicipio.Text
             Muni.IdDepartamento = cmbDepartamento.SelectedValue

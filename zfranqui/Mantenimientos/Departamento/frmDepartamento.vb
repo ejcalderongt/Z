@@ -88,7 +88,7 @@
 
         Try
 
-
+            Depto.IdDepartamento = dDepto.Generar_Nuevo_IdDepartamento()
             Depto.Nombre = txtNomDepto.Text
             Depto.IdDepartamento = Me.txtIdDepartamento.Text
 

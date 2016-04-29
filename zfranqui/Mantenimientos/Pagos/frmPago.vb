@@ -58,6 +58,7 @@ Public Class frmPago
                 Case TipoTrans.Editar
 
                     pObjBeEnc.IsNew = False
+
                     CargarDatos()
 
                     mnuGuardar.Enabled = False
@@ -107,7 +108,7 @@ Public Class frmPago
             lTransaction = lConnection.BeginTransaction()
 
             pObjBeEnc = New clsBePago_enc
-            pObjBeEnc.IdPagoEnc = clsLnPago_enc.Generar_Nuevo_IdPago
+            pObjBeEnc.IdPagoEnc = clsLnPago_enc.Generar_Nuevo_IdPago()
 
             pObjBeEnc.CEF.IdCef = txtCodCEF.Tag
             pObjBeEnc.Franquiciado.IdFranquiciado = txtCodigoFranquiciado.Tag
