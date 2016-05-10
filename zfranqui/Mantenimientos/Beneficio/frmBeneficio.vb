@@ -234,6 +234,9 @@ Public Class frmBeneficio
                 cmbTipo.Focus()
             ElseIf Bene.TipoBeneficio.EsVehiculo = 1 Then
 
+                'Validar que el motor, chasis y placa que voy a crear no existe 
+                'si es update igual validar que no exista otro con los mismos datos
+
                 If txtModelo.Text.Trim = "" Then
                     MsgBox("No se ha definido el modelo", MsgBoxStyle.Exclamation, Me.Text)
                     txtModelo.Focus()
@@ -251,6 +254,9 @@ Public Class frmBeneficio
                 End If
 
             ElseIf Bene.TipoBeneficio.EsTelefono = 1 Then
+
+                'Validar que el # de teléfono que voy a crear no existe 
+                'si es update igual validar que no exista otro teléfono con el mismo número
 
                 If txtNoTelefono.Text.Trim = "" Then
                     MsgBox("No se ha definido el número de teléfono", MsgBoxStyle.Exclamation, Me.Text)
