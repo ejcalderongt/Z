@@ -166,6 +166,9 @@ Public Class frmDescuento
                 XtraMessageBox.Show("Seleccione Persona.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
             ElseIf pObjEnc.Detalle IsNot Nothing AndAlso pObjEnc.Detalle.Count = 0 Then
                 XtraMessageBox.Show("Ingrese por lo menos 1 beneficio.", Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+            ElseIf txtCodCEF.Text.Trim = "" Then
+                MsgBox("El franquiciado seleccionado no tiene CEF asociado, debe asociarlo antes de generarle un descuento", MsgBoxStyle.Critical)
+                txtCodigoFranquiciado.Focus()
             Else
                 Datos_Correctos = True
             End If
@@ -239,6 +242,10 @@ Public Class frmDescuento
 
             End If
 
+            If txtCodCEF.Text.Trim = "" Then
+                MsgBox("El franquiciado seleccionado no tiene CEF asociado, debe asociarlo antes de generarle un descuento", MsgBoxStyle.Critical)
+            End If
+
         Catch ex As Exception
             XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
         End Try
@@ -269,11 +276,14 @@ Public Class frmDescuento
                     txtCodCEF.Text = pObjEnc.Franquiciado.CEF.Codigo
                     txtNomCEF.Text = pObjEnc.Franquiciado.CEF.Descripcion
 
-
                 Else
                     MsgBox("El código ingresado de franquiciado no es válido", MsgBoxStyle.Exclamation, Me.Text)
                 End If
 
+            End If
+
+            If txtCodCEF.Text.Trim = "" Then
+                MsgBox("El franquiciado seleccionado no tiene CEF asociado, debe asociarlo antes de generarle un descuento", MsgBoxStyle.Critical)
             End If
 
         Catch ex As Exception
