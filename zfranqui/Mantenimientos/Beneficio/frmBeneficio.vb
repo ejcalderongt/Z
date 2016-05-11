@@ -304,11 +304,9 @@ Public Class frmBeneficio
                     End If
                 End If
 
-            Else
-
-                Return True
-
             End If
+
+            Return True
 
             ' VALIDAR QUE EL ELIMINAR FUNCiONE PARA TODOS LOS BENEFICIOS
             ' EN LOS PAGOS AL DAR DOBLE CLIC COLOCAR LA DIFERENCIA DEL MONTO TOTAL - LO QUE LE RESTA PAGAR 
