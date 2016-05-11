@@ -352,6 +352,33 @@ Partial Public Class clsLnBeneficio
 
     End Function
 
+    Public Sub Desactivar(ByVal pIdBeneficio As Int32)
+
+        Try
+
+            'Validacion y estandarizacion de los datos
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lCommand As New MySqlCommand("UPDATE beneficio SET Activo=0 WHERE IdBeneficio=@IdBeneficio", lConnection)
+
+                    lCommand.CommandType = CommandType.Text
+                    lCommand.Parameters.AddWithValue("@IdBeneficio", pIdBeneficio)
+
+                    lConnection.Open()
+                    lCommand.ExecuteNonQuery()
+                    lConnection.Close()
+
+                End Using
+
+            End Using
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Sub
+
     Public Shared Function Exists(ByVal pIdTipoBeneficio As Integer) As Boolean
 
         Dim lExists As Boolean = False

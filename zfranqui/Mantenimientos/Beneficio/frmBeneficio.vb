@@ -99,11 +99,26 @@ Public Class frmBeneficio
                     txtNombre.Text = Bene.Nombre
 
                     txtFechaAsignado.Text = Bene.Fecha_asignacion
-                    txtCodigoFranquiciado.Text = Bene.FranquiciadoAsignado.Codigo
-                    txtNombresFranquiciado.Text = Bene.FranquiciadoAsignado.Nombres
-                    txtApellidosFranquiciado.Text = Bene.FranquiciadoAsignado.Apellidos
-                    txtCodCEF.Text = Bene.FranquiciadoAsignado.CEF.Codigo
-                    txtNomCEF.Text = Bene.FranquiciadoAsignado.CEF.Descripcion
+
+                    If Bene.FranquiciadoAsignado IsNot Nothing AndAlso String.IsNullOrEmpty(Bene.FranquiciadoAsignado.Codigo) = False Then
+                        txtCodigoFranquiciado.Text = Bene.FranquiciadoAsignado.Codigo
+                    End If
+
+                    If Bene.FranquiciadoAsignado IsNot Nothing AndAlso String.IsNullOrEmpty(Bene.FranquiciadoAsignado.Nombres) = False Then
+                        txtNombresFranquiciado.Text = Bene.FranquiciadoAsignado.Nombres
+                    End If
+
+                    If Bene.FranquiciadoAsignado IsNot Nothing AndAlso String.IsNullOrEmpty(Bene.FranquiciadoAsignado.Apellidos) = False Then
+                        txtApellidosFranquiciado.Text = Bene.FranquiciadoAsignado.Apellidos
+                    End If
+
+                    If Bene.FranquiciadoAsignado IsNot Nothing AndAlso String.IsNullOrEmpty(Bene.FranquiciadoAsignado.CEF.Codigo) = False Then
+                        txtCodCEF.Text = Bene.FranquiciadoAsignado.CEF.Codigo
+                    End If
+
+                    If Bene.FranquiciadoAsignado IsNot Nothing AndAlso String.IsNullOrEmpty(Bene.FranquiciadoAsignado.CEF.Descripcion) = False Then
+                        txtNomCEF.Text = Bene.FranquiciadoAsignado.CEF.Descripcion
+                    End If
 
                     If txtCodigoFranquiciado.Text.Trim <> "" Then
                         PanDatosBeneficio.Enabled = False
@@ -320,14 +335,11 @@ Public Class frmBeneficio
 
     Private Sub mnuEliminar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuEliminar.ItemClick
 
-        If CBool(MsgBox("¿Eliminar el Beneficio?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes) Then
+        If XtraMessageBox.Show("¿Eliminar el Beneficio?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.Yes Then
 
-            Bene.Activo = 0
-
-            If dBene.Desactivar(Bene) > 0 Then
-                MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
-                Me.Close()
-            End If
+            dBene.Desactivar(Bene.IdBeneficio)
+            MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
+            Me.Close()
 
         End If
 
