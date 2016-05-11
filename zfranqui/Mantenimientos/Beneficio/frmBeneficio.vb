@@ -168,7 +168,7 @@ Public Class frmBeneficio
             Guardar = dBene.Insertar(Bene) > 0
 
         Catch ex As Exception
-            MsgBox(ex.Message)
+            MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
         End Try
 
     End Function
@@ -229,41 +229,62 @@ Public Class frmBeneficio
 
         Try
 
-            If cmbTipo.Text.Trim = "" AndAlso (Bene.TipoBeneficio.EsVehiculo = 0) AndAlso (Bene.TipoBeneficio.EsTelefono = 0) Then
+            If cmbTipo.Text.Trim = "" AndAlso (Bene.TipoBeneficio.EsVehiculo = False) AndAlso (Bene.TipoBeneficio.EsTelefono = False) Then
                 MsgBox("No se ha definido el tipo de beneficio", MsgBoxStyle.Exclamation, Me.Text)
                 cmbTipo.Focus()
-            ElseIf Bene.TipoBeneficio.EsVehiculo = 1 Then
+            ElseIf Bene.TipoBeneficio.EsVehiculo Then
 
                 'Validar que el motor, chasis y placa que voy a crear no existe 
                 'si es update igual validar que no exista otro con los mismos datos
 
                 If txtModelo.Text.Trim = "" Then
-                    MsgBox("No se ha definido el modelo", MsgBoxStyle.Exclamation, Me.Text)
+                    MsgBox("No se ha definido el modelo.", MsgBoxStyle.Exclamation, Me.Text)
                     txtModelo.Focus()
                 ElseIf txtNoChasis.Text.Trim = "" Then
-                    MsgBox("No se ha definido el chasis", MsgBoxStyle.Exclamation, Me.Text)
+                    MsgBox("No se ha definido el chasis.", MsgBoxStyle.Exclamation, Me.Text)
                     txtNoChasis.Focus()
+                ElseIf String.IsNullOrEmpty(txtNoChasis.Text.Trim()) = False Then
+                    If clsLnBeneficio.ExisteChasis(txtNoChasis.Text.Trim) Then
+                        MsgBox(String.Format("El chasis {0} ya fue ingresado.", txtNoChasis.Text.Trim), MsgBoxStyle.Exclamation, Me.Text)
+                        txtNoChasis.Focus()
+                    End If
                 ElseIf txtPlaca.Text.Trim = "" Then
-                    MsgBox("No se ha definido la placa", MsgBoxStyle.Exclamation, Me.Text)
+                    MsgBox("No se ha definido número de placa.", MsgBoxStyle.Exclamation, Me.Text)
                     txtPlaca.Focus()
+                ElseIf String.IsNullOrEmpty(txtPlaca.Text.Trim()) = False Then
+                    If clsLnBeneficio.ExistePlaca(txtPlaca.Text.Trim) Then
+                        Throw New Exception(String.Format("El número de placa {0} ya fue ingresado.", txtPlaca.Text.Trim))
+                    End If
                 ElseIf txtMotor.Text.Trim = "" Then
-                    MsgBox("No se ha definido el motor", MsgBoxStyle.Exclamation, Me.Text)
+                    MsgBox("No se ha definido el motor.", MsgBoxStyle.Exclamation, Me.Text)
                     txtMotor.Focus()
+                ElseIf String.IsNullOrEmpty(txtMotor.Text.Trim()) = False Then
+                    If clsLnBeneficio.ExisteMotor(txtMotor.Text.Trim) Then
+                        MsgBox(String.Format("El motor {0} ya fue ingresado.", txtMotor.Text.Trim), MsgBoxStyle.Exclamation, Me.Text)
+                        txtMotor.Focus()
+                    End If
                 Else
                     Datos_Correctos = True
                 End If
 
-            ElseIf Bene.TipoBeneficio.EsTelefono = 1 Then
+            ElseIf Bene.TipoBeneficio.EsTelefono Then
 
                 'Validar que el # de teléfono que voy a crear no existe 
                 'si es update igual validar que no exista otro teléfono con el mismo número
 
-                If txtNoTelefono.Text.Trim = "" Then
-                    MsgBox("No se ha definido el número de teléfono", MsgBoxStyle.Exclamation, Me.Text)
+                If cmbEmpresaTelco.SelectedIndex = -1 Then
+                    MsgBox("Seleccione Compañia.", MsgBoxStyle.Exclamation, Me.Text)
+                ElseIf txtNoTelefono.Text.Trim = "" Then
+                    MsgBox("No se ha definido el número de teléfono.", MsgBoxStyle.Exclamation, Me.Text)
                     txtNoTelefono.Focus()
                 ElseIf txtNoTelefono.Text.Length < 8 Then
-                    MsgBox("El número ingresado no es válido", MsgBoxStyle.Exclamation, Me.Text)
+                    MsgBox("El número de teléfono ingresado no es válido.", MsgBoxStyle.Exclamation, Me.Text)
                     txtNoTelefono.Focus()
+                ElseIf String.IsNullOrEmpty(txtNoTelefono.Text.Trim()) = False Then
+                    If clsLnBeneficio.ExisteNumeroTelefono(txtNoTelefono.Text.Trim) Then
+                        MsgBox(String.Format("El número de teléfono {0} ya fue ingresado.", txtNoTelefono.Text.Trim), MsgBoxStyle.Exclamation, Me.Text)
+                        txtNoTelefono.Focus()
+                    End If
                 Else
                     Datos_Correctos = True
                 End If

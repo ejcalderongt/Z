@@ -387,4 +387,144 @@ Partial Public Class clsLnBeneficio
 
     End Function
 
+    Public Shared Function ExisteMotor(ByVal pMotor As String) As Boolean
+
+        Try
+
+            Dim lExists As Boolean = False
+
+            'Validacion y estandarizacion de los datos
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM beneficio WHERE Motor=@Motor", lConnection)
+
+                    lCommand.CommandType = CommandType.Text
+                    lCommand.Parameters.AddWithValue("@Motor", pMotor)
+
+                    lConnection.Open()
+                    Dim lReturnValue As Object = lCommand.ExecuteScalar()
+                    lConnection.Close()
+
+                    If lReturnValue IsNot DBNull.Value AndAlso lReturnValue IsNot Nothing Then
+                        lExists = CInt(lReturnValue) > 0
+                    End If
+
+                End Using
+
+            End Using
+
+            Return lExists
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function ExisteChasis(ByVal pNoChasis As String) As Boolean
+
+        Try
+
+            Dim lExists As Boolean = False
+
+            'Validacion y estandarizacion de los datos
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM beneficio WHERE NoChasis=@NoChasis", lConnection)
+
+                    lCommand.CommandType = CommandType.Text
+                    lCommand.Parameters.AddWithValue("@NoChasis", pNoChasis)
+
+                    lConnection.Open()
+                    Dim lReturnValue As Object = lCommand.ExecuteScalar()
+                    lConnection.Close()
+
+                    If lReturnValue IsNot DBNull.Value AndAlso lReturnValue IsNot Nothing Then
+                        lExists = CInt(lReturnValue) > 0
+                    End If
+
+                End Using
+
+            End Using
+
+            Return lExists
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function ExistePlaca(ByVal pNoPlaca As String) As Boolean
+
+        Try
+
+            Dim lExists As Boolean = False
+
+            'Validacion y estandarizacion de los datos
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM beneficio WHERE NoPlaca=@NoPlaca", lConnection)
+
+                    lCommand.CommandType = CommandType.Text
+                    lCommand.Parameters.AddWithValue("@NoPlaca", pNoPlaca)
+
+                    lConnection.Open()
+                    Dim lReturnValue As Object = lCommand.ExecuteScalar()
+                    lConnection.Close()
+
+                    If lReturnValue IsNot DBNull.Value AndAlso lReturnValue IsNot Nothing Then
+                        lExists = CInt(lReturnValue) > 0
+                    End If
+
+                End Using
+
+            End Using
+
+            Return lExists
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
+    Public Shared Function ExisteNumeroTelefono(ByVal pNumeroTelefono As String) As Boolean
+
+        Try
+
+            Dim lExists As Boolean = False
+
+            'Validacion y estandarizacion de los datos
+            Using lConnection As New MySqlConnection(BD.CadenaConexion)
+
+                'Acceso a los datos.
+                Using lCommand As New MySqlCommand("SELECT COUNT(*) FROM beneficio WHERE NumeroTelefono=@NumeroTelefono", lConnection)
+
+                    lCommand.CommandType = CommandType.Text
+                    lCommand.Parameters.AddWithValue("@NumeroTelefono", pNumeroTelefono)
+
+                    lConnection.Open()
+                    Dim lReturnValue As Object = lCommand.ExecuteScalar()
+                    lConnection.Close()
+
+                    If lReturnValue IsNot DBNull.Value AndAlso lReturnValue IsNot Nothing Then
+                        lExists = CInt(lReturnValue) > 0
+                    End If
+
+                End Using
+
+            End Using
+
+            Return lExists
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
 End Class
