@@ -272,6 +272,10 @@ Public Class frmBeneficio
                 Datos_Correctos = True
             End If
 
+            ' VALIDAR QUE EL ELIMINAR FUNCiONE PARA TODOS LOS BENEFICIOS
+            ' EN LOS PAGOS AL DAR DOBLE CLIC COLOCAR LA DIFERENCIA DEL MONTO TOTAL - LO QUE LE RESTA PAGAR 
+            ' EN ABONO , IR REPARTIENDO LOS ABONOS EN TODAS LAS CUOTAS DE LA PERSONA. VALIDAR CON FUNCION FUMADA
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
