@@ -32,8 +32,6 @@ Partial Class frmPagoList
         Me.RibbonStatusBar = New DevExpress.XtraBars.Ribbon.RibbonStatusBar()
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
-        Me.lblFiltro = New DevExpress.XtraEditors.LabelControl()
         Me.dtpDesde = New System.Windows.Forms.DateTimePicker()
         Me.dtpHasta = New System.Windows.Forms.DateTimePicker()
         Me.lblDesde = New System.Windows.Forms.Label()
@@ -42,7 +40,6 @@ Partial Class frmPagoList
         CType(Me.RibbonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtFiltro.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -127,11 +124,11 @@ Partial Class frmPagoList
         '
         Me.Dgrid.Cursor = System.Windows.Forms.Cursors.Default
         Me.Dgrid.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Dgrid.Location = New System.Drawing.Point(0, 239)
+        Me.Dgrid.Location = New System.Drawing.Point(0, 201)
         Me.Dgrid.MainView = Me.GridView1
         Me.Dgrid.MenuManager = Me.RibbonControl
         Me.Dgrid.Name = "Dgrid"
-        Me.Dgrid.Size = New System.Drawing.Size(860, 254)
+        Me.Dgrid.Size = New System.Drawing.Size(860, 292)
         Me.Dgrid.TabIndex = 2
         Me.Dgrid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -140,30 +137,8 @@ Partial Class frmPagoList
         Me.GridView1.GridControl = Me.Dgrid
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsBehavior.Editable = False
-        '
-        'txtFiltro
-        '
-        Me.txtFiltro.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.txtFiltro.EditValue = ""
-        Me.txtFiltro.Location = New System.Drawing.Point(0, 217)
-        Me.txtFiltro.MenuManager = Me.RibbonControl
-        Me.txtFiltro.Name = "txtFiltro"
-        Me.txtFiltro.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat
-        Me.txtFiltro.Size = New System.Drawing.Size(860, 22)
-        Me.txtFiltro.TabIndex = 1
-        Me.txtFiltro.Tag = "Buscar..."
-        '
-        'lblFiltro
-        '
-        Me.lblFiltro.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None
-        Me.lblFiltro.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.lblFiltro.LineStyle = System.Drawing.Drawing2D.DashStyle.Dot
-        Me.lblFiltro.LineVisible = True
-        Me.lblFiltro.Location = New System.Drawing.Point(0, 204)
-        Me.lblFiltro.Name = "lblFiltro"
-        Me.lblFiltro.Size = New System.Drawing.Size(860, 13)
-        Me.lblFiltro.TabIndex = 0
-        Me.lblFiltro.Text = "Filtro"
+        Me.GridView1.OptionsFind.AlwaysVisible = True
+        Me.GridView1.OptionsFind.FindNullPrompt = "Ingrese el texto para buscar..."
         '
         'dtpDesde
         '
@@ -205,10 +180,10 @@ Partial Class frmPagoList
         Me.GroupBox1.Controls.Add(Me.lblHasta)
         Me.GroupBox1.Controls.Add(Me.dtpHasta)
         Me.GroupBox1.Controls.Add(Me.lblDesde)
-        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.GroupBox1.Dock = System.Windows.Forms.DockStyle.Top
         Me.GroupBox1.Location = New System.Drawing.Point(0, 144)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(860, 60)
+        Me.GroupBox1.Size = New System.Drawing.Size(860, 51)
         Me.GroupBox1.TabIndex = 9
         Me.GroupBox1.TabStop = False
         '
@@ -218,8 +193,6 @@ Partial Class frmPagoList
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(860, 524)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.lblFiltro)
-        Me.Controls.Add(Me.txtFiltro)
         Me.Controls.Add(Me.Dgrid)
         Me.Controls.Add(Me.RibbonStatusBar)
         Me.Controls.Add(Me.RibbonControl)
@@ -230,7 +203,6 @@ Partial Class frmPagoList
         CType(Me.RibbonControl, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtFiltro.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
@@ -249,8 +221,6 @@ Partial Class frmPagoList
     Friend WithEvents mnuSalir As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents chkActivos As DevExpress.XtraBars.BarCheckItem
     Friend WithEvents RibbonPageGroup2 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
-    Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
-    Friend WithEvents lblFiltro As DevExpress.XtraEditors.LabelControl
     Friend WithEvents lblRegs As DevExpress.XtraBars.BarStaticItem
     Friend WithEvents dtpDesde As System.Windows.Forms.DateTimePicker
     Friend WithEvents dtpHasta As System.Windows.Forms.DateTimePicker

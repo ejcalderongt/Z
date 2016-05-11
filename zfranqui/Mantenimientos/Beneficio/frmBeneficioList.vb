@@ -18,7 +18,7 @@
             Me.Text = "Listado de " & TipoBene.Nombre
 
             Dgrid.DataSource = Nothing
-            Dgrid.DataSource = Bene.Listar(TipoBene, txtFiltro.Text, chkAct.Checked)
+            Dgrid.DataSource = Bene.Listar(TipoBene, "", chkAct.Checked)
 
             If TipoBene.EsVehiculo Then
                 GridView1.Columns("NumeroTelefono").Visible = False
@@ -107,7 +107,7 @@
         Listar_Beneficios()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_Beneficios()
     End Sub
 

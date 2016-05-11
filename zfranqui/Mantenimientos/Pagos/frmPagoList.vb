@@ -151,7 +151,7 @@ Public Class frmPagoList
         Listar_Pagos()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_Pagos()
     End Sub
 

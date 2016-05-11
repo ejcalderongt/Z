@@ -14,7 +14,7 @@
 
         Try
 
-            Dgrid.DataSource = FranquiL.Listar(txtFiltro.Text, Modo)
+            Dgrid.DataSource = FranquiL.Listar("", Modo)
 
             lblReg.Caption = String.Format("Registros: {0}", GridView1.RowCount)
 
@@ -26,7 +26,6 @@
 
     Private Sub frmFranquiciadoList_Activated(sender As Object, e As EventArgs) Handles Me.Activated
         Listar_Franquiciados()
-        txtFiltro.Focus()
     End Sub
 
     Private Sub frmFranquiciadoList_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -128,7 +127,7 @@
 
     End Sub
 
-    Private Sub txtFiltro_KeyDown(sender As Object, e As KeyEventArgs) Handles txtFiltro.KeyDown
+    Private Sub txtFiltro_KeyDown(sender As Object, e As KeyEventArgs)
 
         UseWaitCursor = True
 
@@ -163,7 +162,7 @@
         Imprimir_Vista()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
 
     End Sub
 End Class

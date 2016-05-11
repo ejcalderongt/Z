@@ -14,7 +14,7 @@
 
         Try
 
-            Dgrid.DataSource = CEFL.Listar(txtFiltro.Text)
+            Dgrid.DataSource = CEFL.Listar("")
             lblRegs.Caption = String.Format("Registros: {0}", GridView1.RowCount)
 
         Catch ex As Exception
@@ -84,7 +84,7 @@
         Listar_CEFs()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_CEFs()
     End Sub
 
@@ -144,4 +144,7 @@
 
     End Sub
 
+    Private Sub RibbonControl_Click(sender As Object, e As EventArgs) Handles RibbonControl.Click
+
+    End Sub
 End Class

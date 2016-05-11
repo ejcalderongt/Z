@@ -11,7 +11,7 @@
 
     Private Sub Listar_Roles()
         Try
-            Dgrid.DataSource = RolL.Listar(chkActivos.Checked, txtFiltro.Text)
+            Dgrid.DataSource = RolL.Listar(chkActivos.Checked, "")
             lblRegs.Caption = String.Format("Registros: {0}", GridView1.RowCount)
         Catch ex As Exception
             MsgBox(ex.Message)
@@ -72,7 +72,7 @@
         Listar_Roles()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_Roles()
     End Sub
 

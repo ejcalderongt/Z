@@ -12,7 +12,7 @@
 
         Try
 
-            Dgrid.DataSource = MunicipioL.Listar(txtFiltro.Text)
+            Dgrid.DataSource = MunicipioL.Listar("")
             lblRegs.Caption = String.Format("Registros: {0}", GridView1.RowCount)
 
 
@@ -81,7 +81,7 @@
         Listar_Municipios()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_Municipios()
     End Sub
 

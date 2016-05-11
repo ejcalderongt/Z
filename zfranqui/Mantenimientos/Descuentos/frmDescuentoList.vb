@@ -21,7 +21,7 @@
 
         Try
 
-            Dgrid.DataSource = DtoL.Listar(txtFiltro.Text, TipoDescuento)
+            Dgrid.DataSource = DtoL.Listar("", TipoDescuento)
             lblRegs.Caption = String.Format("Registros: {0}", GridView1.RowCount)
 
             If GridView1.RowCount > 0 Then
@@ -73,7 +73,7 @@
         Listar_Descuentos()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_Descuentos()
     End Sub
 

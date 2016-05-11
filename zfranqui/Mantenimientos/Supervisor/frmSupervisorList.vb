@@ -12,7 +12,7 @@
 
         Try
 
-            Dgrid.DataSource = SupL.Listar(txtFiltro.Text)
+            Dgrid.DataSource = SupL.Listar("")
 
             If GridView1.Columns.Count > 0 Then
                 GridView1.Columns("Id").Visible = False
@@ -84,7 +84,7 @@
         Listar_Supervisor()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_Supervisor()
     End Sub
 

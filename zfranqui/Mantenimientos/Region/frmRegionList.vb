@@ -12,7 +12,7 @@
 
         Try
 
-            Dgrid.DataSource = RegL.Listar(txtFiltro.Text)
+            Dgrid.DataSource = RegL.Listar("")
             lblRegs.Caption = String.Format("Registros: {0}", GridView1.RowCount)
 
         Catch ex As Exception
@@ -79,7 +79,7 @@
         Listar_Regiones()
     End Sub
 
-    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs) Handles txtFiltro.EditValueChanged
+    Private Sub txtFiltro_EditValueChanged(sender As Object, e As EventArgs)
         Listar_Regiones()
     End Sub
 

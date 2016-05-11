@@ -33,12 +33,9 @@ Partial Class frmDescuentoList
         Me.RibbonStatusBar = New DevExpress.XtraBars.Ribbon.RibbonStatusBar()
         Me.Dgrid = New DevExpress.XtraGrid.GridControl()
         Me.GridView1 = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.txtFiltro = New DevExpress.XtraEditors.TextEdit()
-        Me.lblFiltro = New DevExpress.XtraEditors.LabelControl()
         CType(Me.RibbonControl, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtFiltro.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'RibbonControl
@@ -130,12 +127,12 @@ Partial Class frmDescuentoList
         'Dgrid
         '
         Me.Dgrid.Cursor = System.Windows.Forms.Cursors.Default
-        Me.Dgrid.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.Dgrid.Location = New System.Drawing.Point(0, 215)
+        Me.Dgrid.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Dgrid.Location = New System.Drawing.Point(0, 144)
         Me.Dgrid.MainView = Me.GridView1
         Me.Dgrid.MenuManager = Me.RibbonControl
         Me.Dgrid.Name = "Dgrid"
-        Me.Dgrid.Size = New System.Drawing.Size(860, 254)
+        Me.Dgrid.Size = New System.Drawing.Size(860, 325)
         Me.Dgrid.TabIndex = 2
         Me.Dgrid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -144,38 +141,14 @@ Partial Class frmDescuentoList
         Me.GridView1.GridControl = Me.Dgrid
         Me.GridView1.Name = "GridView1"
         Me.GridView1.OptionsBehavior.Editable = False
-        '
-        'txtFiltro
-        '
-        Me.txtFiltro.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.txtFiltro.EditValue = ""
-        Me.txtFiltro.Location = New System.Drawing.Point(0, 193)
-        Me.txtFiltro.MenuManager = Me.RibbonControl
-        Me.txtFiltro.Name = "txtFiltro"
-        Me.txtFiltro.Properties.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.HotFlat
-        Me.txtFiltro.Size = New System.Drawing.Size(860, 22)
-        Me.txtFiltro.TabIndex = 1
-        Me.txtFiltro.Tag = "Buscar..."
-        '
-        'lblFiltro
-        '
-        Me.lblFiltro.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None
-        Me.lblFiltro.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.lblFiltro.LineStyle = System.Drawing.Drawing2D.DashStyle.Dot
-        Me.lblFiltro.LineVisible = True
-        Me.lblFiltro.Location = New System.Drawing.Point(0, 180)
-        Me.lblFiltro.Name = "lblFiltro"
-        Me.lblFiltro.Size = New System.Drawing.Size(860, 13)
-        Me.lblFiltro.TabIndex = 0
-        Me.lblFiltro.Text = "Filtro"
+        Me.GridView1.OptionsFind.AlwaysVisible = True
+        Me.GridView1.OptionsFind.FindNullPrompt = "Ingrese texto para buscar..."
         '
         'frmDescuentoList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(860, 500)
-        Me.Controls.Add(Me.lblFiltro)
-        Me.Controls.Add(Me.txtFiltro)
         Me.Controls.Add(Me.Dgrid)
         Me.Controls.Add(Me.RibbonStatusBar)
         Me.Controls.Add(Me.RibbonControl)
@@ -186,7 +159,6 @@ Partial Class frmDescuentoList
         CType(Me.RibbonControl, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtFiltro.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -203,8 +175,6 @@ Partial Class frmDescuentoList
     Friend WithEvents mnuSalir As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents chkActivos As DevExpress.XtraBars.BarCheckItem
     Friend WithEvents RibbonPageGroup2 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
-    Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
-    Friend WithEvents lblFiltro As DevExpress.XtraEditors.LabelControl
     Friend WithEvents lblRegs As DevExpress.XtraBars.BarStaticItem
     Friend WithEvents cmdGeneraDescuento As DevExpress.XtraBars.BarButtonItem
 
