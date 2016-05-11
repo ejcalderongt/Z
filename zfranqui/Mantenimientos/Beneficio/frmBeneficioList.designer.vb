@@ -26,6 +26,7 @@ Partial Class frmBeneficioList
         Me.mnuSalir = New DevExpress.XtraBars.BarButtonItem()
         Me.chkActivos = New DevExpress.XtraBars.BarCheckItem()
         Me.lblRegs = New DevExpress.XtraBars.BarStaticItem()
+        Me.chkAct = New DevExpress.XtraBars.BarCheckItem()
         Me.RibbonPage1 = New DevExpress.XtraBars.Ribbon.RibbonPage()
         Me.RibbonPageGroup1 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.RibbonPageGroup2 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
@@ -43,9 +44,9 @@ Partial Class frmBeneficioList
         'RibbonControl
         '
         Me.RibbonControl.ExpandCollapseItem.Id = 0
-        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuNuevo, Me.mnuActualizar, Me.mnuSalir, Me.chkActivos, Me.lblRegs})
+        Me.RibbonControl.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.RibbonControl.ExpandCollapseItem, Me.mnuNuevo, Me.mnuActualizar, Me.mnuSalir, Me.chkActivos, Me.lblRegs, Me.chkAct})
         Me.RibbonControl.Location = New System.Drawing.Point(0, 0)
-        Me.RibbonControl.MaxItemId = 10
+        Me.RibbonControl.MaxItemId = 11
         Me.RibbonControl.Name = "RibbonControl"
         Me.RibbonControl.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.RibbonPage1})
         Me.RibbonControl.Size = New System.Drawing.Size(860, 144)
@@ -90,6 +91,14 @@ Partial Class frmBeneficioList
         Me.lblRegs.Name = "lblRegs"
         Me.lblRegs.TextAlignment = System.Drawing.StringAlignment.Near
         '
+        'chkAct
+        '
+        Me.chkAct.Caption = "Activos"
+        Me.chkAct.CheckBoxVisibility = DevExpress.XtraBars.CheckBoxVisibility.BeforeText
+        Me.chkAct.Checked = True
+        Me.chkAct.Id = 10
+        Me.chkAct.Name = "chkAct"
+        '
         'RibbonPage1
         '
         Me.RibbonPage1.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.RibbonPageGroup1, Me.RibbonPageGroup2})
@@ -105,9 +114,8 @@ Partial Class frmBeneficioList
         '
         'RibbonPageGroup2
         '
-        Me.RibbonPageGroup2.ItemLinks.Add(Me.chkActivos)
+        Me.RibbonPageGroup2.ItemLinks.Add(Me.chkAct)
         Me.RibbonPageGroup2.Name = "RibbonPageGroup2"
-        Me.RibbonPageGroup2.Visible = False
         '
         'RibbonStatusBar
         '
@@ -192,10 +200,11 @@ Partial Class frmBeneficioList
     Friend WithEvents mnuActualizar As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents mnuSalir As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents chkActivos As DevExpress.XtraBars.BarCheckItem
-    Friend WithEvents RibbonPageGroup2 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
     Friend WithEvents txtFiltro As DevExpress.XtraEditors.TextEdit
     Friend WithEvents lblFiltro As DevExpress.XtraEditors.LabelControl
     Friend WithEvents lblRegs As DevExpress.XtraBars.BarStaticItem
+    Friend WithEvents chkAct As DevExpress.XtraBars.BarCheckItem
+    Friend WithEvents RibbonPageGroup2 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
 
 
 End Class

@@ -103,7 +103,7 @@ Partial Public Class clsLnBeneficio
 
     End Sub
 
-    Public Function Listar(ByVal pTipoBene As clsBeTipobeneficio, ByVal Filtro As String) As DataTable
+    Public Function Listar(ByVal pTipoBene As clsBeTipobeneficio, ByVal Filtro As String, ByVal pActivo As Boolean) As DataTable
 
         Try
 
@@ -116,6 +116,12 @@ Partial Public Class clsLnBeneficio
                   " LEFT OUTER JOIN descuento_det ON beneficio.IdBeneficio = descuento_det.IdBeneficio " & _
                   " WHERE 1 > 0 " &
                   " AND beneficio.IdTipoBeneficio =" & pTipoBene.IdTipoBeneficio
+
+            If pActivo Then
+                vSQL += " AND beneficio.Activo=1 "
+            Else
+                vSQL += " AND beneficio.Activo=0 "
+            End If
 
             If Filtro.Trim <> "" Then
 
