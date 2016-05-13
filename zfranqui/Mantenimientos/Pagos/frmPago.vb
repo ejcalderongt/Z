@@ -336,7 +336,7 @@ Public Class frmPago
 
     Private Sub cmdAgregar_Click(sender As Object, e As EventArgs) Handles cmdAgregar.Click
 
-        If pObjBeEnc.IsNew = False Then Exit Sub
+        'If pObjBeEnc.IsNew = False Then Exit Sub
 
         Try
 
@@ -373,6 +373,9 @@ Public Class frmPago
                         Pago.lblCuota.Visible = True
                         Pago.txtCuota.Visible = True
                     End If
+
+                    ListObjPago = clsLnPago_det.GetAllByPagoEnc(pObjBeEnc.IdPagoEnc)
+
                     Pago.pObj = Obj
                     Pago.pListObjDet = ListObjPago
                     Pago.pListObjRef = ListObjRef
@@ -646,4 +649,7 @@ Public Class frmPago
 
     End Sub
 
+    Private Sub RibbonControl_Click(sender As Object, e As EventArgs) Handles RibbonControl.Click
+
+    End Sub
 End Class

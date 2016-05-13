@@ -196,7 +196,6 @@ Partial Class frmPago
         Me.mnuActualizar.Id = 2
         Me.mnuActualizar.LargeGlyph = CType(resources.GetObject("mnuActualizar.LargeGlyph"), System.Drawing.Image)
         Me.mnuActualizar.Name = "mnuActualizar"
-        Me.mnuActualizar.Visibility = DevExpress.XtraBars.BarItemVisibility.Never
         '
         'mnuEliminar
         '

@@ -219,6 +219,8 @@ Public Class frmGeneraPago
 
     Private Sub cmdGuardaPago_Click(sender As Object, e As EventArgs) Handles cmdGuardaPago.Click
 
+        Cursor = Cursors.WaitCursor
+
         Try
 
             If String.IsNullOrEmpty(txtMontoCancelar.Value) Then
@@ -269,7 +271,8 @@ Public Class frmGeneraPago
 
                 Else
 
-                    If txtAbono.Value > txtMontoCancelar.Value Then
+                    Dim val As Double = CDbl(txtMontoCancelar.Value) - CDbl(txtAbono.Tag)
+                    If txtAbono.Value > txtMontoCancelar.Value Or txtAbono.Value > val Then
 
                         Dim lAbonadoOriginal As Double = txtAbono.Value
 
@@ -280,10 +283,13 @@ Public Class frmGeneraPago
                             Dim lIdRef As Integer = Integer.Parse(GridView1.GetRowCellValue(i, "IdDescuentoRef").ToString)
                             Dim lNoCuota As Integer = Integer.Parse(GridView1.GetRowCellValue(i, "No. Cuota").ToString)
                             Dim lAbonado As Double = Double.Parse(GridView1.GetRowCellValue(i, "Abonado").ToString)
+                            Dim lMontoSinV As Double = Double.Parse(GridView1.GetRowCellValue(i, "Monto").ToString)
                             Dim lMontoCancelar As Double = Double.Parse(GridView1.GetRowCellValue(i, "Monto").ToString)
 
                             If lAbonado = lMontoCancelar Then
                                 Continue For
+                            Else
+                                lMontoCancelar -= lAbonado
                             End If
 
                             Dim ObjR As New clsBeDescuento_ref
@@ -300,6 +306,13 @@ Public Class frmGeneraPago
                                     Else
                                         ObjR.Pagada = False
                                     End If
+                                End If
+                            Else
+                                lAbonado += lMontoCancelar
+                                If lAbonado = lMontoSinV Then
+                                    ObjR.Pagada = True
+                                Else
+                                    ObjR.Pagada = False
                                 End If
                             End If
 
@@ -377,6 +390,8 @@ Public Class frmGeneraPago
 
         Catch ex As Exception
             XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Finally
+            Cursor = Cursors.Default
         End Try
 
     End Sub
