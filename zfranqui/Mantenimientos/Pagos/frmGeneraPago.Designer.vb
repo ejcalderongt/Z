@@ -107,7 +107,7 @@ Partial Class frmGeneraPago
         Me.cmdGuardaPago.Appearance.Options.UseFont = true
         Me.cmdGuardaPago.Location = New System.Drawing.Point(139, 159)
         Me.cmdGuardaPago.Name = "cmdGuardaPago"
-        Me.cmdGuardaPago.Size = New System.Drawing.Size(159, 21)
+        Me.cmdGuardaPago.Size = New System.Drawing.Size(159, 25)
         Me.cmdGuardaPago.TabIndex = 5
         Me.cmdGuardaPago.Text = "Guardar Pago"
         '
@@ -312,7 +312,7 @@ Partial Class frmGeneraPago
         'lblInformacionBeneficio
         '
         Me.lblInformacionBeneficio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.lblInformacionBeneficio.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.lblInformacionBeneficio.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.lblInformacionBeneficio.Location = New System.Drawing.Point(12, 29)
         Me.lblInformacionBeneficio.Name = "lblInformacionBeneficio"
         Me.lblInformacionBeneficio.Size = New System.Drawing.Size(682, 23)
@@ -322,8 +322,8 @@ Partial Class frmGeneraPago
         '
         'lblTipoPeriodo
         '
-        Me.lblTipoPeriodo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
-        Me.lblTipoPeriodo.ForeColor = System.Drawing.SystemColors.InfoText
+        Me.lblTipoPeriodo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTipoPeriodo.ForeColor = System.Drawing.Color.FromArgb(CType(CType(64, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(0, Byte), Integer))
         Me.lblTipoPeriodo.Location = New System.Drawing.Point(12, 52)
         Me.lblTipoPeriodo.Name = "lblTipoPeriodo"
         Me.lblTipoPeriodo.Size = New System.Drawing.Size(682, 23)

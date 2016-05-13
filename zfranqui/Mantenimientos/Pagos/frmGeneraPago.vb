@@ -89,10 +89,19 @@ Public Class frmGeneraPago
 
                 Dim Dr As DataRowView = GridView1.GetFocusedRow()
 
-                Dim row As Integer = IIf(GridView1.FocusedRowHandle > 0, GridView1.FocusedRowHandle - 1, GridView1.FocusedRowHandle)
+                'Dim row As Integer = IIf(GridView1.FocusedRowHandle > 0, GridView1.FocusedRowHandle - 1, GridView1.FocusedRowHandle)
 
-                If GridView1.FocusedRowHandle >= 1 Then
-                    If ValidaAbonoAnterior(row) Then
+                If GridView1.FocusedRowHandle > 0 Then
+                    Dim row As Integer
+                    If GridView1.FocusedRowHandle > 0 Then
+                        row = GridView1.FocusedRowHandle - 1
+                    Else
+                        row = GridView1.FocusedRowHandle
+                    End If
+                    If AbonoAnteriorFaltante(row) Then
+                        txtAbono.Enabled = False
+                        cmdGuardaPago.Enabled = False
+                        dtmFechaPago.Enabled = False
                         Limpiar()
                         Throw New Exception("Debe completar el pago de la cuota anterior.")
                     End If
@@ -173,9 +182,9 @@ Public Class frmGeneraPago
 
     End Sub
 
-    Private Function ValidaAbonoAnterior(ByVal row As Integer) As Boolean
+    Private Function AbonoAnteriorFaltante(ByVal row As Integer) As Boolean
 
-        ValidaAbonoAnterior = False
+        AbonoAnteriorFaltante = False
         Try
             Dim colabono As GridColumn = GridView1.Columns("Abonado")
             Dim celabono = Convert.ToString(GridView1.GetRowCellValue(row, colabono))
@@ -183,13 +192,13 @@ Public Class frmGeneraPago
             Dim colmonto As GridColumn = GridView1.Columns("Monto")
             Dim celmonto = Convert.ToString(GridView1.GetRowCellValue(row, colmonto))
 
-            If celabono = String.Empty Then
-                ValidaAbonoAnterior = True
+            If celabono = "0" Then
+                AbonoAnteriorFaltante = True
             Else
                 Dim red1 As Double = Math.Round(CDbl(celabono), 2)
                 Dim red2 As Double = Math.Round(CDbl(celmonto), 2)
-                If red1 = red2 Then
-                    ValidaAbonoAnterior = True
+                If red1 < red2 Then
+                    AbonoAnteriorFaltante = True
                 End If
             End If
         Catch ex As Exception
@@ -220,8 +229,12 @@ Public Class frmGeneraPago
                 Throw New Exception("El abono debe ser mayor a 0.")
             ElseIf txtAbono.Value > txtMontoCancelar.Value Then
                 'Throw New Exception("El abono sobrepasa el monto a cancelar.")
-                If XtraMessageBox.Show("El abono excede el monto a cancelar. ¿Desea repartir lo restante entre los demás pagos?", Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
+                If XtraMessageBox.Show(String.Format("El abono excede el monto a cancelar en la cuota {0}. ¿Desea repartir lo restante entre los demás pagos?", txtCuota.Value), Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
                     Return
+                Else
+                    If ExcedeGranTotal(CDbl(txtAbono.Value)) Then
+                        Throw New Exception(String.Format("El abono {0} excede el monto total a pagar por todas las cuotas restantes.", txtCuota.Value))
+                    End If
                 End If
             End If
 
@@ -367,5 +380,37 @@ Public Class frmGeneraPago
         End Try
 
     End Sub
+
+    Private Function ExcedeGranTotal(ByVal pCantidadIngresada As Double) As Boolean
+
+        ExcedeGranTotal = False
+        Try
+
+            Dim suma As Double = 0
+            For i As Integer = 0 To GridView1.RowCount - 1
+
+                Dim colabono As GridColumn = GridView1.Columns("Abonado")
+                Dim celabono As Double = Double.Parse(GridView1.GetRowCellValue(i, colabono).ToString)
+
+                Dim colmonto As GridColumn = GridView1.Columns("Monto")
+                Dim celmonto As Double = Double.Parse(GridView1.GetRowCellValue(i, colmonto).ToString)
+
+                Dim dif As Double = celmonto - celabono
+
+                If celabono <> celmonto Then
+                    suma += dif
+                End If
+
+            Next
+
+            If pCantidadIngresada > suma Then
+                ExcedeGranTotal = True
+            End If
+
+        Catch ex As Exception
+            XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        End Try
+
+    End Function
 
 End Class
