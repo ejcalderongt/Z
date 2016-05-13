@@ -26,7 +26,7 @@ Partial Class frmGeneraPago
         Dim lblAbono As System.Windows.Forms.Label
         Dim lblMontoCancelar As System.Windows.Forms.Label
         Me.GroupControl1 = New DevExpress.XtraEditors.GroupControl()
-        Me.cmdGuardarPago = New System.Windows.Forms.Button()
+        Me.cmdGuardaPago = New DevExpress.XtraEditors.SimpleButton()
         Me.txtMontoCancelar = New System.Windows.Forms.NumericUpDown()
         Me.lblFechaPago = New System.Windows.Forms.Label()
         Me.dtmFechaPago = New System.Windows.Forms.DateTimePicker()
@@ -52,21 +52,21 @@ Partial Class frmGeneraPago
         Me.lblTipoPeriodo = New System.Windows.Forms.Label()
         lblAbono = New System.Windows.Forms.Label()
         lblMontoCancelar = New System.Windows.Forms.Label()
-        CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupControl1.SuspendLayout()
-        CType(Me.txtMontoCancelar, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtAbono, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.txtCuota, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GroupControl2, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.GroupControl2.SuspendLayout()
-        CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.BarManager, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
+        CType(Me.GroupControl1,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.GroupControl1.SuspendLayout
+        CType(Me.txtMontoCancelar,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtAbono,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.txtCuota,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.GroupControl2,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.GroupControl2.SuspendLayout
+        CType(Me.Dgrid,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.GridView1,System.ComponentModel.ISupportInitialize).BeginInit
+        CType(Me.BarManager,System.ComponentModel.ISupportInitialize).BeginInit
+        Me.SuspendLayout
         '
         'lblAbono
         '
-        lblAbono.AutoSize = True
+        lblAbono.AutoSize = true
         lblAbono.Location = New System.Drawing.Point(12, 135)
         lblAbono.Name = "lblAbono"
         lblAbono.Size = New System.Drawing.Size(41, 13)
@@ -75,7 +75,7 @@ Partial Class frmGeneraPago
         '
         'lblMontoCancelar
         '
-        lblMontoCancelar.AutoSize = True
+        lblMontoCancelar.AutoSize = true
         lblMontoCancelar.Location = New System.Drawing.Point(12, 109)
         lblMontoCancelar.Name = "lblMontoCancelar"
         lblMontoCancelar.Size = New System.Drawing.Size(85, 13)
@@ -84,7 +84,7 @@ Partial Class frmGeneraPago
         '
         'GroupControl1
         '
-        Me.GroupControl1.Controls.Add(Me.cmdGuardarPago)
+        Me.GroupControl1.Controls.Add(Me.cmdGuardaPago)
         Me.GroupControl1.Controls.Add(Me.txtMontoCancelar)
         Me.GroupControl1.Controls.Add(lblMontoCancelar)
         Me.GroupControl1.Controls.Add(Me.lblFechaPago)
@@ -101,31 +101,31 @@ Partial Class frmGeneraPago
         Me.GroupControl1.TabIndex = 1
         Me.GroupControl1.Text = "Datos"
         '
-        'cmdGuardarPago
+        'cmdGuardaPago
         '
-        Me.cmdGuardarPago.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-        Me.cmdGuardarPago.Location = New System.Drawing.Point(139, 159)
-        Me.cmdGuardarPago.Name = "cmdGuardarPago"
-        Me.cmdGuardarPago.Size = New System.Drawing.Size(159, 23)
-        Me.cmdGuardarPago.TabIndex = 153
-        Me.cmdGuardarPago.Text = "Guardar Pago"
-        Me.cmdGuardarPago.UseVisualStyleBackColor = True
+        Me.cmdGuardaPago.Appearance.Font = New System.Drawing.Font("Tahoma", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
+        Me.cmdGuardaPago.Appearance.Options.UseFont = true
+        Me.cmdGuardaPago.Location = New System.Drawing.Point(139, 159)
+        Me.cmdGuardaPago.Name = "cmdGuardaPago"
+        Me.cmdGuardaPago.Size = New System.Drawing.Size(159, 21)
+        Me.cmdGuardaPago.TabIndex = 5
+        Me.cmdGuardaPago.Text = "Guardar Pago"
         '
         'txtMontoCancelar
         '
         Me.txtMontoCancelar.DecimalPlaces = 2
-        Me.txtMontoCancelar.Enabled = False
+        Me.txtMontoCancelar.Enabled = false
         Me.txtMontoCancelar.Location = New System.Drawing.Point(139, 107)
         Me.txtMontoCancelar.Maximum = New Decimal(New Integer() {1215752191, 23, 0, 0})
         Me.txtMontoCancelar.Minimum = New Decimal(New Integer() {1316134911, 2328, 0, -2147483648})
         Me.txtMontoCancelar.Name = "txtMontoCancelar"
         Me.txtMontoCancelar.Size = New System.Drawing.Size(159, 20)
-        Me.txtMontoCancelar.TabIndex = 14
+        Me.txtMontoCancelar.TabIndex = 3
         '
         'lblFechaPago
         '
-        Me.lblFechaPago.AutoSize = True
-        Me.lblFechaPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFechaPago.AutoSize = true
+        Me.lblFechaPago.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.lblFechaPago.Location = New System.Drawing.Point(12, 85)
         Me.lblFechaPago.Name = "lblFechaPago"
         Me.lblFechaPago.Size = New System.Drawing.Size(68, 13)
@@ -134,21 +134,21 @@ Partial Class frmGeneraPago
         '
         'dtmFechaPago
         '
-        Me.dtmFechaPago.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtmFechaPago.Checked = False
+        Me.dtmFechaPago.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)  _
+            Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.dtmFechaPago.Checked = false
         Me.dtmFechaPago.CustomFormat = "dd-MMM-yyyy"
         Me.dtmFechaPago.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtmFechaPago.Location = New System.Drawing.Point(139, 81)
         Me.dtmFechaPago.Name = "dtmFechaPago"
         Me.dtmFechaPago.Size = New System.Drawing.Size(159, 20)
-        Me.dtmFechaPago.TabIndex = 0
+        Me.dtmFechaPago.TabIndex = 2
         '
         'lblFechaCobro
         '
-        Me.lblFechaCobro.AutoSize = True
-        Me.lblFechaCobro.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblFechaCobro.AutoSize = true
+        Me.lblFechaCobro.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.lblFechaCobro.Location = New System.Drawing.Point(12, 59)
         Me.lblFechaCobro.Name = "lblFechaCobro"
         Me.lblFechaCobro.Size = New System.Drawing.Size(71, 13)
@@ -157,22 +157,22 @@ Partial Class frmGeneraPago
         '
         'dtmFechaCobro
         '
-        Me.dtmFechaCobro.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.dtmFechaCobro.Checked = False
+        Me.dtmFechaCobro.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom)  _
+            Or System.Windows.Forms.AnchorStyles.Left)  _
+            Or System.Windows.Forms.AnchorStyles.Right),System.Windows.Forms.AnchorStyles)
+        Me.dtmFechaCobro.Checked = false
         Me.dtmFechaCobro.CustomFormat = "dd-MMM-yyyy"
-        Me.dtmFechaCobro.Enabled = False
+        Me.dtmFechaCobro.Enabled = false
         Me.dtmFechaCobro.Format = System.Windows.Forms.DateTimePickerFormat.[Short]
         Me.dtmFechaCobro.Location = New System.Drawing.Point(139, 55)
         Me.dtmFechaCobro.Name = "dtmFechaCobro"
         Me.dtmFechaCobro.Size = New System.Drawing.Size(159, 20)
-        Me.dtmFechaCobro.TabIndex = 10
+        Me.dtmFechaCobro.TabIndex = 1
         '
         'lblCuota
         '
-        Me.lblCuota.AutoSize = True
-        Me.lblCuota.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblCuota.AutoSize = true
+        Me.lblCuota.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.lblCuota.Location = New System.Drawing.Point(12, 31)
         Me.lblCuota.Name = "lblCuota"
         Me.lblCuota.Size = New System.Drawing.Size(38, 13)
@@ -187,24 +187,24 @@ Partial Class frmGeneraPago
         Me.txtAbono.Minimum = New Decimal(New Integer() {1316134911, 2328, 0, -2147483648})
         Me.txtAbono.Name = "txtAbono"
         Me.txtAbono.Size = New System.Drawing.Size(159, 20)
-        Me.txtAbono.TabIndex = 2
+        Me.txtAbono.TabIndex = 4
         '
         'txtCuota
         '
-        Me.txtCuota.Enabled = False
+        Me.txtCuota.Enabled = false
         Me.txtCuota.Location = New System.Drawing.Point(139, 29)
         Me.txtCuota.Maximum = New Decimal(New Integer() {1215752191, 23, 0, 0})
         Me.txtCuota.Minimum = New Decimal(New Integer() {1316134911, 2328, 0, -2147483648})
         Me.txtCuota.Name = "txtCuota"
         Me.txtCuota.Size = New System.Drawing.Size(159, 20)
-        Me.txtCuota.TabIndex = 1
+        Me.txtCuota.TabIndex = 0
         '
         'GroupControl2
         '
         Me.GroupControl2.Controls.Add(Me.Dgrid)
         Me.GroupControl2.Location = New System.Drawing.Point(2, 277)
         Me.GroupControl2.Name = "GroupControl2"
-        Me.GroupControl2.Size = New System.Drawing.Size(704, 206)
+        Me.GroupControl2.Size = New System.Drawing.Size(704, 231)
         Me.GroupControl2.TabIndex = 0
         Me.GroupControl2.Text = "Lista de Cuotas"
         '
@@ -215,7 +215,7 @@ Partial Class frmGeneraPago
         Me.Dgrid.Location = New System.Drawing.Point(2, 21)
         Me.Dgrid.MainView = Me.GridView1
         Me.Dgrid.Name = "Dgrid"
-        Me.Dgrid.Size = New System.Drawing.Size(700, 183)
+        Me.Dgrid.Size = New System.Drawing.Size(700, 208)
         Me.Dgrid.TabIndex = 0
         Me.Dgrid.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.GridView1})
         '
@@ -223,8 +223,8 @@ Partial Class frmGeneraPago
         '
         Me.GridView1.GridControl = Me.Dgrid
         Me.GridView1.Name = "GridView1"
-        Me.GridView1.OptionsBehavior.Editable = False
-        Me.GridView1.OptionsView.ShowFooter = True
+        Me.GridView1.OptionsBehavior.Editable = false
+        Me.GridView1.OptionsView.ShowFooter = true
         '
         'BarManager
         '
@@ -246,8 +246,8 @@ Partial Class frmGeneraPago
         Me.Bar2.DockRow = 0
         Me.Bar2.DockStyle = DevExpress.XtraBars.BarDockStyle.Top
         Me.Bar2.LinksPersistInfo.AddRange(New DevExpress.XtraBars.LinkPersistInfo() {New DevExpress.XtraBars.LinkPersistInfo(Me.cmdGrabar)})
-        Me.Bar2.OptionsBar.MultiLine = True
-        Me.Bar2.OptionsBar.UseWholeRow = True
+        Me.Bar2.OptionsBar.MultiLine = true
+        Me.Bar2.OptionsBar.UseWholeRow = true
         Me.Bar2.Text = "Main menu"
         '
         'cmdGrabar
@@ -263,38 +263,38 @@ Partial Class frmGeneraPago
         Me.Bar3.DockCol = 0
         Me.Bar3.DockRow = 0
         Me.Bar3.DockStyle = DevExpress.XtraBars.BarDockStyle.Bottom
-        Me.Bar3.OptionsBar.AllowQuickCustomization = False
-        Me.Bar3.OptionsBar.DrawDragBorder = False
-        Me.Bar3.OptionsBar.UseWholeRow = True
+        Me.Bar3.OptionsBar.AllowQuickCustomization = false
+        Me.Bar3.OptionsBar.DrawDragBorder = false
+        Me.Bar3.OptionsBar.UseWholeRow = true
         Me.Bar3.Text = "Status bar"
         '
         'barDockControlTop
         '
-        Me.barDockControlTop.CausesValidation = False
+        Me.barDockControlTop.CausesValidation = false
         Me.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top
         Me.barDockControlTop.Location = New System.Drawing.Point(0, 0)
         Me.barDockControlTop.Size = New System.Drawing.Size(708, 22)
         '
         'barDockControlBottom
         '
-        Me.barDockControlBottom.CausesValidation = False
+        Me.barDockControlBottom.CausesValidation = false
         Me.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 489)
+        Me.barDockControlBottom.Location = New System.Drawing.Point(0, 514)
         Me.barDockControlBottom.Size = New System.Drawing.Size(708, 23)
         '
         'barDockControlLeft
         '
-        Me.barDockControlLeft.CausesValidation = False
+        Me.barDockControlLeft.CausesValidation = false
         Me.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left
         Me.barDockControlLeft.Location = New System.Drawing.Point(0, 22)
-        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 467)
+        Me.barDockControlLeft.Size = New System.Drawing.Size(0, 492)
         '
         'barDockControlRight
         '
-        Me.barDockControlRight.CausesValidation = False
+        Me.barDockControlRight.CausesValidation = false
         Me.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right
         Me.barDockControlRight.Location = New System.Drawing.Point(708, 22)
-        Me.barDockControlRight.Size = New System.Drawing.Size(0, 467)
+        Me.barDockControlRight.Size = New System.Drawing.Size(0, 492)
         '
         'cmdCancelar
         '
@@ -311,7 +311,7 @@ Partial Class frmGeneraPago
         '
         'lblInformacionBeneficio
         '
-        Me.lblInformacionBeneficio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInformacionBeneficio.Font = New System.Drawing.Font("Microsoft Sans Serif", 9!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.lblInformacionBeneficio.ForeColor = System.Drawing.SystemColors.InfoText
         Me.lblInformacionBeneficio.Location = New System.Drawing.Point(12, 29)
         Me.lblInformacionBeneficio.Name = "lblInformacionBeneficio"
@@ -322,7 +322,7 @@ Partial Class frmGeneraPago
         '
         'lblTipoPeriodo
         '
-        Me.lblTipoPeriodo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblTipoPeriodo.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0,Byte))
         Me.lblTipoPeriodo.ForeColor = System.Drawing.SystemColors.InfoText
         Me.lblTipoPeriodo.Location = New System.Drawing.Point(12, 52)
         Me.lblTipoPeriodo.Name = "lblTipoPeriodo"
@@ -333,9 +333,9 @@ Partial Class frmGeneraPago
         '
         'frmGeneraPago
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6!, 13!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(708, 512)
+        Me.ClientSize = New System.Drawing.Size(708, 537)
         Me.Controls.Add(Me.lblInformacionBeneficio)
         Me.Controls.Add(Me.lblTipoPeriodo)
         Me.Controls.Add(Me.GroupControl2)
@@ -344,26 +344,26 @@ Partial Class frmGeneraPago
         Me.Controls.Add(Me.barDockControlRight)
         Me.Controls.Add(Me.barDockControlBottom)
         Me.Controls.Add(Me.barDockControlTop)
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
-        Me.MaximumSize = New System.Drawing.Size(724, 546)
-        Me.MinimumSize = New System.Drawing.Size(724, 546)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = false
+        Me.MinimizeBox = false
         Me.Name = "frmGeneraPago"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Pago"
-        CType(Me.GroupControl1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupControl1.ResumeLayout(False)
-        Me.GroupControl1.PerformLayout()
-        CType(Me.txtMontoCancelar, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtAbono, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.txtCuota, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GroupControl2, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.GroupControl2.ResumeLayout(False)
-        CType(Me.Dgrid, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.GridView1, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.BarManager, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
+        CType(Me.GroupControl1,System.ComponentModel.ISupportInitialize).EndInit
+        Me.GroupControl1.ResumeLayout(false)
+        Me.GroupControl1.PerformLayout
+        CType(Me.txtMontoCancelar,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtAbono,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.txtCuota,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.GroupControl2,System.ComponentModel.ISupportInitialize).EndInit
+        Me.GroupControl2.ResumeLayout(false)
+        CType(Me.Dgrid,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.GridView1,System.ComponentModel.ISupportInitialize).EndInit
+        CType(Me.BarManager,System.ComponentModel.ISupportInitialize).EndInit
+        Me.ResumeLayout(false)
 
-    End Sub
+End Sub
     Friend WithEvents GroupControl1 As DevExpress.XtraEditors.GroupControl
     Friend WithEvents GroupControl2 As DevExpress.XtraEditors.GroupControl
     Friend WithEvents Dgrid As DevExpress.XtraGrid.GridControl
@@ -386,7 +386,7 @@ Partial Class frmGeneraPago
     Friend WithEvents lblFechaCobro As System.Windows.Forms.Label
     Friend WithEvents dtmFechaCobro As System.Windows.Forms.DateTimePicker
     Friend WithEvents txtMontoCancelar As System.Windows.Forms.NumericUpDown
-    Friend WithEvents cmdGuardarPago As System.Windows.Forms.Button
     Friend WithEvents lblInformacionBeneficio As System.Windows.Forms.Label
     Friend WithEvents lblTipoPeriodo As System.Windows.Forms.Label
+    Friend WithEvents cmdGuardaPago As DevExpress.XtraEditors.SimpleButton
 End Class

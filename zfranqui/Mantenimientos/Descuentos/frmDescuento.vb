@@ -282,9 +282,9 @@ Public Class frmDescuento
 
             End If
 
-            If txtCodCEF.Text.Trim = "" Then
-                MsgBox("El franquiciado seleccionado no tiene CEF asociado, debe asociarlo antes de generarle un descuento", MsgBoxStyle.Critical)
-            End If
+            'If txtCodCEF.Text.Trim = "" Then
+            '    MsgBox("El franquiciado seleccionado no tiene CEF asociado, debe asociarlo antes de generarle un descuento", MsgBoxStyle.Critical)
+            'End If
 
         Catch ex As Exception
             XtraMessageBox.Show(ex.Message, Me.Text, MessageBoxButtons.OK, MessageBoxIcon.Information)
