@@ -232,6 +232,7 @@ Public Class frmGeneraPago
             ElseIf txtAbono.Value > txtMontoCancelar.Value Then
                 'Throw New Exception("El abono sobrepasa el monto a cancelar.")
                 If XtraMessageBox.Show(String.Format("El abono excede el monto a cancelar en la cuota {0}. ¿Desea repartir lo restante entre los demás pagos?", txtCuota.Value), Me.Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) = Windows.Forms.DialogResult.No Then
+                    Cursor = Cursors.Default
                     Return
                 Else
                     If ExcedeGranTotal(CDbl(txtAbono.Value)) Then
@@ -250,18 +251,21 @@ Public Class frmGeneraPago
 
                 If lIndex > -1 Then
 
-                    If pListObjDet(lIndex).MontoAbono < CDbl(txtAbono.Tag) Then
+                    ' VALIDAR ACA SI EL ABONO QUE ESTAN HACIENDO ES MAYOR A LA DIFERENCIA RESTANTE DE ESA CUOTA
+                    ' SI ES MAYOR ENTONCES HACER FOR COMO EL DE ABAJO DE LO CONTRARIO DEJAR EL CODIGO DE ABAJO TAL Y COMO ESTA
+
+                    If Math.Round(pListObjDet(lIndex).MontoAbono, 2) < Math.Round(CDbl(txtAbono.Tag), 2) Then
                         pListObjDet(lIndex).MontoAbono += txtAbono.Value + txtAbono.Tag
                     Else
-                        pListObjDet(lIndex).MontoAbono += txtAbono.Value
+                        pListObjDet(lIndex).MontoAbono += CDbl(txtAbono.Value)
                     End If
 
                     'pListObjDet(lIndex).MontoAbono += txtAbono.Value
                     pListObjRef(lIndex).Abonado = pListObjDet(lIndex).MontoAbono
 
-                    If pListObjRef(lIndex).Abonado = txtMontoCancelar.Value Then
+                    If Math.Round(pListObjRef(lIndex).Abonado, 2) = Math.Round(CDbl(txtMontoCancelar.Value), 2) Then
                         pListObjRef(lIndex).Pagada = True
-                    ElseIf pListObjRef(lIndex).Abonado > txtMontoCancelar.Value Then
+                    ElseIf Math.Round(pListObjRef(lIndex).Abonado, 2) > Math.Round(CDbl(txtMontoCancelar.Value), 2) Then
                         Throw New Exception("No puede pagar más del monto total.")
                     Else
                         pListObjRef(lIndex).Pagada = False
@@ -340,6 +344,7 @@ Public Class frmGeneraPago
 
                             If lAbonadoOriginal < 0 Then
                                 Limpiar()
+                                Cursor = Cursors.Default
                                 Exit Sub
                             End If
 
