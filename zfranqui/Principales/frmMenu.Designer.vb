@@ -21,12 +21,12 @@ Partial Class frmMenu
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMenu))
-        Dim SuperToolTip1 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem1 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem1 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
-        Dim SuperToolTip2 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
-        Dim ToolTipTitleItem2 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
-        Dim ToolTipItem2 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip3 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem3 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem3 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
+        Dim SuperToolTip4 As DevExpress.Utils.SuperToolTip = New DevExpress.Utils.SuperToolTip()
+        Dim ToolTipTitleItem4 As DevExpress.Utils.ToolTipTitleItem = New DevExpress.Utils.ToolTipTitleItem()
+        Dim ToolTipItem4 As DevExpress.Utils.ToolTipItem = New DevExpress.Utils.ToolTipItem()
         Me.RibbonStatusBar = New DevExpress.XtraBars.Ribbon.RibbonStatusBar()
         Me.lblNomPCCliente = New DevExpress.XtraBars.BarStaticItem()
         Me.lblUser = New DevExpress.XtraBars.BarStaticItem()
@@ -83,6 +83,7 @@ Partial Class frmMenu
         Me.rpg7 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.rpg8 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.XtraTabbedMdiManager1 = New DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(Me.components)
+        Me.BarButtonItem1 = New DevExpress.XtraBars.BarButtonItem()
         CType(Me.rbMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.XtraTabbedMdiManager1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -126,9 +127,9 @@ Partial Class frmMenu
         '
         Me.rbMain.ApplicationIcon = Global.zfranqui.My.Resources.Resources.home
         Me.rbMain.ExpandCollapseItem.Id = 0
-        Me.rbMain.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.rbMain.ExpandCollapseItem, Me.mnuCEFP, Me.mnuDepartamento, Me.mnuMunicipio, Me.mnuRegion, Me.mnuSupervisor, Me.mnuFranquiciadoP, Me.mnuBanco, Me.mnuFranquiciado, Me.mnuBeneficioP, Me.mnuChanganes, Me.mnuIngresoCobro, Me.mnuPeriodoDefinido, Me.cmdIndefinido, Me.mnuUnico, Me.BarButtonItem12, Me.mnuIngresoPagoP, Me.mnuPagoManual, Me.BarButtonItem14, Me.mnuIngresoVentaP, Me.mnuVentaManual, Me.mnuVentaExcel, Me.mnuConfigUsuP, Me.mnuRoles, Me.mnuUsuarios, Me.lblNomPCCliente, Me.lblUser, Me.lblVersion, Me.mnuCEF, Me.mnuMotos, Me.mnuTelefonos, Me.mnuFranquicias, Me.mnuServicios, Me.mnuPeriodoDescuento, Me.mnuReportes, Me.mnuRepDtosPorFranqui, Me.mnuEstadoCuentaDetalle, Me.BarButtonItem3, Me.mnuRepSaldoVehiculos, Me.mnuRepFranquiciadosCEF, Me.cmdReciboPagoPendiente, Me.mnuPagosOperados, Me.mnuRepDescuentosTipo, Me.mnuPagoAuto, Me.cmdSupervisor, Me.cmdCargaExcel})
+        Me.rbMain.Items.AddRange(New DevExpress.XtraBars.BarItem() {Me.rbMain.ExpandCollapseItem, Me.mnuCEFP, Me.mnuDepartamento, Me.mnuMunicipio, Me.mnuRegion, Me.mnuSupervisor, Me.mnuFranquiciadoP, Me.mnuBanco, Me.mnuFranquiciado, Me.mnuBeneficioP, Me.mnuChanganes, Me.mnuIngresoCobro, Me.mnuPeriodoDefinido, Me.cmdIndefinido, Me.mnuUnico, Me.BarButtonItem12, Me.mnuIngresoPagoP, Me.mnuPagoManual, Me.BarButtonItem14, Me.mnuIngresoVentaP, Me.mnuVentaManual, Me.mnuVentaExcel, Me.mnuConfigUsuP, Me.mnuRoles, Me.mnuUsuarios, Me.lblNomPCCliente, Me.lblUser, Me.lblVersion, Me.mnuCEF, Me.mnuMotos, Me.mnuTelefonos, Me.mnuFranquicias, Me.mnuServicios, Me.mnuPeriodoDescuento, Me.mnuReportes, Me.mnuRepDtosPorFranqui, Me.mnuEstadoCuentaDetalle, Me.BarButtonItem3, Me.mnuRepSaldoVehiculos, Me.mnuRepFranquiciadosCEF, Me.cmdReciboPagoPendiente, Me.mnuPagosOperados, Me.mnuRepDescuentosTipo, Me.mnuPagoAuto, Me.cmdSupervisor, Me.cmdCargaExcel, Me.BarButtonItem1})
         Me.rbMain.Location = New System.Drawing.Point(0, 0)
-        Me.rbMain.MaxItemId = 69
+        Me.rbMain.MaxItemId = 70
         Me.rbMain.Name = "rbMain"
         Me.rbMain.Pages.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPage() {Me.rpConfiguracion})
         Me.rbMain.Size = New System.Drawing.Size(853, 144)
@@ -421,25 +422,25 @@ Partial Class frmMenu
         Me.rpg1.ItemLinks.Add(Me.mnuCEFP)
         Me.rpg1.ItemLinks.Add(Me.mnuFranquiciadoP)
         Me.rpg1.Name = "rpg1"
-        ToolTipTitleItem1.Text = "Configuración de franquicias"
-        ToolTipItem1.LeftIndent = 6
-        ToolTipItem1.Text = "Permite configurar las franquicias y sus franquiciados"
-        SuperToolTip1.Items.Add(ToolTipTitleItem1)
-        SuperToolTip1.Items.Add(ToolTipItem1)
-        Me.rpg1.SuperTip = SuperToolTip1
+        ToolTipTitleItem3.Text = "Configuración de franquicias"
+        ToolTipItem3.LeftIndent = 6
+        ToolTipItem3.Text = "Permite configurar las franquicias y sus franquiciados"
+        SuperToolTip3.Items.Add(ToolTipTitleItem3)
+        SuperToolTip3.Items.Add(ToolTipItem3)
+        Me.rpg1.SuperTip = SuperToolTip3
         Me.rpg1.Text = "Franquicias"
         '
         'rpg2
         '
         Me.rpg2.ItemLinks.Add(Me.mnuBeneficioP)
         Me.rpg2.Name = "rpg2"
-        ToolTipTitleItem2.Text = "Beneficios"
-        ToolTipItem2.LeftIndent = 6
-        ToolTipItem2.Text = "Permite configurar los distintos activos para los franquiciados, como changanes, " & _
+        ToolTipTitleItem4.Text = "Beneficios"
+        ToolTipItem4.LeftIndent = 6
+        ToolTipItem4.Text = "Permite configurar los distintos activos para los franquiciados, como changanes, " & _
     "motos y celulares."
-        SuperToolTip2.Items.Add(ToolTipTitleItem2)
-        SuperToolTip2.Items.Add(ToolTipItem2)
-        Me.rpg2.SuperTip = SuperToolTip2
+        SuperToolTip4.Items.Add(ToolTipTitleItem4)
+        SuperToolTip4.Items.Add(ToolTipItem4)
+        Me.rpg2.SuperTip = SuperToolTip4
         Me.rpg2.Text = "Activos"
         '
         'rpg3
@@ -475,6 +476,12 @@ Partial Class frmMenu
         'XtraTabbedMdiManager1
         '
         Me.XtraTabbedMdiManager1.MdiParent = Me
+        '
+        'BarButtonItem1
+        '
+        Me.BarButtonItem1.Caption = "Carga Temporal"
+        Me.BarButtonItem1.Id = 69
+        Me.BarButtonItem1.Name = "BarButtonItem1"
         '
         'frmMenu
         '
@@ -553,6 +560,7 @@ Partial Class frmMenu
     Friend WithEvents cmdSupervisor As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents cmdCargaExcel As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents rpg8 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
+    Friend WithEvents BarButtonItem1 As DevExpress.XtraBars.BarButtonItem
 
 
 End Class

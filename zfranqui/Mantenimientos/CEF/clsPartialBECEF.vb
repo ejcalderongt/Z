@@ -12,6 +12,4 @@
     Public Sup As New clsBeCefsupervisor
     Public dSup As New clsLnCefsupervisor
 
-    
-
 End Class

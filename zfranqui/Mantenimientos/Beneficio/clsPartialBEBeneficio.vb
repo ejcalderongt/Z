@@ -13,4 +13,14 @@
         End Set
     End Property
 
+    Public _asignado As Boolean
+    Public Property Asignado As Boolean
+        Get
+            Return _asignado
+        End Get
+        Set(value As Boolean)
+            _asignado = value
+        End Set
+    End Property
+
 End Class

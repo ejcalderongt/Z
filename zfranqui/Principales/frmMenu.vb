@@ -735,7 +735,7 @@ Public Class frmMenu
     End Sub
 
     Private Sub cmdCargaExcel_ItemClick(sender As Object, e As ItemClickEventArgs) Handles cmdCargaExcel.ItemClick
-        Dim Carga As New frmCargaExcel()
+        Dim Carga As New frmCarga()
         Carga.ShowDialog()
         Carga.Dispose()
     End Sub
@@ -746,4 +746,9 @@ Public Class frmMenu
         'PagosDet.Dispose()
     End Sub
 
+    Private Sub BarButtonItem1_ItemClick(sender As Object, e As ItemClickEventArgs) Handles BarButtonItem1.ItemClick
+        Dim carga As New frmCarga
+        carga.ShowDialog()
+        carga.Dispose()
+    End Sub
 End Class

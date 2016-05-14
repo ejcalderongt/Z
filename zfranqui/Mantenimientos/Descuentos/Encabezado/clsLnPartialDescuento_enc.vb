@@ -446,4 +446,64 @@ Partial Public Class clsLnDescuento_enc
 
     End Function
 
+    Public Function Insertartmp(ByRef oBeDescuento_enc As clsBeDescuento_enc, Optional ByVal pConection As MySqlConnection = Nothing, Optional ByVal pTransaction As MySqlTransaction = Nothing) As Integer
+
+        Dim cnn As New MySqlConnection(BD.CadenaConexion)
+        Dim cmd As New MySqlCommand()
+
+        Try
+
+            Ins.Init("descuento_enc")
+            Ins.Add("iddescuentoenc", "@iddescuentoenc", "F")
+            Ins.Add("idcef", "@idcef", "F")
+            Ins.Add("idfranquiciado", "@idfranquiciado", "F")
+            Ins.Add("idtipodescuento", "@idtipodescuento", "F")
+            Ins.Add("fec_agr", "@fec_agr", "F")
+            Ins.Add("fec_mod", "@fec_mod", "F")
+            Ins.Add("user_agr", "@user_agr", "F")
+            Ins.Add("user_mod", "@user_mod", "F")
+            Ins.Add("cargamasiva", "@cargamasiva", "F")
+
+            Dim sp As String = Ins.SQL()
+
+            Dim EsTransaccional As Boolean = (Not pConection Is Nothing AndAlso Not pTransaction Is Nothing)
+
+            cmd.CommandType = CommandType.Text
+
+
+            If EsTransaccional Then
+                cmd = New MySqlClient.MySqlCommand(sp, pConection)
+                cmd.Transaction = pTransaction
+            Else
+
+                cmd = New MySqlClient.MySqlCommand(sp, cnn)
+                cnn.Open()
+            End If
+
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDDESCUENTOENC", oBeDescuento_enc.IdDescuentoEnc))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDCEF", oBeDescuento_enc.CEF.IdCef))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDFRANQUICIADO", oBeDescuento_enc.Franquiciado.IdFranquiciado))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@IDTIPODESCUENTO", oBeDescuento_enc.IdTipoDescuento))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_AGR", oBeDescuento_enc.Fec_agr))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@FEC_MOD", oBeDescuento_enc.Fec_mod))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_AGR", oBeDescuento_enc.User_agr))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@USER_MOD", oBeDescuento_enc.User_mod))
+            cmd.Parameters.Add(New MySqlClient.MySqlParameter("@CARGAMASIVA", 1))
+
+            Dim rowsAffected As Integer = 0
+            rowsAffected = cmd.ExecuteNonQuery()
+            Return rowsAffected
+
+            oBeDescuento_enc.IdDescuentoEnc = CInt(cmd.Parameters("@IDDESCUENTOENC").Value)
+
+        Catch ex As Exception
+            Throw ex
+        Finally
+            If cnn.State = ConnectionState.Open Then cnn.Close()
+            cnn.Dispose()
+            cmd.Dispose()
+        End Try
+
+    End Function
+
 End Class
