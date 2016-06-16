@@ -560,4 +560,44 @@ Partial Public Class clsLnBeneficio
 
     End Function
 
+    Public Shared Function GetTelefonos() As List(Of clsBeBeneficio)
+
+        Dim lReturnList As New List(Of clsBeBeneficio)
+
+        Try
+
+            'Validacion y estandarización de los datos
+            Using lCnn As New MySqlConnection(BD.CadenaConexion)
+
+                Dim lSQL As String = "select * from beneficio where idtipobeneficio=3"
+
+                'Acceso a los datos.
+                Using lDTA As New MySqlDataAdapter(lSQL, lCnn)
+
+                    lDTA.SelectCommand.CommandType = CommandType.Text
+
+                    Dim lDataTable As New DataTable
+                    lDTA.Fill(lDataTable)
+
+                    Dim Obj As clsBeBeneficio
+
+                    If lDataTable IsNot Nothing AndAlso lDataTable.Rows.Count > 0 Then
+                        For Each lRow As DataRow In lDataTable.Rows
+                            Obj = New clsBeBeneficio
+                            Obj.IdBeneficio = CType(lRow("IdBeneficio"), System.Int32)
+                            Obj.Asignado = False
+                            lReturnList.Add(Obj)
+                        Next
+                    End If
+                End Using
+            End Using
+
+            Return lReturnList
+
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+    End Function
+
 End Class
