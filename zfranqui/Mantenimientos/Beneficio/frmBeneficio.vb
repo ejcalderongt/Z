@@ -240,6 +240,8 @@ Public Class frmBeneficio
 
     Private Function Datos_Correctos() As Boolean
 
+        Datos_Correctos = False
+
         Try
 
             If cmbTipo.Text.Trim = "" AndAlso (Bene.TipoBeneficio.EsVehiculo = False) AndAlso (Bene.TipoBeneficio.EsTelefono = False) Then
@@ -321,11 +323,7 @@ Public Class frmBeneficio
 
             End If
 
-            Return True
-
-            ' VALIDAR QUE EL ELIMINAR FUNCiONE PARA TODOS LOS BENEFICIOS
-            ' EN LOS PAGOS AL DAR DOBLE CLIC COLOCAR LA DIFERENCIA DEL MONTO TOTAL - LO QUE LE RESTA PAGAR 
-            ' EN ABONO , IR REPARTIENDO LOS ABONOS EN TODAS LAS CUOTAS DE LA PERSONA. VALIDAR CON FUNCION FUMADA
+            Datos_Correctos = True
 
         Catch ex As Exception
             MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
@@ -352,14 +350,6 @@ Public Class frmBeneficio
 
             PanTelefono.Visible = Bene.TipoBeneficio.EsTelefono
             PanVehiculo.Visible = Bene.TipoBeneficio.EsVehiculo
-
-            'If Bene.TipoBeneficio.EsVehiculo Then
-            '    PanDatosBeneficio.Location = New Point(210, PanDatosBeneficio.Location.Y)
-            '    PanVehiculo.Location = New Point(210, PanVehiculo.Location.Y)
-            '    txtModelo.Focus()
-            'ElseIf PanTelefono.Visible = Bene.TipoBeneficio.EsTelefono Then
-
-            'End If
 
         Catch ex As Exception
 

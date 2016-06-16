@@ -96,45 +96,5 @@ Partial Public Class clsLnCef
 
     End Function
 
-    Public Shared Function GetPersona(ByVal pCodigo As String) As clsPersona
-
-        Try
-
-            'Validacion y estandarización de los datos
-            Using lCnn As New MySqlConnection(BD.CadenaConexion)
-
-                Dim lSQLC As String = String.Format("SELECT c.IdCef,f.IdFranquiciado FROM cef AS c " _
-                                                    & "INNER JOIN franquiciadocef AS fc ON c.IdCef = fc.IdCEF " _
-                                                    & "INNER JOIN franquiciado AS f ON fc.IdFranquiciado = f.IdFranquiciado " _
-                                                    & "WHERE c.Codigo ='{0}'", pCodigo)
-
-                'Acceso a los datos.
-                Using lDTA As New MySqlDataAdapter(lSQLC, lCnn)
-
-                    lDTA.SelectCommand.CommandType = CommandType.Text
-
-                    Dim lDT As New DataTable
-                    lDTA.Fill(lDT)
-
-                    Dim Obj As clsPersona
-
-                    If lDT IsNot Nothing AndAlso lDT.Rows.Count > 0 Then
-                        Obj = New clsPersona
-                        Obj.IdCef = CType(lDT(0)("IdCef"), System.Int32)
-                        Obj.IdFranquiciado = CType(lDT(0)("IdFranquiciado"), System.Int32)
-                        Return Obj
-                    End If
-
-                End Using
-            End Using
-
-            Return Nothing
-
-        Catch ex As Exception
-            Throw ex
-        End Try
-
-    End Function
-
 
 End Class

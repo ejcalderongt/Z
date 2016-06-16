@@ -212,7 +212,6 @@
     <Compile Include="Mantenimientos\CEF\frmCEFList.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Mantenimientos\clsPersona.vb" />
     <Compile Include="Mantenimientos\Departamento\clsBeDepartamento.vb" />
     <Compile Include="Mantenimientos\Departamento\clsLnDepartamento.vb" />
     <Compile Include="Mantenimientos\Departamento\frmDepartamento.designer.vb">
@@ -280,12 +279,6 @@
       <DependentUpon>frmFranquiciadoList.vb</DependentUpon>
     </Compile>
     <Compile Include="Mantenimientos\Franquiciado\frmFranquiciadoList.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Mantenimientos\frmCarga.Designer.vb">
-      <DependentUpon>frmCarga.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Mantenimientos\frmCarga.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Mantenimientos\Municipio\clsBeMunicipio.vb" />
@@ -564,9 +557,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Franquiciado\frmFranquiciadoList.resx">
       <DependentUpon>frmFranquiciadoList.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mantenimientos\frmCarga.resx">
-      <DependentUpon>frmCarga.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\Municipio\frmMunicipio.resx">
       <DependentUpon>frmMunicipio.vb</DependentUpon>
