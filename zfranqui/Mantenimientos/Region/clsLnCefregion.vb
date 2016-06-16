@@ -231,8 +231,10 @@ Public Class clsLnCefregion
     End Sub
 
     Public Function Obtener(ByRef oBeCefregion As clsBeCefregion) As Boolean
-        Try
-            Dim sp As String = "SELECT * FROM Cefregion" & _
+        
+		Try
+        
+		Dim sp As String = "SELECT * FROM Cefregion" & _
             " Where(IdRegion = @IdRegion)"
 
             Dim cnn As New MySqlConnection(BD.CadenaConexion)

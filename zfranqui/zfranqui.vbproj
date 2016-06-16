@@ -32,8 +32,8 @@
     <ProductName>ZFRANQUI</ProductName>
     <PublisherName>DSSISA</PublisherName>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>54</ApplicationRevision>
-    <ApplicationVersion>1.0.3.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.4.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -124,9 +124,13 @@
     <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
-    <Reference Include="MySql.Data, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Documents\Z\zfranqui_ultver_rg\zfranqui_ultver_rg\zfranqui\zfranqui\bin\Debug\MySql.Data.dll</HintPath>
+      <HintPath>C:\Users\ejcalderon\Downloads\MySqlBackup.NET 2.0.9.2\binaries\v4.0\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySqlBackup, Version=2.0.9.2, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\x86\Debug\MySqlBackup.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -155,6 +159,7 @@
     <Compile Include="Clases\BaseDatos.vb" />
     <Compile Include="Clases\clsFormatoFechas.vb" />
     <Compile Include="Clases\clsInsert.vb" />
+    <Compile Include="Clases\clsPublic.vb" />
     <Compile Include="Clases\clsUpdate.vb" />
     <Compile Include="Clases\Global.vb" />
     <Compile Include="Mantenimientos\Banco\clsBeBanco.vb" />
@@ -191,18 +196,6 @@
     <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsBeTipobeneficio_Partial.vb" />
     <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsLnTipobeneficio.vb" />
     <Compile Include="Mantenimientos\Beneficio\TipoBeneficio\clsLnTipobeneficio_Partial.vb" />
-    <Compile Include="Mantenimientos\Carga_Excel\clsExcel.vb" />
-    <Compile Include="Mantenimientos\Carga_Excel\DsExcel.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DsExcel.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Mantenimientos\Carga_Excel\frmCargaExcel.Designer.vb">
-      <DependentUpon>frmCargaExcel.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Mantenimientos\Carga_Excel\frmCargaExcel.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Mantenimientos\CEF\clsBeCef.vb" />
     <Compile Include="Mantenimientos\CEF\clsLnCef.vb" />
     <Compile Include="Mantenimientos\CEF\clsPartialBECEF.vb" />
@@ -535,9 +528,6 @@
     <EmbeddedResource Include="Mantenimientos\Beneficio\frmBeneficioList.resx">
       <DependentUpon>frmBeneficioList.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Mantenimientos\Carga_Excel\frmCargaExcel.resx">
-      <DependentUpon>frmCargaExcel.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Mantenimientos\CEF\frmCEF.resx">
       <DependentUpon>frmCEF.vb</DependentUpon>
     </EmbeddedResource>
@@ -689,17 +679,6 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Conn.ini" />
-    <None Include="Mantenimientos\Carga_Excel\DsExcel.xsc">
-      <DependentUpon>DsExcel.xsd</DependentUpon>
-    </None>
-    <None Include="Mantenimientos\Carga_Excel\DsExcel.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DsExcel.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="Mantenimientos\Carga_Excel\DsExcel.xss">
-      <DependentUpon>DsExcel.xsd</DependentUpon>
-    </None>
     <None Include="My Project\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
@@ -1573,6 +1552,16 @@
       <FileType>Assembly</FileType>
     </PublishFile>
     <PublishFile Include="MySql.Data">
+      <Visible>False</Visible>
+      <Group>
+      </Group>
+      <TargetPath>
+      </TargetPath>
+      <PublishState>Include</PublishState>
+      <IncludeHash>True</IncludeHash>
+      <FileType>Assembly</FileType>
+    </PublishFile>
+    <PublishFile Include="MySqlBackup">
       <Visible>False</Visible>
       <Group>
       </Group>

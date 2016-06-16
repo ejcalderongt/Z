@@ -143,6 +143,14 @@ Public Class frmPago
             GuardarDatos = True
             'lblCodigo.Text = pObjBeEnc.IdPagoEnc
 
+            Bita = New clsBeBitacora
+            Bita.IdUsuario = gUsuario.IdUsuario
+            Bita.Modulo = "Pago " & Me.Text
+            Bita.Accion = "Guardar"
+            Bita.Fecha = Now
+            Bita.Observacion = "IdPagoEnc# " & pObjBeEnc.IdPagoEnc
+            nB.Insertar(Bita)
+
         Catch ex As Exception
             lTransaction.Rollback()
             MsgBox(ex.Message, MsgBoxStyle.Information, Me.Text)
@@ -181,11 +189,25 @@ Public Class frmPago
     Private Sub mnuEliminar_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles mnuEliminar.ItemClick
 
         If CBool(MsgBox("¿Eliminar el Pago?", MsgBoxStyle.YesNo, Me.Text) = MsgBoxResult.Yes) Then
+
             Dim ObjLNenc As New clsLnPago_enc
+
             If ObjLNenc.Eliminar(pObjBeEnc) > 0 Then
+
                 MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
+
+                Bita = New clsBeBitacora
+                Bita.IdUsuario = gUsuario.IdUsuario
+                Bita.Modulo = "Pago " & Me.Text
+                Bita.Accion = "Guardar"
+                Bita.Fecha = Now
+                Bita.Observacion = "IdPagoEnc# " & pObjBeEnc.IdPagoEnc
+                nB.Insertar(Bita)
+
                 Me.Close()
+
             End If
+
         End If
 
     End Sub
@@ -233,6 +255,7 @@ Public Class frmPago
             End If
 
             If GridViewDescuento.RowCount > 0 Then
+
                 GridViewDescuento.Columns("IdDescuentoEnc").Visible = False
                 GridViewDescuento.Columns("IdDescuentoDet").Visible = False
                 GridViewDescuento.Columns("IdBeneficio").Visible = False
@@ -247,6 +270,7 @@ Public Class frmPago
 
                 GridViewDescuento.Columns("Monto Total").SummaryItem.SummaryType = DevExpress.Data.SummaryItemType.Sum
                 GridViewDescuento.Columns("Monto Total").SummaryItem.DisplayFormat = "{0:n2}"
+
             End If
 
         Catch ex As Exception

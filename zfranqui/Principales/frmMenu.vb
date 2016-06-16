@@ -356,7 +356,6 @@ Public Class frmMenu
 
     Private Sub mnuChanganes_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuChanganes.ItemClick
 
-
         Dim Chan As New frmBeneficioList
 
         With Chan
@@ -735,9 +734,15 @@ Public Class frmMenu
     End Sub
 
     Private Sub cmdCargaExcel_ItemClick(sender As Object, e As ItemClickEventArgs) Handles cmdCargaExcel.ItemClick
-        Dim Carga As New frmCargaExcel()
-        Carga.ShowDialog()
-        Carga.Dispose()
+
+        'Dim Carga As New frmCargaExcel()
+        'Carga.ShowDialog()
+        'Carga.Dispose()
+
+        'Dim Carga1 As New frmBackupBD()
+        'Carga1.ShowDialog()
+        'Carga1.Dispose()
+
     End Sub
 
     Private Sub mnuPagosOperados_ItemClick(sender As Object, e As ItemClickEventArgs) Handles mnuPagosOperados.ItemClick

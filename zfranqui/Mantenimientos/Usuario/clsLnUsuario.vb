@@ -309,10 +309,6 @@ Public Class clsLnUsuario
                 oBeUsuario.Nombre = IIf(IsDBNull(dt.Rows(0).Item("Nombre")), "", dt.Rows(0).Item("Nombre")).ToString
                 oBeUsuario.IdRol = Integer.Parse(IIf(IsDBNull(dt.Rows(0).Item("IdRol")), 0, dt.Rows(0).Item("IdRol")).ToString)
 
-                'If Val(oBeUsuario.IdRol) = 0 Then
-                '    Throw New Exception("Usuario sin rol definido")
-                'End If
-
                 Usuario_Valido = True
 
             End If

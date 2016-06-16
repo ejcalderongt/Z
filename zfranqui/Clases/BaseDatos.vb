@@ -11,6 +11,8 @@ Public Class BaseDatos
     Public Property CadenaConexion As String = String.Format("server={0};user id={1}; password={2}; port={3}; database={4}; pooling=false", Server, UsuarioBD, ClaveBD, PuertoBD, NomBD)
     Public Property CadenaConexionZVentas As String = String.Format("server={0};user id={1}; password={2}; port={3}; database={4}; pooling=false", Server, UsuarioBD, ClaveBD, PuertoBD, "zgas")
 
+    Public Property FechaExpiracionLicencia As Date = CDate("31/05/2016")
+
     ''' <summary>
     ''' Ejecuta una sentencia SQL de tipo DDL, devuelve el número de filas afectadas
     ''' </summary>

@@ -85,6 +85,7 @@ Public Class frmDescuento
             End If
 
             Dim lMaxDet As Integer = clsLnDescuento_det.MaxID(pObjEnc.IdDescuentoEnc)
+
             For Each Obj As clsBeDescuento_det In pObjEnc.Detalle
 
                 If Obj.IsNew Then
@@ -125,6 +126,15 @@ Public Class frmDescuento
 
             GuardarDatos = True
             'lblCodigo.Text = pObjEnc.IdDescuentoEnc
+
+            Bita = New clsBeBitacora
+            Bita.IdUsuario = gUsuario.IdUsuario
+            Bita.Modulo = "Descuento " & Me.Text
+            Bita.Accion = "Guardar"
+            Bita.Fecha = Now
+            Bita.Observacion = "IdDescuentoEnc# " & pObjEnc.IdDescuentoEnc
+            nB.Insertar(Bita)
+
             Me.Close()
 
         Catch ex As Exception
@@ -207,8 +217,19 @@ Public Class frmDescuento
             If Not DescuentoTieneAlgunPago() Then
 
                 If clsLnDescuento_enc.AnularDescuento(pObjEnc) Then
+
+
+                    Bita = New clsBeBitacora
+                    Bita.IdUsuario = gUsuario.IdUsuario
+                    Bita.Modulo = "Descuento " & Me.Text
+                    Bita.Accion = "Eliminar"
+                    Bita.Fecha = Now
+                    Bita.Observacion = "IdDescuentoEnc# " & pObjEnc.IdDescuentoEnc
+                    nB.Insertar(Bita)
+
                     MsgBox("Se ha eliminado el registro", MsgBoxStyle.Information, Me.Text)
                     Me.Close()
+
                 End If
                 
             Else

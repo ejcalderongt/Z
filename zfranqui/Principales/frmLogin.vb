@@ -146,12 +146,12 @@ Public Class frmLogin
         'lblFechaActualizacion
         '
         Me.lblFechaActualizacion.AutoSize = True
-        Me.lblFechaActualizacion.ForeColor = System.Drawing.Color.Orange
+        Me.lblFechaActualizacion.ForeColor = System.Drawing.Color.OliveDrab
         Me.lblFechaActualizacion.Location = New System.Drawing.Point(306, 255)
         Me.lblFechaActualizacion.Name = "lblFechaActualizacion"
         Me.lblFechaActualizacion.Size = New System.Drawing.Size(55, 13)
         Me.lblFechaActualizacion.TabIndex = 4
-        Me.lblFechaActualizacion.Text = "25042016"
+        Me.lblFechaActualizacion.Text = "13052016"
         '
         'frmLogin
         '
@@ -243,7 +243,7 @@ Public Class frmLogin
                 End If
             Catch ex1 As Exception
             End Try
-            
+
             If InfOK() Then
 
                 Usuario.Codigo = txtUsuario.Text
@@ -326,7 +326,7 @@ Public Class frmLogin
                 End Select
 
             Else
-                Leer_Cadena_Conexion()
+                If Existe_Ini() Then Leer_Cadena_Conexion()
             End If
 
             GetIPAddress()
@@ -336,6 +336,27 @@ Public Class frmLogin
         End Try
 
     End Sub
+
+    Private Function GetFechaServidor() As Date
+
+        GetFechaServidor = Now.Date
+
+        Dim DT As New DataTable
+
+        Try
+
+            vSQL = "SELECT CURDATE() AS FECHASERVER"
+            BD.OpenDT(DT, vSQL)
+
+            If DT.Rows.Count > 0 Then
+                GetFechaServidor = DT.Rows(0).Item("FECHASERVER")
+            End If
+
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Function
 
     Private Function Existe_Ini() As Boolean
 
@@ -353,6 +374,16 @@ Public Class frmLogin
 
             BD.CadenaConexion = oRead.ReadLine
             BD.CadenaConexionZVentas = oRead.ReadLine
+
+            'Dim vFechaExpiracionLicencia As String = oRead.ReadLine
+
+            'If vFechaExpiracionLicencia <> "" Then
+            '    Try
+            '        BD.FechaExpiracionLicencia = clsPublic.Desencriptar(vFechaExpiracionLicencia)
+            '    Catch ex As Exception
+            '    End Try
+            'End If
+
             oRead.Close()
 
             If BD.CadenaConexionZVentas = "" Then Throw New Exception("No está definida la cadena de conexión para la bd de ventas")

@@ -81,7 +81,6 @@ Partial Class frmMenu
         Me.rpg4 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.rpg6 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.rpg7 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
-        Me.rpg8 = New DevExpress.XtraBars.Ribbon.RibbonPageGroup()
         Me.XtraTabbedMdiManager1 = New DevExpress.XtraTabbedMdi.XtraTabbedMdiManager(Me.components)
         CType(Me.rbMain, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.XtraTabbedMdiManager1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -116,7 +115,7 @@ Partial Class frmMenu
         'lblVersion
         '
         Me.lblVersion.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right
-        Me.lblVersion.Caption = "25042016- Entrega VII"
+        Me.lblVersion.Caption = "13052016- Entrega 7"
         Me.lblVersion.Glyph = CType(resources.GetObject("lblVersion.Glyph"), System.Drawing.Image)
         Me.lblVersion.Id = 43
         Me.lblVersion.Name = "lblVersion"
@@ -412,7 +411,7 @@ Partial Class frmMenu
         '
         'rpConfiguracion
         '
-        Me.rpConfiguracion.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.rpg1, Me.rpg2, Me.rpg3, Me.rpg4, Me.rpg6, Me.rpg7, Me.rpg8})
+        Me.rpConfiguracion.Groups.AddRange(New DevExpress.XtraBars.Ribbon.RibbonPageGroup() {Me.rpg1, Me.rpg2, Me.rpg3, Me.rpg4, Me.rpg6, Me.rpg7})
         Me.rpConfiguracion.Name = "rpConfiguracion"
         Me.rpConfiguracion.Text = "Configuración"
         '
@@ -465,12 +464,6 @@ Partial Class frmMenu
         Me.rpg7.ItemLinks.Add(Me.mnuReportes)
         Me.rpg7.Name = "rpg7"
         Me.rpg7.Text = "Reportes"
-        '
-        'rpg8
-        '
-        Me.rpg8.ItemLinks.Add(Me.cmdCargaExcel)
-        Me.rpg8.Name = "rpg8"
-        Me.rpg8.Text = "Carga"
         '
         'XtraTabbedMdiManager1
         '
@@ -552,7 +545,6 @@ Partial Class frmMenu
     Friend WithEvents mnuPagoAuto As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents cmdSupervisor As DevExpress.XtraBars.BarButtonItem
     Friend WithEvents cmdCargaExcel As DevExpress.XtraBars.BarButtonItem
-    Friend WithEvents rpg8 As DevExpress.XtraBars.Ribbon.RibbonPageGroup
 
 
 End Class
